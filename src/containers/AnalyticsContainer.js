@@ -1,0 +1,47 @@
+import React from 'react';
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+
+import SampleBarChart from '../components/SampleBarChart';
+import ProductItem from '../components/ProductItem';
+import ChatBubble from '../components/ChatBubble';
+
+class AnalyticsContainer extends React.Component {
+  static renderRightButton = (props) => {
+        return (
+            <TouchableOpacity onPress={() => console.log('onRightPressed')}>
+                <Text>Cart</Text>
+            </TouchableOpacity>
+        );
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <ChatBubble belloMessage="Yang request untuk membeli iPhone 10s meningkat lho!" />
+        <Text style={{ textAlign: 'center', fontWeight: 'bold', color: '#FFF', marginTop: 10 }}>iPhone 10s Trends</Text>
+        <View style={{ margin: 10, padding: 30, backgroundColor: '#FFF', elevation: 2, borderRadius: 10 }}>
+          <SampleBarChart />
+        </View>
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#3498DB',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 40,
+  },
+  productList: {
+    flex: 1,
+    width: '100%',
+    padding: 20,
+    paddingTop: 100,
+    flexDirection: 'column',
+  },
+});
+
+export default AnalyticsContainer;
