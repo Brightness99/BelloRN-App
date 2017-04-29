@@ -4,12 +4,12 @@ import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'rea
 import SampleBarChart from '../components/SampleBarChart';
 import ProductItem from '../components/ProductItem';
 import ChatBubble from '../components/ChatBubble';
+import FooterActionButton from '../components/FooterActionButton';
 
 class AnalyticsContainer extends React.Component {
   static renderRightButton = (props) => {
         return (
             <TouchableOpacity onPress={() => console.log('onRightPressed')}>
-                <Text>Cart</Text>
             </TouchableOpacity>
         );
   }
@@ -19,9 +19,10 @@ class AnalyticsContainer extends React.Component {
       <View style={styles.container}>
         <ChatBubble belloMessage="Yang request untuk membeli iPhone 10s meningkat lho!" />
         <Text style={{ textAlign: 'center', fontWeight: 'bold', color: '#FFF', marginTop: 10 }}>iPhone 10s Trends</Text>
-        <View style={{ margin: 10, padding: 30, backgroundColor: '#FFF', elevation: 2, borderRadius: 10 }}>
+        <View style={{ height: 350, margin: 10, paddingLeft: 40, paddingTop: 10, backgroundColor: '#FFF', elevation: 2, borderRadius: 10 }}>
           <SampleBarChart />
         </View>
+        <FooterActionButton text="Buka lapak dan Jual iPhone 10 Sekarang!" />
       </View>
     );
   }
@@ -32,8 +33,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#3498DB',
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 40,
+    justifyContent: 'space-between',
+    paddingTop: 60,
   },
   productList: {
     flex: 1,

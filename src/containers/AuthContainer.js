@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
+import BelloLogo from '../images/bello.png';
+
 class AuthContainer extends React.Component {
   render() {
     return (
@@ -9,8 +11,12 @@ class AuthContainer extends React.Component {
         <View style={styles.welcome}>
           <Text style={styles.logo}>Bello</Text>
           <Text style={styles.tagline}>Belanja Semudah Bilang Hello!</Text>
-          <TouchableOpacity onPress={Actions.home} style={{ backgroundColor: '#FFFFFF', borderRadius: 10, padding: 20, margin: 10, elevation: 1, width: 200 }}>
+          <Image source={BelloLogo} style={{ width: '100%', height: '25%', resizeMode: 'contain', marginTop: 30, marginBottom: 30 }} />
+          <TouchableOpacity onPress={Actions.home} style={{ backgroundColor: '#FFFFFF', borderRadius: 10, padding: 20, margin: 5, elevation: 1, width: 200 }}>
             <Text style={{ color: '#444', fontWeight: 'bold', textAlign: 'center' }}>Masuk</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={Actions.home} style={{ backgroundColor: '#FFFFFF', borderRadius: 10, padding: 20, margin: 5, elevation: 1, width: 200 }}>
+            <Text style={{ color: '#444', fontWeight: 'bold', textAlign: 'center' }}>Daftar</Text>
           </TouchableOpacity>
         </View>
       </View>

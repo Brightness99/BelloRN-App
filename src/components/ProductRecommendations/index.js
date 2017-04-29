@@ -4,13 +4,13 @@ import { StyleSheet, Dimensions, Text, View, Image, ScrollView, TouchableOpacity
 import ProductItem from '../ProductItem';
 import ChatSectionHeading from '../ChatSectionHeading';
 
-const ProductRecommendations = ({ toggleDetailModal }) => (
+const ProductRecommendations = ({ toggleDetailModal, products }) => (
   <View>
-    <ChatSectionHeading headingText={'Rekomendasi Produk: Nendoroid Menma'} />
+    <ChatSectionHeading headingText={'Rekomendasi Produk: iPhone 10'} />
     <ScrollView horizontal style={styles.productRecommendations}>
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((productRec, i) => (
+      {products.map((product, i) => (
         <View key={i} style={styles.productRecWrapper}>
-          <ProductItem toggleDetailModal={toggleDetailModal} />
+          <ProductItem toggleDetailModal={toggleDetailModal} {...product} />
         </View>
       ))}
     </ScrollView>

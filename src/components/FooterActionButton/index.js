@@ -1,17 +1,17 @@
 import React from 'react';
 import { StyleSheet, Dimensions, Text, View, Image, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 
-const FooterActionButton = () => (
+const FooterActionButton = ({ text }) => (
   <View style={styles.actionBar}>
     <TouchableOpacity style={styles.btnGreen} activeOpacity={0.8}>
-      <Text style={styles.btnText}>CHECKOUT</Text>
+      <Text style={styles.btnText}>{ text }</Text>
     </TouchableOpacity>
   </View>
 );
 
 const styles = StyleSheet.create({
   actionBar: {
-    backgroundColor: '#16A085',
+    backgroundColor: '#EB9532',
     borderTopColor: '#3498DB',
     borderTopWidth: 5,
     padding: 0,
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
   btnGreen: {
     flex: 1,
-    backgroundColor: '#16A085',
+    backgroundColor: '#EB9532',
     padding: 10,
     margin: 3,
     borderRadius: 4,

@@ -1,10 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 
+import BelloWhiteLogo from '../../images/bello-white-background.png';
+
 const ChatBubble = props => (
   <View style={styles.chatBubbleContainer}>
     <View style={styles.chatAvatar}>
-      <Image style={styles.chatAvatarImage} source={{uri: 'https://pbs.twimg.com/profile_images/378800000451012500/4628fbb9dc70514d389ed9491243866f_400x400.png'}} />
+      <Image style={styles.chatAvatarImage} source={BelloWhiteLogo} />
     </View>
     <View style={styles.chatBubble}>
       <View style={styles.productCardContent}>

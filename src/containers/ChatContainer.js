@@ -8,11 +8,15 @@ import ChatSectionHeading from '../components/ChatSectionHeading';
 import ProductDetailPopup from '../components/ProductDetailPopup';
 import ChatActionBar from '../components/ChatActionBar';
 
+import data from '../../data/db.json';
+
 class productContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isDetailPopupActive: false,
+      products: data.products,
+      requests: data.requests,
     };
 
     this.toggleDetailModal = this.toggleDetailModal.bind(this);
@@ -30,7 +34,7 @@ class productContainer extends React.Component {
   };
 
   render() {
-    const { isDetailPopupActive } = this.state;
+    const { isDetailPopupActive, products, requests } = this.state;
     return (
       <View style={styles.container}>
         <ScrollView style={styles.chatList}>
@@ -39,15 +43,18 @@ class productContainer extends React.Component {
           <ChatSearch />
           <ChatBubble belloMessage="Dicari dulu ya!" />
           <ChatBubble belloMessage="Ketemu 5 barang yang cocok nih bos" />
-          <ProductRecommendations toggleDetailModal={this.toggleDetailModal} />
-          <ChatBubble belloMessage="Tidak ketemu nih, Bello umumin ke pelapak yang tertarik dulu ya. Nanti Bello kabarin lagi deh, gimana?" />
-          <ChatBubble belloMessage="Bello Hendry! Ada 5 barang yang kemarin kamu cari nih. Cek yuk!" />
-          <ProductRecommendations toggleDetailModal={this.toggleDetailModal} />
-          <ProductRecommendations toggleDetailModal={this.toggleDetailModal} />
+          <ProductRecommendations toggleDetailModal={this.toggleDetailModal} products={products} />
           <ChatBubble belloMessage="Barang sudah dibeli. Checkout atau mau belanja lagi?" />
+          <ChatBubble belloMessage="Mau beli apa lagi bos?" />
+          <ChatSearch />
+          <ChatBubble belloMessage="Dicari dulu ya!" />
+          <ChatBubble belloMessage="Tidak ketemu nih, Bello umumin ke pelapak yang tertarik dulu ya. Nanti Bello kabarin lagi deh, gimana?" />
+          <ChatBubble belloMessage="Siap! nanti Bello kabarin" />
+          <ChatSectionHeading headingText={'21 Mei 2017'} />
+          <ChatBubble belloMessage="Bello Hendry! Ada 2 barang yang kemarin kamu cari nih. Cek yuk!" />
+          <ProductRecommendations toggleDetailModal={this.toggleDetailModal} products={requests} />
           <View style={{ height: 150, width: '100%' }}></View>
         </ScrollView>
-        <ChatActionBar />
         { isDetailPopupActive && <ProductDetailPopup toggleDetailModal={this.toggleDetailModal} /> }
       </View>
     );
@@ -67,7 +74,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     padding: 0,
-    paddingTop: 100,
+    paddingTop: 70,
     flexDirection: 'column',
   },
   chatSectionHeading: {

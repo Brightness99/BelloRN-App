@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions, Text, View, Image, ScrollView, TouchableOpacity
 
 const ChatSearch = () => (
   <View style={styles.chatSearchContainer}>
-    <TextInput placeholder="Cari apa aja yang bos mau!" style={styles.chatInput} underlineColorAndroid="#FFFFFF" />
+    <TextInput value="Keyboard Laptop" placeholder="Cari apa aja yang bos mau!" style={styles.chatInput} underlineColorAndroid="#FFFFFF" />
   </View>
 );
 

@@ -1,15 +1,15 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 
-const ProductItem = ({ toggleDetailModal }) => (
+const ProductItem = ({ toggleDetailModal, name, owner, price, image }) => (
   <TouchableOpacity style={styles.productCard} onPress={toggleDetailModal} activeOpacity={0.8}>
     <View style={styles.productCardImage}>
-      <Image style={styles.productImage} source={{uri: 'http://images.goodsmile.info/cgm/images/product/20111026/3326/30336/medium/d310f1d447089a4fd0da9f4f31fcaf44.jpg'}} />
+      <Image style={styles.productImage} source={{uri: image }} />
     </View>
     <View style={styles.productCardContent}>
-      <Text style={styles.productTitle}>Nendoroid Menma</Text>
-      <Text style={styles.productDescription}>oleh Lapak Sukses Sejahtera</Text>
-      <Text style={styles.productPrice}>{`Rp. 500.000`}</Text>
+      <Text style={styles.productTitle}>{ name }</Text>
+      <Text style={styles.productDescription}>oleh { owner }</Text>
+      <Text style={styles.productPrice}>{ price }</Text>
     </View>
   </TouchableOpacity>
 );

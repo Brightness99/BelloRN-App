@@ -4,10 +4,7 @@ import { StyleSheet, Dimensions, Text, View, Image, ScrollView, TouchableOpacity
 const ChatActionBar = () => (
   <View style={styles.actionBar}>
     <TouchableOpacity style={styles.btnGreen} activeOpacity={0.8}>
-      <Text style={styles.btnText}>LANJUT</Text>
-    </TouchableOpacity>
-    <TouchableOpacity style={styles.btnOrange} activeOpacity={0.8}>
-      <Text style={styles.btnText}>TUNDA</Text>
+      <Text style={styles.btnText}>OKE, KABARIN YA!</Text>
     </TouchableOpacity>
     <TouchableOpacity style={styles.btnRed} activeOpacity={0.8}>
       <Text style={styles.btnText}>BATAL</Text>

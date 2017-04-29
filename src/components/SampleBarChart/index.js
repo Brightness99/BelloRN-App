@@ -18,7 +18,7 @@ import Svg,{
 } from 'react-native-svg';
 
 const SampleBarChart = () => (
-  <Svg preserveAspectRatio="xMinYMin meet" style={{width: '100%', height: '74%', padding: 0, backgroundColor: 'transparent'}}>
+  <Svg preserveAspectRatio="xMinYMin meet" style={{width: '100%', height: '84%', padding: 0, backgroundColor: 'transparent'}}>
     <G fill="none" font-size="10" font-family="sans-serif" text-anchor="end">
       <Path class="domain" stroke="#000" d="M-6,300.5H0.5V0.5H-6"></Path>
       <G class="tick" opacity="1" transform="translate(0,300)">

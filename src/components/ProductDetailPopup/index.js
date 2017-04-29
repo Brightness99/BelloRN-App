@@ -9,10 +9,10 @@ const ProductDetailPopup = ({ toggleDetailModal }) => (
       <TouchableOpacity style={styles.closeBtn} activeOpacity={0.8} onPress={toggleDetailModal}>
         <Text style={styles.closeBtnText}>x</Text>
       </TouchableOpacity>
-      <Image style={styles.productImage} source={{uri: 'http://images.goodsmile.info/cgm/images/product/20111026/3326/30336/medium/d310f1d447089a4fd0da9f4f31fcaf44.jpg'}} />
-      <Text style={styles.productTitle}>Nendoroid Menma</Text>
-      <Text style={styles.productDescription}>oleh Lapak Sukses Sejahtera</Text>
-      <Text style={styles.productPrice}>{`Rp. 500.000`}</Text>
+      <Image style={styles.productImage} source={{uri: 'https://s0.bukalapak.com/img/589340477/large/Kredit_iPhone_5s_16GB_dengan_Cicilan_Tanpa_Kartu_Kredit.jpg'}} />
+      <Text style={styles.productTitle}>iPhone 10</Text>
+      <Text style={styles.productDescription}>Makmur Gadget Shoppe</Text>
+      <Text style={styles.productPrice}>{`Rp. 20,000,000`}</Text>
       <Text style={{ fontWeight: 'bold' }}>Reviews</Text>
       <ScrollView horizontal style={styles.reviews}>
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((productRec, i) => (

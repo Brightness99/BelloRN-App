@@ -4,6 +4,8 @@ import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'rea
 import ProductItem from '../components/ProductItem';
 import FooterActionButton from '../components/FooterActionButton';
 
+import data from '../../data/db.json';
+
 class CartContainer extends React.Component {
   static renderRightButton = (props) => {
         return (
@@ -17,12 +19,12 @@ class CartContainer extends React.Component {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.productList}>
-          {[1, 2, 3, 4].map((x, i) => (
-            <ProductItem key={i} toggleDetailModal={() => console.log('s')} />
+          {data.products.concat(data.requests).map((product, i) => (
+            <ProductItem key={i} {...product} toggleDetailModal={() => console.log('s')} />
           ))}
           <View style={{ height: 150, width: '100%' }}></View>
         </ScrollView>
-        <FooterActionButton />
+        <FooterActionButton text="CHECKOUT" />
       </View>
     );
   }
