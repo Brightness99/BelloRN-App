@@ -13,10 +13,10 @@ class AuthContainer extends React.Component {
           <Text style={styles.logo}>Bello</Text>
           <Text style={styles.tagline}>Belanja Semudah Bilang Hello!</Text>
           <Image source={BelloLogo} style={styles.belloImage} />
-          <TouchableOpacity onPress={Actions.home} style={styles.btn}>
+          <TouchableOpacity onPress={Actions.home} style={styles.btn} activeOpacity={0.8}>
             <Text style={styles.btnText}>Masuk</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={Actions.home} style={styles.btn}>
+          <TouchableOpacity onPress={Actions.home} style={styles.btn} activeOpacity={0.8}>
             <Text style={styles.btnText}>Daftar</Text>
           </TouchableOpacity>
           <View style={ styles.footerSponsor }>
