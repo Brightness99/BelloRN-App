@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Dimensions, Text, View, Image, ScrollView, TouchableOpacity, TextInput } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 import ChatBubble from '../components/ChatBubble';
 import ChatSearch from '../components/ChatSearch';
@@ -8,6 +9,7 @@ import ChatSectionHeading from '../components/ChatSectionHeading';
 import ProductDetailPopup from '../components/ProductDetailPopup';
 import ChatActionBar from '../components/ChatActionBar';
 
+import cartIcon from '../images/shopping-cart.png';
 import data from '../../data/db.json';
 
 class productContainer extends React.Component {
@@ -28,7 +30,8 @@ class productContainer extends React.Component {
 
   static renderRightButton = (props) => {
     return (
-      <TouchableOpacity onPress={() => console.log('onRightPressed')}>
+      <TouchableOpacity onPress={Actions.cart}>
+        <Image source={cartIcon} style={{ width: 25, height: 25, marginTop: 0 }} />
       </TouchableOpacity>
     );
   };
