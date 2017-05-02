@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Dimensions, Text, View, Image, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 
 import ProductItem from '../ProductItem';
+import ProductMoreItem from '../ProductItem/More';
 import ChatSectionHeading from '../ChatSectionHeading';
 
 const ProductRecommendations = ({ toggleDetailModal, products }) => (
@@ -13,6 +14,9 @@ const ProductRecommendations = ({ toggleDetailModal, products }) => (
           <ProductItem toggleDetailModal={toggleDetailModal} {...product} />
         </View>
       ))}
+        <View style={styles.productRecWrapperMore}>
+          <ProductMoreItem toggleDetailModal={toggleDetailModal} />
+        </View>
     </ScrollView>
   </View>
 );
@@ -27,6 +31,9 @@ const styles = StyleSheet.create({
     paddingTop: 0,
   },
   productRecWrapper: {
+    width: deviceWidth * 0.9,
+  },
+  productRecWrapperMore: {
     width: deviceWidth * 0.9,
   },
 });
