@@ -66,17 +66,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#3498DB',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
+    padding: 30,
     paddingTop: 100,
   },
   homeList: {
     flex: 1,
     width: '100%',
+    height: '50%',
     padding: 0,
     flexDirection: 'row',
   },
   homeCard: {
-    margin: 20,
+    margin: 10,
     backgroundColor: '#FFFFFF',
     borderRadius: 100,
     paddingLeft: 5,
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
   },
   homeCardContent: {
     flex: 1,
-    padding: 15,
+    padding: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -101,9 +102,9 @@ const styles = StyleSheet.create({
   },
   homeTitle: {
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: 12,
     textAlign: 'center',
-    color: '#333',
+    color: '#555',
   },
   homePrice: {
     fontWeight: 'bold',
