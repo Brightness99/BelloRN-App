@@ -38,8 +38,8 @@ class productContainer extends React.Component {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.chatList}>
+          <ChatSectionHeading headingText={'Senin, 25 Mei'} />
           <ChatBubble belloMessage="Bello bos! mau beli apa?" />
-          <ChatSectionHeading headingText={'Cari Produk'} />
           <ChatSearch />
           <ChatBubble belloMessage="Dicari dulu ya!" />
           <ChatBubble belloMessage="Ketemu 5 barang yang cocok nih bos" />
