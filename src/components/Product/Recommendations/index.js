@@ -7,12 +7,19 @@ import ProductItem from '../Item';
 import ProductMoreItem from '../Item/More';
 import ChatSectionHeading from '../../Chat/SectionHeading';
 
-type Props = {
-  toggleDetailModal: Function,
-  products: [{ name: string, owner: string, price: number, image: string}],
+type ProductType = {
+  name: string,
+  owner: string,
+  price: number,
+  image: string
 };
 
-const ProductRecommendations = ({ toggleDetailModal, products }: Props) => (
+type PropTypes = {
+  toggleDetailModal: Function,
+  products: [ProductType],
+};
+
+const ProductRecommendations = ({ toggleDetailModal, products }: PropTypes) => (
   <View>
     <ChatSectionHeading headingText={'Rekomendasi Produk: iPhone 10'} />
     <ScrollView horizontal style={styles.productRecommendations}>
