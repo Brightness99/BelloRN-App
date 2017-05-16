@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider, connect } from 'react-redux';
 import { Scene, Router } from 'react-native-router-flux';
 
-import store from './src/store/configureStore';
+import store from '../src/store/configureStore';
 import {
   HomeContainer,
   AuthContainer,
@@ -10,7 +10,7 @@ import {
   ProductContainer,
   CartContainer,
   AnalyticsContainer,
-} from './src/containers';
+} from '../src/containers';
 
 const styles = {
   rootNavbar: {
@@ -61,12 +61,10 @@ const mapStateToProps = state => ({ scene: state.scene });
 
 const ConnectedRouter = connect(mapStateToProps, null)(MainRouter);
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <ConnectedRouter />
-      </Provider>
-    );
-  }
-}
+const App = () => (
+  <Provider store={store}>
+    <ConnectedRouter />
+  </Provider>
+);
+
+export default App;
