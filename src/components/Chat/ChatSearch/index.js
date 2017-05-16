@@ -5,14 +5,23 @@ import { View, TextInput } from 'react-native';
 import styles from './styles';
 import SectionHeading from '../SectionHeading';
 
-const ChatSearch = () => (
+type PropTypes = {
+  searchKeyword: string,
+  handleChange: Function,
+  handleSubmit: Function,
+};
+
+const ChatSearch = ({ searchKeyword, handleChange, handleSubmit }: PropTypes) => (
   <View style={styles.chatSearchContainer}>
     <SectionHeading headingText={'Cari Produk'} />
     <TextInput
-      value=""
+      autoFocus
+      value={searchKeyword}
       placeholder="Cari apa aja yang bos mau!"
       style={styles.chatInput}
       underlineColorAndroid="#FFFFFF"
+      onChangeText={handleChange}
+      onSubmitEditing={handleSubmit}
     />
   </View>
 );

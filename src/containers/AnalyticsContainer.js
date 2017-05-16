@@ -34,7 +34,7 @@ class AnalyticsContainer extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <MessageBubble message="Yang request untuk membeli iPhone 10s meningkat lho!" sender="Bello" time="" />
+        <MessageBubble id={1} message="Yang request untuk membeli iPhone 10s meningkat lho!" sender="Bello" time="" />
         <Text style={{ textAlign: 'center', fontWeight: 'bold', color: '#FFF', marginTop: 10 }}>iPhone 10s Trends</Text>
         <View style={{ height: 350, margin: 10, paddingLeft: 40, paddingTop: 10, backgroundColor: '#FFF', elevation: 2, borderRadius: 10 }}>
           <SampleBarChart />

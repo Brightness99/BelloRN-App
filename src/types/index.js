@@ -9,6 +9,7 @@ export type ProductType = {
 export type ProductsType = [ ProductType ];
 
 export type ChatType = {
+  id?: number,
   sender: string,
   message: string,
   time: string,

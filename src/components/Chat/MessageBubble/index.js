@@ -9,7 +9,7 @@ import MeAvatar from '../../../images/me.png';
 
 import type { ChatType } from '../../../types';
 
-const MessageBubble = ({ sender, message, time }: ChatType) => (
+const MessageBubble = ({ id = 0, sender, message, time }: ChatType) => (
   <View style={styles.chatBubbleContainer}>
     <View style={styles.chatAvatar}>
       { sender === 'Bello' ? (
