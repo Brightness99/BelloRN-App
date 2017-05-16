@@ -56,7 +56,7 @@ class productContainer extends React.Component {
   }
 
   state: {
-    isDetailPopupActive: number,
+    isDetailPopupActive: boolean,
     products: Array<mixed>,
     requests: Array<mixed>,
   };

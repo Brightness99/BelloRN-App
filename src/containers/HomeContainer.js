@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import cartIcon from '../images/shopping-cart.png';
@@ -9,58 +9,7 @@ import buyIcon from '../images/shopping-bag.png';
 import analyticsIcon from '../images/bar-chart.png';
 import profileIcon from '../images/user.png';
 
-class HomeContainer extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.homeList}>
-          <TouchableOpacity style={styles.homeCard} onPress={Actions.chat} activeOpacity={0.8}>
-            <View style={styles.homeCardContent}>
-              <Image source={buyIcon} style={styles.homeIcon} />
-              <Text style={styles.homeTitle}>BELI</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.homeCard} onPress={Actions.cart} activeOpacity={0.8}>
-            <View style={styles.homeCardContent}>
-              <Image source={cartIcon} style={styles.homeIcon} />
-              <Text style={styles.homeTitle}>KERANJANG</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.homeList}>
-          <TouchableOpacity style={styles.homeCard} onPress={Actions.analytics} activeOpacity={0.8}>
-            <View style={styles.homeCardContent}>
-              <Image source={analyticsIcon} style={styles.homeIcon} />
-              <Text style={styles.homeTitle}>ANALISA</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.homeCard} onPress={Actions.product} activeOpacity={0.8}>
-            <View style={styles.homeCardContent}>
-              <Image source={profileIcon} style={styles.homeIcon} />
-              <Text style={styles.homeTitle}>PROFIL</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.homeList}>
-          <TouchableOpacity style={styles.homeCard} onPress={Actions.product} activeOpacity={0.8}>
-            <View style={styles.homeCardContent}>
-              <Image source={notificationIcon} style={styles.homeIcon} />
-              <Text style={styles.homeTitle}>NOTIFIKASI</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.homeCard} onPress={Actions.product} activeOpacity={0.8}>
-            <View style={styles.homeCardContent}>
-              <Image source={reminderIcon} style={styles.homeIcon} />
-              <Text style={styles.homeTitle}>REMINDER</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
+const styles = {
   container: {
     flex: 1,
     backgroundColor: '#3498DB',
@@ -118,6 +67,61 @@ const styles = StyleSheet.create({
   homeDescription: {
     color: '#666666',
   },
-});
+};
+
+class HomeContainer extends React.Component {
+  componentDidMount() {
+    // do something about sessions here!
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.homeList}>
+          <TouchableOpacity style={styles.homeCard} onPress={Actions.chat} activeOpacity={0.8}>
+            <View style={styles.homeCardContent}>
+              <Image source={buyIcon} style={styles.homeIcon} />
+              <Text style={styles.homeTitle}>BELI</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.homeCard} onPress={Actions.cart} activeOpacity={0.8}>
+            <View style={styles.homeCardContent}>
+              <Image source={cartIcon} style={styles.homeIcon} />
+              <Text style={styles.homeTitle}>KERANJANG</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.homeList}>
+          <TouchableOpacity style={styles.homeCard} onPress={Actions.analytics} activeOpacity={0.8}>
+            <View style={styles.homeCardContent}>
+              <Image source={analyticsIcon} style={styles.homeIcon} />
+              <Text style={styles.homeTitle}>ANALISA</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.homeCard} onPress={Actions.product} activeOpacity={0.8}>
+            <View style={styles.homeCardContent}>
+              <Image source={profileIcon} style={styles.homeIcon} />
+              <Text style={styles.homeTitle}>PROFIL</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.homeList}>
+          <TouchableOpacity style={styles.homeCard} onPress={Actions.product} activeOpacity={0.8}>
+            <View style={styles.homeCardContent}>
+              <Image source={notificationIcon} style={styles.homeIcon} />
+              <Text style={styles.homeTitle}>NOTIFIKASI</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.homeCard} onPress={Actions.product} activeOpacity={0.8}>
+            <View style={styles.homeCardContent}>
+              <Image source={reminderIcon} style={styles.homeIcon} />
+              <Text style={styles.homeTitle}>REMINDER</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+}
 
 export default HomeContainer;
