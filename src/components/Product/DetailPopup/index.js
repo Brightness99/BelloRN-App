@@ -4,6 +4,8 @@ import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import ReviewItem from '../ReviewItem';
 
+import GreenButton from '../../Core/GreenButton';
+
 const ProductDetailPopup = ({ toggleDetailModal }) => (
   <View style={styles.popupOverlay}>
     <View style={styles.popupModal}>
@@ -23,9 +25,7 @@ const ProductDetailPopup = ({ toggleDetailModal }) => (
         ))}
       </ScrollView>
       <View style={styles.btnWrapper}>
-        <TouchableOpacity style={styles.btnBuy} activeOpacity={1}>
-          <Text style={styles.btnText}>Beli</Text>
-        </TouchableOpacity>
+        <GreenButton label="Beli" handleClick={() => {}} />
         <TouchableOpacity style={styles.btnWishList} activeOpacity={1}>
           <Text style={styles.btnText}>Tambah ke Wishlist</Text>
         </TouchableOpacity>
