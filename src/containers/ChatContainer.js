@@ -75,19 +75,23 @@ class productContainer extends React.Component {
       <View style={styles.container}>
         <ScrollView style={styles.chatList}>
           <ChatSectionHeading headingText={'Senin, 25 Mei'} />
-          <MessageBubble belloMessage="Bello bos! mau beli apa?" />
+          <MessageBubble sender="Bello" time="12:30" message="Bello bos! mau beli apa?" />
           <ChatSearch />
-          <MessageBubble belloMessage="Dicari dulu ya!" />
-          <MessageBubble belloMessage="Ketemu 5 barang yang cocok nih bos" />
+          <MessageBubble sender="Me" time="12:35" message="Beli kaos jersey real mandrit" />
+          <MessageBubble sender="Bello" time="12:30" message="Dicari dulu ya!" />
+          <MessageBubble sender="Bello" time="12:30" message="Ketemu 5 barang yang cocok nih bos" />
           <ProductRecommendations toggleDetailModal={this.toggleDetailModal} products={products} />
-          <MessageBubble belloMessage="Barang sudah dibeli. Checkout atau mau belanja lagi?" />
-          <MessageBubble belloMessage="Mau beli apa lagi bos?" />
+          <MessageBubble sender="Me" time="12:35" message="Beli 1 ya Bello!" />
+          <MessageBubble sender="Bello" time="12:30" message="Barang sudah dibeli. Checkout atau mau belanja lagi?" />
+          <MessageBubble sender="Me" time="12:35" message="Mau belanja lagi deh" />
+          <MessageBubble sender="Bello" time="12:30" message="Mau beli apa lagi bos?" />
           <ChatSearch />
-          <MessageBubble belloMessage="Dicari dulu ya!" />
-          <MessageBubble belloMessage="Tidak ketemu nih, Bello umumin ke pelapak yang tertarik dulu ya. Nanti Bello kabarin lagi deh, gimana?" />
-          <MessageBubble belloMessage="Siap! nanti Bello kabarin" />
+          <MessageBubble sender="Bello" time="12:30" message="Dicari dulu ya!" />
+          <MessageBubble sender="Bello" time="12:30" message="Tidak ketemu nih, Bello umumin ke pelapak yang tertarik dulu ya. Nanti Bello kabarin lagi deh, gimana?" />
+          <MessageBubble sender="Me" time="12:35" message="Boleh, nanti kabarin ya Bello!" />
+          <MessageBubble sender="Bello" time="12:30" message="Siap! nanti Bello kabarin" />
           <ChatSectionHeading headingText={'21 Mei 2017'} />
-          <MessageBubble belloMessage="Bello Hendry! Ada 2 barang yang kemarin kamu cari nih. Cek yuk!" />
+          <MessageBubble sender="Bello" time="12:30" message="Bello Hendry! Ada 2 barang yang kemarin kamu cari nih. Cek yuk!" />
           <ProductRecommendations toggleDetailModal={this.toggleDetailModal} products={requests} />
           <View style={{ height: 150, width: '100%' }} />
         </ScrollView>

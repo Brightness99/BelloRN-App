@@ -27,8 +27,10 @@ const styles = {
   },
   homeCard: {
     margin: 10,
+    width: '45%',
+    height: '80%',
     backgroundColor: '#FFFFFF',
-    borderRadius: 100,
+    borderRadius: 10,
     paddingLeft: 5,
     paddingRight: 5,
     flex: 1,
