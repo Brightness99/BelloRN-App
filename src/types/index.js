@@ -7,3 +7,16 @@ export type ProductType = {
 };
 
 export type ProductsType = [ ProductType ];
+
+export type ChatType = {
+  sender: string,
+  message: string,
+  time: string,
+};
+
+export type ChatsType = [ ChatType ];
+
+export type ButtonPropTypes = {
+  label: string,
+  handleClick: Function,
+};

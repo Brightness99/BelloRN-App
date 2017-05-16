@@ -7,13 +7,9 @@ import styles from './styles';
 import BelloWhiteLogo from '../../../images/bello-white-background.png';
 import MeAvatar from '../../../images/me.png';
 
-type Props = {
-  sender: string,
-  message: string,
-  time: string,
-};
+import type { ChatType } from '../../../types';
 
-const MessageBubble = ({ sender, message, time }: Props) => (
+const MessageBubble = ({ sender, message, time }: ChatType) => (
   <View style={styles.chatBubbleContainer}>
     <View style={styles.chatAvatar}>
       { sender === 'Bello' ? (

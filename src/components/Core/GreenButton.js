@@ -1,7 +1,8 @@
 // @flow
-
 import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
+
+import type { ButtonPropTypes } from '../../types';
 
 const styles = {
   button: {
@@ -18,7 +19,7 @@ const styles = {
   },
 };
 
-const GreenButton = ({ label, handleClick }: { label: string, handleClick: Function }) => (
+const GreenButton = ({ label, handleClick }: ButtonPropTypes) => (
   <TouchableOpacity style={styles.button} activeOpacity={1} onClick={handleClick}>
     <Text style={styles.btnText}>{ label }</Text>
   </TouchableOpacity>
