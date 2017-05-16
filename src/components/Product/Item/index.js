@@ -1,11 +1,10 @@
 // @flow
-
 import React from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 
 import styles from './styles';
 
-type Props = {
+type PropTypes = {
   toggleDetailModal: Function,
   name: string,
   owner: string,
@@ -13,7 +12,7 @@ type Props = {
   image: string,
 };
 
-const ProductItem = ({ toggleDetailModal, name, owner, price, image }: Props) => (
+const ProductItem = ({ toggleDetailModal, name, owner, price, image }: PropTypes) => (
   <TouchableOpacity style={styles.productCard} onPress={toggleDetailModal} activeOpacity={0.8}>
     <View style={styles.productCardImage}>
       <Image style={styles.productImage} source={{ uri: image }} />
