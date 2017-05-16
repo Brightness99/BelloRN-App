@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { View, ScrollView } from 'react-native';
 
@@ -6,7 +7,12 @@ import ProductItem from '../Item';
 import ProductMoreItem from '../Item/More';
 import ChatSectionHeading from '../../Chat/SectionHeading';
 
-const ProductRecommendations = ({ toggleDetailModal, products }) => (
+type Props = {
+  toggleDetailModal: Function,
+  products: [{ name: string, owner: string, price: number, image: string}],
+};
+
+const ProductRecommendations = ({ toggleDetailModal, products }: Props) => (
   <View>
     <ChatSectionHeading headingText={'Rekomendasi Produk: iPhone 10'} />
     <ScrollView horizontal style={styles.productRecommendations}>

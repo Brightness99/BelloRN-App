@@ -57,8 +57,8 @@ class productContainer extends React.Component {
 
   state: {
     isDetailPopupActive: boolean,
-    products: Array<mixed>,
-    requests: Array<mixed>,
+    products: [{ name: string, owner: string, price: number, image: string}],
+    requests: [{ name: string, owner: string, price: number, image: string}],
   };
 
   props: {};

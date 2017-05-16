@@ -6,10 +6,10 @@ import { Text, View, Image, TouchableOpacity } from 'react-native';
 import styles from './styles';
 
 type Props = {
-  toggleDetailModal: string,
+  toggleDetailModal: Function,
   name: string,
   owner: string,
-  price: string,
+  price: number,
   image: string,
 };
 
