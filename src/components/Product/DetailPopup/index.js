@@ -5,6 +5,7 @@ import styles from './styles';
 import ReviewItem from '../ReviewItem';
 
 import GreenButton from '../../Core/GreenButton';
+import OrangeButton from '../../Core/OrangeButton';
 
 const ProductDetailPopup = ({ toggleDetailModal }) => (
   <View style={styles.popupOverlay}>
@@ -26,9 +27,7 @@ const ProductDetailPopup = ({ toggleDetailModal }) => (
       </ScrollView>
       <View style={styles.btnWrapper}>
         <GreenButton label="Beli" handleClick={() => {}} />
-        <TouchableOpacity style={styles.btnWishList} activeOpacity={1}>
-          <Text style={styles.btnText}>Tambah ke Wishlist</Text>
-        </TouchableOpacity>
+        <OrangeButton label="Tambah ke Wishlist" handleClick={() => {}} />
       </View>
     </View>
   </View>
