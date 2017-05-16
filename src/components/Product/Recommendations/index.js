@@ -7,16 +7,11 @@ import ProductItem from '../Item';
 import ProductMoreItem from '../Item/More';
 import ChatSectionHeading from '../../Chat/SectionHeading';
 
-type ProductType = {
-  name: string,
-  owner: string,
-  price: number,
-  image: string
-};
+import type { ProductsType } from '../../../types';
 
 type PropTypes = {
   toggleDetailModal: Function,
-  products: [ProductType],
+  products: ProductsType,
 };
 
 const ProductRecommendations = ({ toggleDetailModal, products }: PropTypes) => (
