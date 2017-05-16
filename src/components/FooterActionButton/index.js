@@ -1,13 +1,14 @@
+// @flow
+
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 
 import styles from './styles';
+import GreenButton from '../Core/GreenButton';
 
-const FooterActionButton = ({ text }) => (
+const FooterActionButton = ({ text }: {text: string}) => (
   <View style={styles.actionBar}>
-    <TouchableOpacity style={styles.btnGreen} activeOpacity={0.8}>
-      <Text style={styles.btnText}>{ text }</Text>
-    </TouchableOpacity>
+    <GreenButton label={text} handleClick={() => {}} />
   </View>
 );
 
