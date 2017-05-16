@@ -1,5 +1,7 @@
 import React from 'react';
-import { StyleSheet, Dimensions, Text, View, Image, ScrollView, TouchableOpacity, TextInput } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
+
+import styles from './styles';
 
 const ChatActionBar = () => (
   <View style={styles.actionBar}>
@@ -11,45 +13,5 @@ const ChatActionBar = () => (
     </TouchableOpacity>
   </View>
 );
-
-const styles = StyleSheet.create({
-  actionBar: {
-    backgroundColor: '#2574A9',
-    backgroundColor: '#FFFFFF',
-    borderTopColor: '#3498DB',
-    borderTopWidth: 5,
-    padding: 10,
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  btnGreen: {
-    flex: 1,
-    backgroundColor: '#16A085',
-    padding: 10,
-    margin: 3,
-    borderRadius: 4,
-  },
-  btnRed: {
-    flex: 1,
-    backgroundColor: '#C0392B',
-    padding: 10,
-    margin: 3,
-    borderRadius: 4,
-  },
-  btnOrange: {
-    flex: 1,
-    backgroundColor: '#EB9532',
-    padding: 10,
-    margin: 3,
-    borderRadius: 4,
-  },
-  btnText: {
-    color: '#FFFFFF',
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-});
 
 export default ChatActionBar;
