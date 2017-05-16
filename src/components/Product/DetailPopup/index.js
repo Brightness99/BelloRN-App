@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 
@@ -7,7 +8,7 @@ import ReviewItem from '../ReviewItem';
 import GreenButton from '../../Core/GreenButton';
 import OrangeButton from '../../Core/OrangeButton';
 
-const ProductDetailPopup = ({ toggleDetailModal }) => (
+const ProductDetailPopup = ({ toggleDetailModal }: {toggleDetailModal: Function}) => (
   <View style={styles.popupOverlay}>
     <View style={styles.popupModal}>
       <TouchableOpacity style={styles.closeBtn} activeOpacity={0.8} onPress={toggleDetailModal}>
