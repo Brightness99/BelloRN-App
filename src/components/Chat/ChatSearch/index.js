@@ -2,11 +2,11 @@ import React from 'react';
 import { View, TextInput } from 'react-native';
 
 import styles from './styles';
-import ChatSectionHeading from '../ChatSectionHeading';
+import SectionHeading from '../SectionHeading';
 
 const ChatSearch = () => (
   <View style={styles.chatSearchContainer}>
-    <ChatSectionHeading headingText={'Cari Produk'} />
+    <SectionHeading headingText={'Cari Produk'} />
     <TextInput
       value=""
       placeholder="Cari apa aja yang bos mau!"

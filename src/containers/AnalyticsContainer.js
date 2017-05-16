@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 
 import SampleBarChart from '../components/SampleBarChart';
-import ProductItem from '../components/ProductItem';
-import ChatBubble from '../components/ChatBubble';
+import ProductItem from '../components/Product/Item';
+import MessageBubble from '../components/Chat/MessageBubble';
 import FooterActionButton from '../components/FooterActionButton';
 
 class AnalyticsContainer extends React.Component {
@@ -17,7 +17,7 @@ class AnalyticsContainer extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ChatBubble belloMessage="Yang request untuk membeli iPhone 10s meningkat lho!" />
+        <MessageBubble belloMessage="Yang request untuk membeli iPhone 10s meningkat lho!" />
         <Text style={{ textAlign: 'center', fontWeight: 'bold', color: '#FFF', marginTop: 10 }}>iPhone 10s Trends</Text>
         <View style={{ height: 350, margin: 10, paddingLeft: 40, paddingTop: 10, backgroundColor: '#FFF', elevation: 2, borderRadius: 10 }}>
           <SampleBarChart />

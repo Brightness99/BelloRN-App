@@ -2,12 +2,12 @@ import React from 'react';
 import { StyleSheet, Dimensions, Text, View, Image, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
-import ChatBubble from '../components/ChatBubble';
-import ChatSearch from '../components/ChatSearch';
-import ProductRecommendations from '../components/ProductRecommendations';
-import ChatSectionHeading from '../components/ChatSectionHeading';
-import ProductDetailPopup from '../components/ProductDetailPopup';
-import ChatActionBar from '../components/ChatActionBar';
+import MessageBubble from '../components/Chat/MessageBubble';
+import ChatSearch from '../components/Chat/ChatSearch';
+import ChatSectionHeading from '../components/Chat/SectionHeading';
+import ChatActionBar from '../components/Chat/ActionBar';
+import ProductRecommendations from '../components/Product/Recommendations';
+import ProductDetailPopup from '../components/Product/DetailPopup';
 
 import cartIcon from '../images/shopping-cart.png';
 import data from '../../data/db.json';
@@ -42,19 +42,19 @@ class productContainer extends React.Component {
       <View style={styles.container}>
         <ScrollView style={styles.chatList}>
           <ChatSectionHeading headingText={'Senin, 25 Mei'} />
-          <ChatBubble belloMessage="Bello bos! mau beli apa?" />
+          <MessageBubble belloMessage="Bello bos! mau beli apa?" />
           <ChatSearch />
-          <ChatBubble belloMessage="Dicari dulu ya!" />
-          <ChatBubble belloMessage="Ketemu 5 barang yang cocok nih bos" />
+          <MessageBubble belloMessage="Dicari dulu ya!" />
+          <MessageBubble belloMessage="Ketemu 5 barang yang cocok nih bos" />
           <ProductRecommendations toggleDetailModal={this.toggleDetailModal} products={products} />
-          <ChatBubble belloMessage="Barang sudah dibeli. Checkout atau mau belanja lagi?" />
-          <ChatBubble belloMessage="Mau beli apa lagi bos?" />
+          <MessageBubble belloMessage="Barang sudah dibeli. Checkout atau mau belanja lagi?" />
+          <MessageBubble belloMessage="Mau beli apa lagi bos?" />
           <ChatSearch />
-          <ChatBubble belloMessage="Dicari dulu ya!" />
-          <ChatBubble belloMessage="Tidak ketemu nih, Bello umumin ke pelapak yang tertarik dulu ya. Nanti Bello kabarin lagi deh, gimana?" />
-          <ChatBubble belloMessage="Siap! nanti Bello kabarin" />
+          <MessageBubble belloMessage="Dicari dulu ya!" />
+          <MessageBubble belloMessage="Tidak ketemu nih, Bello umumin ke pelapak yang tertarik dulu ya. Nanti Bello kabarin lagi deh, gimana?" />
+          <MessageBubble belloMessage="Siap! nanti Bello kabarin" />
           <ChatSectionHeading headingText={'21 Mei 2017'} />
-          <ChatBubble belloMessage="Bello Hendry! Ada 2 barang yang kemarin kamu cari nih. Cek yuk!" />
+          <MessageBubble belloMessage="Bello Hendry! Ada 2 barang yang kemarin kamu cari nih. Cek yuk!" />
           <ProductRecommendations toggleDetailModal={this.toggleDetailModal} products={requests} />
           <View style={{ height: 150, width: '100%' }}></View>
         </ScrollView>

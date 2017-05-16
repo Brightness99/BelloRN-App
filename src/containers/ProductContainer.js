@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 
-import ProductItem from '../components/ProductItem';
+import ProductItem from '../components/Product/Item';
 
 class ProductContainer extends React.Component {
   static renderRightButton = (props) => {
