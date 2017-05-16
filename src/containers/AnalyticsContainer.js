@@ -1,8 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 import SampleBarChart from '../components/SampleBarChart';
-import ProductItem from '../components/Product/Item';
 import MessageBubble from '../components/Chat/MessageBubble';
 import FooterActionButton from '../components/FooterActionButton';
 
