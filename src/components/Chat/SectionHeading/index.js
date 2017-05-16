@@ -5,7 +5,7 @@ import { Text, View } from 'react-native';
 
 import styles from './styles';
 
-const chatSectionHeading = ({ headingText }: { headingText: boolean }) => (
+const chatSectionHeading = ({ headingText }: { headingText: string }) => (
   <View style={styles.chatSectionHeading}>
     <Text style={styles.chatSectionText}>
       { headingText }

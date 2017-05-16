@@ -7,7 +7,7 @@ import styles from './styles';
 
 type Props = {
   toggleDetailModal: string,
-  name: number,
+  name: string,
   owner: string,
   price: string,
   image: string,

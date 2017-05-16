@@ -6,7 +6,7 @@ import { Text, View, Image } from 'react-native';
 import styles from './styles';
 import BelloWhiteLogo from '../../../images/bello-white-background.png';
 
-const MessageBubble = ({ belloMessage }: {belloMessage: String}) => (
+const MessageBubble = ({ belloMessage }: {belloMessage: string}) => (
   <View style={styles.chatBubbleContainer}>
     <View style={styles.chatAvatar}>
       <Image style={styles.chatAvatarImage} source={BelloWhiteLogo} />

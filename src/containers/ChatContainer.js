@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import { View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -42,7 +44,7 @@ class productContainer extends React.Component {
     </TouchableOpacity>
   );
 
-  constructor(props) {
+  constructor(props: Object) {
     super(props);
     this.state = {
       isDetailPopupActive: false,
@@ -52,6 +54,16 @@ class productContainer extends React.Component {
 
     this.toggleDetailModal = this.toggleDetailModal.bind(this);
   }
+
+  state: {
+    isDetailPopupActive: number,
+    products: Array<mixed>,
+    requests: Array<mixed>,
+  };
+
+  props: {};
+
+  toggleDetailModal: Function;
 
   toggleDetailModal() {
     this.setState({ isDetailPopupActive: !this.state.isDetailPopupActive });
