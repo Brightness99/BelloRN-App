@@ -1,18 +1,47 @@
 import React from 'react';
-import { StyleSheet, Dimensions, Text, View, Image, ScrollView, TouchableOpacity, TextInput } from 'react-native';
+import { View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import MessageBubble from '../components/Chat/MessageBubble';
 import ChatSearch from '../components/Chat/ChatSearch';
 import ChatSectionHeading from '../components/Chat/SectionHeading';
-import ChatActionBar from '../components/Chat/ActionBar';
 import ProductRecommendations from '../components/Product/Recommendations';
 import ProductDetailPopup from '../components/Product/DetailPopup';
 
 import cartIcon from '../images/shopping-cart.png';
 import data from '../../data/db.json';
 
+const styles = {
+  container: {
+    flex: 1,
+    backgroundColor: '#3498DB',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  chatList: {
+    flex: 1,
+    width: '100%',
+    padding: 0,
+    paddingTop: 70,
+    flexDirection: 'column',
+  },
+  chatSectionHeading: {
+    paddingLeft: 20,
+    paddingTop: 20,
+  },
+  chatSectionText: {
+    fontWeight: 'bold',
+    color: '#FFF',
+  },
+};
+
 class productContainer extends React.Component {
+  static renderRightButton = () => (
+    <TouchableOpacity onPress={Actions.cart}>
+      <Image source={cartIcon} style={{ width: 25, height: 25, marginTop: 0 }} />
+    </TouchableOpacity>
+  );
+
   constructor(props) {
     super(props);
     this.state = {
@@ -27,14 +56,6 @@ class productContainer extends React.Component {
   toggleDetailModal() {
     this.setState({ isDetailPopupActive: !this.state.isDetailPopupActive });
   }
-
-  static renderRightButton = (props) => {
-    return (
-      <TouchableOpacity onPress={Actions.cart}>
-        <Image source={cartIcon} style={{ width: 25, height: 25, marginTop: 0 }} />
-      </TouchableOpacity>
-    );
-  };
 
   render() {
     const { isDetailPopupActive, products, requests } = this.state;
@@ -56,38 +77,12 @@ class productContainer extends React.Component {
           <ChatSectionHeading headingText={'21 Mei 2017'} />
           <MessageBubble belloMessage="Bello Hendry! Ada 2 barang yang kemarin kamu cari nih. Cek yuk!" />
           <ProductRecommendations toggleDetailModal={this.toggleDetailModal} products={requests} />
-          <View style={{ height: 150, width: '100%' }}></View>
+          <View style={{ height: 150, width: '100%' }} />
         </ScrollView>
         { isDetailPopupActive && <ProductDetailPopup toggleDetailModal={this.toggleDetailModal} /> }
       </View>
     );
   }
 }
-
-const deviceWidth = Dimensions.get('window').width;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#3498DB',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  chatList: {
-    flex: 1,
-    width: '100%',
-    padding: 0,
-    paddingTop: 70,
-    flexDirection: 'column',
-  },
-  chatSectionHeading: {
-    paddingLeft: 20,
-    paddingTop: 20,
-  },
-  chatSectionText: {
-    fontWeight: 'bold',
-    color: '#FFF',
-  }
-});
 
 export default productContainer;
