@@ -1,9 +1,10 @@
+// @flow
 import React from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 
 import styles from './styles';
 
-const ProductMoreItem = ({ toggleDetailModal }) => (
+const ProductMoreItem = ({ toggleDetailModal }: {toggleDetailModal: Function}) => (
   <TouchableOpacity style={styles.productCard} onPress={toggleDetailModal} activeOpacity={0.8}>
     <View style={styles.productCardImage}>
       <Image
