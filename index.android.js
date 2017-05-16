@@ -6,3 +6,5 @@ import App from './src/App';
 const belloClientApp = () => (<App />);
 
 AppRegistry.registerComponent('belloClientApp', () => belloClientApp);
+
+export default belloClientApp;
