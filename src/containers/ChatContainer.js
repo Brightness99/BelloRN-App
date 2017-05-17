@@ -176,16 +176,14 @@ class productContainer extends React.Component {
 
   resetAction() {
     this.addChatMessage('Bello', 'Oke, ada lagi yang bisa Bello bantu?');
-    setTimeout(() => {
-      this.displayActionBar({
-        redLabel: 'Tidak ada',
-        redMethod: this.goBackHomeAction,
-        orangeLabel: 'Belanja',
-        orangeMethod: this.displaySearchAction,
-        greenLabel: 'Cari Promo',
-        greenMethod: () => {},
-      });
-    }, 1000);
+    this.displayActionBar({
+      redLabel: 'Tidak ada',
+      redMethod: this.goBackHomeAction,
+      orangeLabel: 'Belanja',
+      orangeMethod: this.displaySearchAction,
+      greenLabel: 'Cari Promo',
+      greenMethod: () => {},
+    });
   }
 
   cancelBuyingAction() {
@@ -244,6 +242,7 @@ class productContainer extends React.Component {
         isProductsFetching: false,
         isProductsLoaded: true,
       });
+      this.addChatMessage('Bello', `Pencarian selesai. Bello dapat 10 barang yang sesuai dengan ${this.state.searchKeyword}.`);
       this.displayActionBar({
         redLabel: 'Batal',
         redMethod: this.cancelBuyingAction,
@@ -287,9 +286,8 @@ class productContainer extends React.Component {
               handleSubmit={this.handleSearchSubmit}
               searchKeyword={searchKeyword}
             />) }
-          { isSearchingSubmitted && <MessageBubble sender="Bello" message="Ditunggu sebentar ya... Bello cari dulu!" time="12:30" /> }
+          { isSearchingSubmitted && !isProductsLoaded && <MessageBubble sender="Bello" message="Ditunggu sebentar ya... Bello cari dulu!" time="12:30" /> }
           { isProductsFetching && <Image source={BelloIcon} style={{ width: 100, height: 100, alignSelf: 'center', margin: 20 }} /> }
-          { isSearchingSubmitted && !isProductsFetching && <MessageBubble sender="Bello" message="Pencarian selesai. Bello dapat 10 barang nih!" time="12:30" /> }
           { isProductsLoaded && (
           <ProductRecommendations toggleDetailModal={this.toggleDetailModal} products={products} />
             ) }
