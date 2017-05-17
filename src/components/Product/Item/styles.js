@@ -1,7 +1,6 @@
 export default {
   productCard: {
-    margin: 0,
-    marginTop: 10,
+    margin: 10,
     backgroundColor: '#FFFFFF',
     borderRadius: 5,
     padding: 5,
@@ -10,7 +9,6 @@ export default {
     flex: 1,
     elevation: 3,
     flexDirection: 'row',
-    marginRight: 10,
   },
   productCardImage: {
     flex: 0.4,
