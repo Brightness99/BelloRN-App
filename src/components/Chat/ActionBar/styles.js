@@ -1,8 +1,8 @@
 export default {
   actionBar: {
     backgroundColor: '#FFFFFF',
-    borderTopColor: '#3498DB',
-    borderTopWidth: 5,
+    borderTopColor: 'rgba(0, 0, 0, 0.1)',
+    borderTopWidth: 1,
     padding: 10,
     width: '100%',
     flexDirection: 'row',
