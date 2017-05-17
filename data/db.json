@@ -4,21 +4,21 @@
       "id": 1,
       "name": "iPhone 10",
       "owner": "Smart Gadget Shoppe",
-      "price": "20,000,000",
+      "price": 20000000,
       "image": "https://s0.bukalapak.com/img/589340477/large/Kredit_iPhone_5s_16GB_dengan_Cicilan_Tanpa_Kartu_Kredit.jpg"
     },
     {
       "id": 2,
       "name": "iPhone 10",
       "owner": "Makmur Gadget",
-      "price": "22,000,000",
+      "price": 20000000,
       "image": "https://s4.bukalapak.com/img/99472042/large/Iphone.png"
     },
     {
       "id": 3,
       "name": "iPhone 10",
       "owner": "Keren Tron Tech",
-      "price": "25,000,000",
+      "price": 20000000,
       "image": "https://s3.bukalapak.com/img/305701933/large/Apple_iPhone_5_GOLD__32_GB__GSM_ORI_GARANSI_PLATINUM_TOP_1_T.png"
     }
   ],
@@ -27,14 +27,14 @@
       "id": 1,
       "name": "Keyboard Laptop Wireless",
       "owner": "Makmur Gadget",
-      "price": "2,000,000",
+      "price": 20000000,
       "image": "https://s0.bukalapak.com/img/055041563/medium/image20160822_135.jpg"
     },
     {
       "id": 2,
       "name": "Keyboard Laptop Wire",
       "owner": "Makmur Gadget",
-      "price": "2,500,000",
+      "price": 20000000,
       "image": "https://s0.bukalapak.com/img/096467426/s-194-194/36208486_099b62e6_d402_41e4_b41f_c88d438ffcd3.jpg"
     }
   ]

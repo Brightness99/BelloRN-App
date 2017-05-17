@@ -1,22 +1,4 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, TextInput } from 'react-native';
-
-import BelloWhiteLogo from '../../images/bello-white-background.png';
-
-const ChatBubble = props => (
-  <View style={styles.chatBubbleContainer}>
-    <View style={styles.chatAvatar}>
-      <Image style={styles.chatAvatarImage} source={BelloWhiteLogo} />
-    </View>
-    <View style={styles.chatBubble}>
-      <View style={styles.productCardContent}>
-        <Text style={styles.productDescription}>{props.belloMessage}</Text>
-      </View>
-    </View>
-  </View>
-);
-
-const styles = StyleSheet.create({
+export default {
   container: {
     flex: 1,
     backgroundColor: '#3498DB',
@@ -37,21 +19,29 @@ const styles = StyleSheet.create({
   },
   chatAvatar: {
     width: '20%',
-    height: 50,
-    paddingTop: 0,
+    height: 55,
+    paddingLeft: 0,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   },
   chatAvatarImage: {
-    borderRadius: 100,
+    flex: 1,
+    alignSelf: 'flex-start',
+    marginTop: 10,
     width: '100%',
     height: '100%',
     resizeMode: 'contain',
+  },
+  chatMessage: {
+    flexDirection: 'column',
+    width: '70%',
   },
   chatBubble: {
     marginTop: 0,
     backgroundColor: '#FFFFFF',
     borderRadius: 5,
     padding: 5,
-    width: '70%',
     elevation: 1,
     flexDirection: 'row',
   },
@@ -100,6 +90,18 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     elevation: 2,
   },
-});
-
-export default ChatBubble;
+  chatInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 5,
+    paddingBottom: 5,
+  },
+  senderName: {
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+  },
+  messageTime: {
+    color: '#F5F5F5',
+    fontSize: 12,
+  },
+};

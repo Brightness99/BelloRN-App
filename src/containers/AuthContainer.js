@@ -1,35 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import BelloLogo from '../images/bello.png';
-import bukalapakLogo from '../images/white_bukalapak.png'
+import bukalapakLogo from '../images/white_bukalapak.png';
 
-class AuthContainer extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.welcome}>
-          <Text style={styles.logo}>Bello</Text>
-          <Text style={styles.tagline}>Belanja Semudah Bilang Hello!</Text>
-          <Image source={BelloLogo} style={styles.belloImage} />
-          <TouchableOpacity onPress={Actions.home} style={styles.btn} activeOpacity={0.8}>
-            <Text style={styles.btnText}>Masuk</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={Actions.home} style={styles.btn} activeOpacity={0.8}>
-            <Text style={styles.btnText}>Daftar</Text>
-          </TouchableOpacity>
-          <View style={ styles.footerSponsor }>
-            <Text style={ styles.footerSponsorText }>Supported By</Text>
-            <Image source={bukalapakLogo} style={ styles.bukalapakLogo } />
-          </View>
-        </View>
-      </View>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
+const styles = {
   container: {
     flex: 1,
     backgroundColor: '#3498DB',
@@ -69,7 +45,7 @@ const styles = StyleSheet.create({
   btnText: {
     color: '#444',
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   footerSponsor: {
     height: '20%',
@@ -88,6 +64,34 @@ const styles = StyleSheet.create({
     height: 50,
     resizeMode: 'contain',
   },
-});
+};
+
+class AuthContainer extends React.Component {
+  componentDidMount() {
+    // do something about login sessions here!
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.welcome}>
+          <Text style={styles.logo}>Bello</Text>
+          <Text style={styles.tagline}>Belanja Semudah Bilang Hello!</Text>
+          <Image source={BelloLogo} style={styles.belloImage} />
+          <TouchableOpacity onPress={Actions.home} style={styles.btn} activeOpacity={0.8}>
+            <Text style={styles.btnText}>Masuk</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={Actions.home} style={styles.btn} activeOpacity={0.8}>
+            <Text style={styles.btnText}>Daftar</Text>
+          </TouchableOpacity>
+          <View style={styles.footerSponsor}>
+            <Text style={styles.footerSponsorText}>Supported By</Text>
+            <Image source={bukalapakLogo} style={styles.bukalapakLogo} />
+          </View>
+        </View>
+      </View>
+    );
+  }
+}
 
 export default AuthContainer;

@@ -1,36 +1,14 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+// @flow
 
-import ProductItem from '../components/ProductItem';
+import React from 'react';
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+
+import ProductItem from '../components/Product/Item';
 import FooterActionButton from '../components/FooterActionButton';
 
 import data from '../../data/db.json';
 
-class CartContainer extends React.Component {
-  static renderRightButton = (props) => {
-        return (
-            <TouchableOpacity onPress={() => console.log('onRightPressed')}>
-                <Text>Clear All</Text>
-            </TouchableOpacity>
-        );
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <ScrollView style={styles.productList}>
-          {data.products.concat(data.requests).map((product, i) => (
-            <ProductItem key={i} {...product} toggleDetailModal={() => console.log('s')} />
-          ))}
-          <View style={{ height: 150, width: '100%' }}></View>
-        </ScrollView>
-        <FooterActionButton text="CHECKOUT" />
-      </View>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
+const styles = {
   container: {
     flex: 1,
     backgroundColor: '#3498DB',
@@ -44,6 +22,28 @@ const styles = StyleSheet.create({
     paddingTop: 100,
     flexDirection: 'column',
   },
-});
+};
+
+class CartContainer extends React.Component {
+  static renderRightButton = () => (
+    <TouchableOpacity onPress={() => console.log('onRightPressed')}>
+      <Text>Clear All</Text>
+    </TouchableOpacity>
+  );
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <ScrollView style={styles.productList}>
+          {data.products.concat(data.requests).map((product, i) => (
+            <ProductItem key={i} {...product} toggleDetailModal={() => console.log('s')} />
+          ))}
+          <View style={{ height: 150, width: '100%' }} />
+        </ScrollView>
+        <FooterActionButton text="CHECKOUT" />
+      </View>
+    );
+  }
+}
 
 export default CartContainer;

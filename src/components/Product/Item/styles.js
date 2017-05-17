@@ -1,22 +1,4 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
-
-const ProductMoreItem = ({ toggleDetailModal }) => (
-  <TouchableOpacity style={styles.productCard} onPress={toggleDetailModal} activeOpacity={0.8}>
-    <View style={styles.productCardImage}>
-      <Image
-        source={{ uri: 'https://blog.bukalapak.com/wp-content/uploads/2016/05/logo-icon-baru.png' }}
-        style={styles.productImage}
-      />
-    </View>
-    <View style={styles.productCardContent}>
-      <Text style={styles.productDescription}> Gak Ketemu? </Text>
-      <Text style={styles.productPrice}> Cari Lebih Banyak</Text>
-    </View>
-  </TouchableOpacity>
-);
-
-const styles = StyleSheet.create({
+export default {
   productCard: {
     margin: 5,
     marginTop: 10,
@@ -61,6 +43,4 @@ const styles = StyleSheet.create({
   productDescription: {
     color: '#666666',
   },
-});
-
-export default ProductMoreItem;
+};

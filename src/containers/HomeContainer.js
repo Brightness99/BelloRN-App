@@ -1,6 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+
+import MessageBubble from '../components/Chat/MessageBubble';
 
 import cartIcon from '../images/shopping-cart.png';
 import notificationIcon from '../images/bell.png';
@@ -9,7 +11,73 @@ import buyIcon from '../images/shopping-bag.png';
 import analyticsIcon from '../images/bar-chart.png';
 import profileIcon from '../images/user.png';
 
+const styles = {
+  container: {
+    flex: 1,
+    backgroundColor: '#3498DB',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 30,
+    paddingTop: 100,
+  },
+  homeList: {
+    flex: 1,
+    width: '100%',
+    height: '50%',
+    padding: 0,
+    flexDirection: 'row',
+  },
+  homeCard: {
+    margin: 10,
+    width: '45%',
+    height: '80%',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    paddingLeft: 5,
+    paddingRight: 5,
+    flex: 1,
+    elevation: 3,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  homeCardContent: {
+    flex: 1,
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  homeIcon: {
+    width: '50%',
+    height: '50%',
+    resizeMode: 'contain',
+    margin: 5,
+  },
+  homeTitle: {
+    fontWeight: 'bold',
+    fontSize: 12,
+    textAlign: 'center',
+    color: '#555',
+  },
+  homePrice: {
+    fontWeight: 'bold',
+    fontSize: 14,
+    color: '#EB9532',
+  },
+  homeSeller: {
+    fontSize: 14,
+    color: '#26A65B',
+  },
+  homeDescription: {
+    color: '#666666',
+  },
+};
+
 class HomeContainer extends React.Component {
+  componentDidMount() {
+    // do something about sessions here!
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -59,65 +127,5 @@ class HomeContainer extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#3498DB',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 30,
-    paddingTop: 100,
-  },
-  homeList: {
-    flex: 1,
-    width: '100%',
-    height: '50%',
-    padding: 0,
-    flexDirection: 'row',
-  },
-  homeCard: {
-    margin: 10,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 100,
-    paddingLeft: 5,
-    paddingRight: 5,
-    flex: 1,
-    elevation: 3,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  homeCardContent: {
-    flex: 1,
-    padding: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  homeIcon: {
-    width: '50%',
-    height: '50%',
-    resizeMode: 'contain',
-    margin: 5,
-  },
-  homeTitle: {
-    fontWeight: 'bold',
-    fontSize: 12,
-    textAlign: 'center',
-    color: '#555',
-  },
-  homePrice: {
-    fontWeight: 'bold',
-    fontSize: 14,
-    color: '#EB9532',
-  },
-  homeSeller: {
-    fontSize: 14,
-    color: '#26A65B',
-  },
-  homeDescription: {
-    color: '#666666',
-  },
-});
 
 export default HomeContainer;
