@@ -37,6 +37,7 @@ class productContainer extends React.Component {
       isDetailPopupActive: false,
       products: data.products,
       selectedProduct: { id: 0, name: '', owner: '', price: 0, image: '' },
+      selectedProductIndexCursor: 0,
       requests: data.requests,
       chats: [],
       isSearching: true,
@@ -69,6 +70,7 @@ class productContainer extends React.Component {
 
     // Product Recommendations methods
     this.toggleDetailModal = this.toggleDetailModal.bind(this);
+    this.setSelectedProductCursor = this.setSelectedProductCursor.bind(this);
   }
 
   // static state StateTypes
@@ -76,6 +78,7 @@ class productContainer extends React.Component {
     isDetailPopupActive: boolean,
     products: ProductsType,
     selectedProduct: ProductType,
+    selectedProductIndexCursor: number,
     requests: ProductsType,
     chats: ChatsType,
     isSearching: boolean,
@@ -106,6 +109,7 @@ class productContainer extends React.Component {
   addProductRequestReminder: Function;
   showProductRecommendations: Function;
   toggleDetailModal: Function;
+  setSelectedProductCursor: Function;
 
   scrollViewComponent: ReactElement;
   props: {};
@@ -237,7 +241,7 @@ class productContainer extends React.Component {
     }, 3000);
   }
 
-  toggleDetailModal(product: ProductType) {
+  toggleDetailModal(product: ProductType, indexCursor: number) {
     const { isDetailPopupActive } = this.state;
     this.setState({ isDetailPopupActive: !isDetailPopupActive });
     if (isDetailPopupActive) {
@@ -248,13 +252,32 @@ class productContainer extends React.Component {
         orangeMethod: this.displaySearchAction,
       });
     } else {
-      this.setState({ selectedProduct: product });
+      this.setState({
+        selectedProduct: product,
+        selectedProductIndexCursor: indexCursor,
+      });
       this.displayActionBar({
         orangeLabel: 'Tambah ke Wishlist',
         orangeMethod: () => {},
         greenLabel: 'Beli',
         greenMethod: () => {},
       });
+    }
+  }
+
+  setSelectedProductCursor(direction: string) {
+    const currentProductCursor = this.state.selectedProductIndexCursor;
+    const cursorMovement = direction === 'next' ? 1 : -1;
+    let selectedProduct = this.state.products[currentProductCursor + cursorMovement];
+    if (selectedProduct) { // if selectedProduct is undefined (is outside of array)
+      // change cursor position
+      this.setState({
+        selectedProductIndexCursor: this.state.selectedProductIndexCursor + cursorMovement,
+        selectedProduct,
+      });
+    } else {
+      // do not change selected product to state or change cursor
+      selectedProduct = this.state.selectedProduct;
     }
   }
 
@@ -308,13 +331,17 @@ class productContainer extends React.Component {
           { isSearchingSubmitted && !isProductsLoaded && <MessageBubble sender="Bello" message="Ditunggu sebentar ya... Bello cari dulu!" time={moment().format('DD-MM-YYYY HH:mm')} /> }
           { isProductsFetching && <Image source={BelloIcon} style={{ width: 100, height: 100, alignSelf: 'center', margin: 20 }} /> }
           { isProductsLoaded && (
-          <ProductRecommendations toggleDetailModal={this.toggleDetailModal} products={products} />
-            ) }
+          <ProductRecommendations
+            toggleDetailModal={this.toggleDetailModal}
+            products={products}
+          />) }
           <View style={{ height: 150, width: '100%' }} />
         </ScrollView>
         { isDetailPopupActive && (
           <ProductDetailPopup
             toggleDetailModal={this.toggleDetailModal}
+            productCursorPrev={() => this.setSelectedProductCursor('prev')}
+            productCursorNext={() => this.setSelectedProductCursor('next')}
             product={selectedProduct}
           />) }
         { isActionBarVisible && <ActionBar {...actionBarMenu} /> }

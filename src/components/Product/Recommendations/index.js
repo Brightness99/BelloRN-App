@@ -18,9 +18,9 @@ const ProductRecommendations = ({ toggleDetailModal, products }: PropTypes) => (
   <View>
     <ChatSectionHeading headingText={'Rekomendasi Produk: iPhone 10'} />
     <ScrollView horizontal style={styles.productRecommendations}>
-      {products.map(product => (
+      {products.map((product, index) => (
         <View key={product.id} style={styles.productRecWrapper}>
-          <ProductItem toggleDetailModal={() => toggleDetailModal(product)} {...product} />
+          <ProductItem toggleDetailModal={() => toggleDetailModal(product, index)} {...product} />
         </View>
       ))}
       <View style={styles.productRecWrapperMore}>

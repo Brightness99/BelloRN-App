@@ -8,7 +8,24 @@ import ReviewItem from '../ReviewItem';
 import GreyButton from '../../Core/GreyButton';
 import type { ProductType } from '../../../types';
 
-const ProductDetailPopup = ({ toggleDetailModal, product }: {toggleDetailModal: Function, product: ProductType}) => (
+// const PropTypes = {
+//   toggleDetailModal: Function,
+//   productCursorPrev: Function,
+//   productCursorNext: Function,
+//   product: ProductsType,
+// };
+
+const ProductDetailPopup = ({
+  toggleDetailModal,
+  productCursorPrev,
+  productCursorNext,
+  product,
+}: {
+  toggleDetailModal: Function,
+  productCursorPrev: Function,
+  productCursorNext: Function,
+  product: ProductType,
+}) => (
   <View style={styles.popupOverlay}>
     <View style={styles.popupModal}>
       <TouchableOpacity style={styles.closeBtn} activeOpacity={0.8} onPress={toggleDetailModal}>
@@ -27,8 +44,8 @@ const ProductDetailPopup = ({ toggleDetailModal, product }: {toggleDetailModal: 
         ))}
       </ScrollView>
       <View style={styles.btnWrapper}>
-        <GreyButton label="<< Sebelumnya" handleClick={() => {}} />
-        <GreyButton label="Selanjutnya >>" handleClick={() => {}} />
+        <GreyButton label="<< Sebelumnya" handleClick={productCursorPrev} />
+        <GreyButton label="Selanjutnya >>" handleClick={productCursorNext} />
       </View>
     </View>
   </View>
