@@ -111,7 +111,7 @@ class productContainer extends React.Component {
   toggleDetailModal: Function;
   setSelectedProductCursor: Function;
 
-  scrollViewComponent: ReactElement;
+  scrollViewComponent: ReactElement<any>;
   props: {};
 
   // Chat methods
