@@ -1,7 +1,7 @@
 // @flow
-
 import React from 'react';
 import { Text, View, Image } from 'react-native';
+import moment from 'moment';
 
 import styles from './styles';
 import BelloWhiteLogo from '../../../images/bello-white-background.png';
@@ -19,7 +19,7 @@ const MessageBubble = ({ id = 0, sender, message, time }: ChatType) => (
     <View style={styles.chatMessage}>
       <View style={styles.chatInfo}>
         <Text style={styles.senderName}>{ sender }</Text>
-        <Text style={styles.messageTime}>{ time }</Text>
+        <Text style={styles.messageTime}>{ time.substring(11, 16) }</Text>
       </View>
       <View style={styles.chatBubble}>
         <View style={styles.productCardContent}>

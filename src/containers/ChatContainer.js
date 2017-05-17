@@ -2,6 +2,7 @@
 import React from 'react';
 import { View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import moment from 'moment';
 
 // Chat Components
 import MessageBubble from '../components/Chat/MessageBubble';
@@ -58,9 +59,7 @@ class productContainer extends React.Component {
       isDetailPopupActive: false,
       products: data.products,
       requests: data.requests,
-      chats: [
-        { id: 1, sender: 'Bello', message: 'Bello bos! Mau beli apa?', time: '12:30' },
-      ],
+      chats: [],
       isSearching: true,
       isSearchingSubmitted: false,
       searchKeyword: '',
@@ -108,6 +107,10 @@ class productContainer extends React.Component {
     actionBarMenu: Object,
   };
 
+  componentDidMount() {
+    this.addChatMessage('Bello', 'Bello! Mau beli apa hari ini?');
+  }
+
   // static functions StateTypes
   addChatMessage: Function;
   displayActionBar: Function;
@@ -129,8 +132,8 @@ class productContainer extends React.Component {
   addChatMessage(sender: string, message: string) {
     const { chats } = this.state;
     const chatsId = chats.map(chat => chat.id);
-    const newChatId = chatsId[chatsId.length - 1] + 1;
-    const newChat = { id: newChatId, sender, message, time: '12:30' };
+    const newChatId = chats.length === 0 ? 1 : chatsId[chatsId.length - 1] + 1;
+    const newChat = { id: newChatId, sender, message, time: moment().format('DD-MM-YYYY HH:mm') };
     const newChats = [...chats, newChat];
     this.setState({ chats: newChats });
   }
@@ -278,15 +281,31 @@ class productContainer extends React.Component {
           ref={(thisComponent) => { this.scrollViewComponent = thisComponent; }}
           onContentSizeChange={() => { this.scrollViewComponent.scrollToEnd({ animated: false }); }}
         >
-          <ChatSectionHeading headingText={'21 Mei 2017'} />
-          { chats.map(chat => (<MessageBubble key={chat.id} {...chat} />))}
+
+          { chats.map((chat, index, chatsArr) => {
+            const chatDate = moment(chat.time, 'DD-MM-YYYY HH:ss').format('DD MMM YYYY');
+            const chatYesterdayDate = index === 0 ? '' : moment(chatsArr[index - 1].time, 'DD-MM-YYYY HH:ss').format('DD MMM YYYY');
+            if (chatDate !== chatYesterdayDate) {
+              return (
+                <View key={chat.id}>
+                  <ChatSectionHeading headingText={chatDate} />
+                  <MessageBubble {...chat} />
+                </View>
+              )
+            }
+            return (
+              <View key={chat.id}>
+                <MessageBubble {...chat} />
+              </View>
+            );
+          })}
           { isSearching && !isSearchingSubmitted && (
             <ChatSearch
               handleChange={this.setSearchKeyword}
               handleSubmit={this.handleSearchSubmit}
               searchKeyword={searchKeyword}
             />) }
-          { isSearchingSubmitted && !isProductsLoaded && <MessageBubble sender="Bello" message="Ditunggu sebentar ya... Bello cari dulu!" time="12:30" /> }
+          { isSearchingSubmitted && !isProductsLoaded && <MessageBubble sender="Bello" message="Ditunggu sebentar ya... Bello cari dulu!" time={moment().format('DD-MM-YYYY HH:mm')} /> }
           { isProductsFetching && <Image source={BelloIcon} style={{ width: 100, height: 100, alignSelf: 'center', margin: 20 }} /> }
           { isProductsLoaded && (
           <ProductRecommendations toggleDetailModal={this.toggleDetailModal} products={products} />
