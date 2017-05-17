@@ -77,6 +77,7 @@ class productContainer extends React.Component {
     this.setSearchKeyword = this.setSearchKeyword.bind(this);
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
     this.addChatMessage = this.addChatMessage.bind(this);
+    this.addProductRequestReminder = this.addProductRequestReminder.bind(this);
     this.showProductRecommendations = this.showProductRecommendations.bind(this);
 
     // ActionBar methods
@@ -86,6 +87,7 @@ class productContainer extends React.Component {
     this.resetAction = this.resetAction.bind(this);
     this.cancelBuyingAction = this.cancelBuyingAction.bind(this);
     this.productNotFoundAction = this.productNotFoundAction.bind(this);
+    this.productRequestConfAction = this.productRequestConfAction.bind(this);
 
     // Product Recommendations methods
     this.toggleDetailModal = this.toggleDetailModal.bind(this);
@@ -114,8 +116,11 @@ class productContainer extends React.Component {
   displaySearchAction: Function;
   cancelBuyingAction: Function;
   productNotFoundAction: Function;
+  productRequestConfAction: Function;
+
   setSearchKeyword: Function;
   handleSearchSubmit: Function;
+  addProductRequestReminder: Function;
   showProductRecommendations: Function;
   toggleDetailModal: Function;
   props: {};
@@ -201,29 +206,35 @@ class productContainer extends React.Component {
         orangeMethod: this.resetAction,
       });
     }, 1000);
-    // setTimeout(() => {
-    //   this.addChatMessage('Bello', 'Oke! Ada lagi yang bisa Bello bantu?');
-    //   this.displayActionBar({
-    //     redLabel: 'Tidak ada',
-    //     redMethod: this.goBackHomeAction,
-    //     orangeLabel: 'Belanja',
-    //     orangeMethod: this.displaySearchAction,
-    //     greenLabel: 'Cari Promo',
-    //     greenMethod: () => {},
-    //   });
-    // }, 1000);
   }
 
   productNotFoundAction() {
     this.addChatMessage('Bello', 'Kenapa tidak ada barang yang cocok?');
     this.displayActionBar({
       redLabel: 'Harga mahal',
-      redMethod: this.resetAction,
+      redMethod: this.productRequestConfAction,
       orangeLabel: 'Beda Barang',
-      orangeMethod: this.resetAction,
+      orangeMethod: this.productRequestConfAction,
       greenLabel: 'Lainnya',
-      greenMethod: this.resetAction,
+      greenMethod: this.productRequestConfAction,
     });
+  }
+
+  productRequestConfAction() {
+    this.addChatMessage('Bello', 'Oh begitu... kalau ada barang baru yang lebih murah atau lebih cocok, mau Bello reminder tidak?');
+    this.displayActionBar({
+      redLabel: 'Tidak',
+      redMethod: this.resetAction,
+      greenLabel: 'Boleh',
+      greenMethod: this.addProductRequestReminder,
+    });
+  }
+
+  addProductRequestReminder() {
+    const { searchKeyword } = this.state;
+    // do something with searchKeyword here, save to DB!
+    this.addChatMessage('Bello', `Siap, nanti Bello kabarin kalau ada ${searchKeyword} yang baru dan sesuai dengan keinginan ya! Kalau mau membatalkan, kamu bisa masuk ke pengaturan untuk menghapus reminder request.`);
+    setTimeout(this.resetAction, 1000);
   }
 
   // Product Recommendations methods
