@@ -14,7 +14,7 @@ export default {
   popupModal: {
     backgroundColor: '#FFFFFF',
     width: '100%',
-    height: '100%',
+    height: '86%',
     padding: 5,
     borderRadius: 8,
     flexDirection: 'column',
@@ -23,7 +23,7 @@ export default {
   productImage: {
     margin: 10,
     width: '100%',
-    height: '35%',
+    height: '25%',
     resizeMode: 'contain',
   },
 

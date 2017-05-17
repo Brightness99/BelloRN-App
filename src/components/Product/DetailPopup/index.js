@@ -5,7 +5,7 @@ import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import ReviewItem from '../ReviewItem';
 
-import GreenButton from '../../Core/GreenButton';
+import GreyButton from '../../Core/GreyButton';
 import OrangeButton from '../../Core/OrangeButton';
 
 const ProductDetailPopup = ({ toggleDetailModal }: {toggleDetailModal: Function}) => (
@@ -27,8 +27,8 @@ const ProductDetailPopup = ({ toggleDetailModal }: {toggleDetailModal: Function}
         ))}
       </ScrollView>
       <View style={styles.btnWrapper}>
-        <GreenButton label="Beli" handleClick={() => {}} />
-        <OrangeButton label="Tambah ke Wishlist" handleClick={() => {}} />
+        <GreyButton label="<< Sebelumnya" handleClick={() => {}} />
+        <GreyButton label="Selanjutnya >>" handleClick={() => {}} />
       </View>
     </View>
   </View>

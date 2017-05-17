@@ -58,6 +58,7 @@ class productContainer extends React.Component {
     this.state = {
       isDetailPopupActive: false,
       products: data.products,
+      selectedProductId: 0,
       requests: data.requests,
       chats: [],
       isSearching: true,
@@ -256,7 +257,23 @@ class productContainer extends React.Component {
   }
 
   toggleDetailModal() {
-    this.setState({ isDetailPopupActive: !this.state.isDetailPopupActive });
+    const { isDetailPopupActive } = this.state;
+    this.setState({ isDetailPopupActive: !isDetailPopupActive });
+    if (isDetailPopupActive) {
+      this.displayActionBar({
+        redLabel: 'Batal',
+        redMethod: this.cancelBuyingAction,
+        orangeLabel: 'Cari yang lain',
+        orangeMethod: this.displaySearchAction,
+      });
+    } else {
+      this.displayActionBar({
+        orangeLabel: 'Tambah ke Wishlist',
+        orangeMethod: () => {},
+        greenLabel: 'Beli',
+        greenMethod: () => {},
+      });
+    }
   }
 
   render() {
@@ -291,7 +308,7 @@ class productContainer extends React.Component {
                   <ChatSectionHeading headingText={chatDate} />
                   <MessageBubble {...chat} />
                 </View>
-              )
+              );
             }
             return (
               <View key={chat.id}>

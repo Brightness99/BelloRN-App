@@ -7,7 +7,7 @@ import type { ButtonPropTypes } from '../../types';
 const styles = {
   button: {
     flex: 1,
-    backgroundColor: '#EB9532',
+    backgroundColor: '#353535',
     padding: 10,
     margin: 3,
     borderRadius: 4,
@@ -19,10 +19,10 @@ const styles = {
   },
 };
 
-const OrangeButton = ({ label, handleClick }: ButtonPropTypes) => (
+const GreyButton = ({ label, handleClick }: ButtonPropTypes) => (
   <TouchableOpacity style={styles.button} activeOpacity={0.9} onPress={handleClick}>
     <Text style={styles.btnText}>{ label }</Text>
   </TouchableOpacity>
 );
 
-export default OrangeButton;
+export default GreyButton;

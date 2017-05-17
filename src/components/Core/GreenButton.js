@@ -20,7 +20,7 @@ const styles = {
 };
 
 const GreenButton = ({ label, handleClick }: ButtonPropTypes) => (
-  <TouchableOpacity style={styles.button} activeOpacity={1} onPress={handleClick}>
+  <TouchableOpacity style={styles.button} activeOpacity={0.9} onPress={handleClick}>
     <Text style={styles.btnText}>{ label }</Text>
   </TouchableOpacity>
 );
