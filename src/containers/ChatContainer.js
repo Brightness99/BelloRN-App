@@ -76,6 +76,7 @@ class productContainer extends React.Component {
     this.displayActionBar = this.displayActionBar.bind(this);
 
     // ActionBar methods
+    this.displaySearchAction = this.displaySearchAction.bind(this);
     this.cancelBuyingAction = this.cancelBuyingAction.bind(this);
 
     this.toggleDetailModal = this.toggleDetailModal.bind(this);
@@ -99,7 +100,9 @@ class productContainer extends React.Component {
   handleSearchSubmit: Function;
   addChatMessage: Function;
   showProductRecommendations: Function;
+
   displayActionBar: Function;
+  displaySearchAction: Function;
   cancelBuyingAction: Function;
   toggleDetailModal: Function;
   props: {};
@@ -132,7 +135,6 @@ class productContainer extends React.Component {
   }
 
   showProductRecommendations() {
-    const self = this;
     setTimeout(() => {
       this.setState({
         isProductsFetching: false,
@@ -140,18 +142,26 @@ class productContainer extends React.Component {
       });
       this.displayActionBar({
         redLabel: 'Batal',
-        redMethod: self.cancelBuyingAction,
+        redMethod: this.cancelBuyingAction,
         orangeLabel: 'Cari yang lain',
-        orangeMethod: () => {},
+        orangeMethod: this.displaySearchAction,
       });
     }, 3000);
   }
 
+  // User Chat Actions
   displayActionBar(buttons: Object) {
     this.setState({
       isActionBarVisible: true,
       actionBarMenu: buttons,
     });
+  }
+
+  displaySearchAction() {
+    this.setState({
+      isSearching: true,
+    });
+    this.addChatMessage('Bello', 'Mau cari barang apa?');
   }
 
   cancelBuyingAction() {
@@ -169,7 +179,7 @@ class productContainer extends React.Component {
         redLabel: 'Tidak ada',
         redMethod: () => {},
         orangeLabel: 'Belanja',
-        orangeMethod: () => {},
+        orangeMethod: this.displaySearchAction,
         greenLabel: 'Cari Promo',
         greenMethod: () => {},
       });
