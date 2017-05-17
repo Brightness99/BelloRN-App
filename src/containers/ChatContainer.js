@@ -22,29 +22,7 @@ import cartIcon from '../images/shopping-cart.png';
 import BelloIcon from '../images/bello.png';
 import data from '../../data/db.json';
 
-const styles = {
-  container: {
-    flex: 1,
-    backgroundColor: '#3498DB',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  chatList: {
-    flex: 1,
-    width: '100%',
-    padding: 0,
-    paddingTop: 70,
-    flexDirection: 'column',
-  },
-  chatSectionHeading: {
-    paddingLeft: 20,
-    paddingTop: 20,
-  },
-  chatSectionText: {
-    fontWeight: 'bold',
-    color: '#FFF',
-  },
-};
+import styles from './chatContainer.styles';
 
 class productContainer extends React.Component {
   static renderRightButton = () => (
@@ -58,7 +36,7 @@ class productContainer extends React.Component {
     this.state = {
       isDetailPopupActive: false,
       products: data.products,
-      selectedProduct: {},
+      selectedProduct: { id: 0, name: '', owner: '', price: 0, image: '' },
       requests: data.requests,
       chats: [],
       isSearching: true,
@@ -128,6 +106,8 @@ class productContainer extends React.Component {
   addProductRequestReminder: Function;
   showProductRecommendations: Function;
   toggleDetailModal: Function;
+
+  scrollViewComponent: ReactElement;
   props: {};
 
   // Chat methods
@@ -257,7 +237,7 @@ class productContainer extends React.Component {
     }, 3000);
   }
 
-  toggleDetailModal(product) {
+  toggleDetailModal(product: ProductType) {
     const { isDetailPopupActive } = this.state;
     this.setState({ isDetailPopupActive: !isDetailPopupActive });
     if (isDetailPopupActive) {
@@ -268,7 +248,7 @@ class productContainer extends React.Component {
         orangeMethod: this.displaySearchAction,
       });
     } else {
-      this.setState({ selectedProduct: product })
+      this.setState({ selectedProduct: product });
       this.displayActionBar({
         orangeLabel: 'Tambah ke Wishlist',
         orangeMethod: () => {},

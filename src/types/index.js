@@ -16,7 +16,7 @@ export type ChatType = {
   time: string,
 };
 
-export type ChatsType = [ ChatType ];
+export type ChatsType = [ ChatType ] | [];
 
 export type ButtonPropTypes = {
   label: string,
