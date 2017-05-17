@@ -9,6 +9,7 @@ import ChatSearch from '../components/Chat/ChatSearch';
 import ChatSectionHeading from '../components/Chat/SectionHeading';
 import ProductRecommendations from '../components/Product/Recommendations';
 import ProductDetailPopup from '../components/Product/DetailPopup';
+import ActionBar from '../components/Chat/ActionBar';
 
 import cartIcon from '../images/shopping-cart.png';
 import BelloIcon from '../images/bello.png';
@@ -60,12 +61,22 @@ class productContainer extends React.Component {
       searchKeyword: '',
       isProductsFetching: false,
       isProductsLoaded: false,
+      isActionBarVisible: false,
+      actionBarMenu: {
+        redLabel: 'Batal',
+        orangeLabel: 'Cari yang lain',
+        greenLabel: '',
+      },
     };
 
     this.setSearchKeyword = this.setSearchKeyword.bind(this);
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
     this.addChatMessage = this.addChatMessage.bind(this);
     this.showProductRecommendations = this.showProductRecommendations.bind(this);
+    this.displayActionBar = this.displayActionBar.bind(this);
+
+    // ActionBar methods
+    this.cancelBuyingAction = this.cancelBuyingAction.bind(this);
 
     this.toggleDetailModal = this.toggleDetailModal.bind(this);
   }
@@ -80,12 +91,16 @@ class productContainer extends React.Component {
     searchKeyword: string,
     isProductsFetching: boolean,
     isProductsLoaded: boolean,
+    isActionBarVisible: boolean,
+    actionBarMenu: Object,
   };
 
   setSearchKeyword: Function;
   handleSearchSubmit: Function;
   addChatMessage: Function;
   showProductRecommendations: Function;
+  displayActionBar: Function;
+  cancelBuyingAction: Function;
   toggleDetailModal: Function;
   props: {};
 
@@ -98,7 +113,7 @@ class productContainer extends React.Component {
   }
 
   handleSearchSubmit() {
-    this.addChatMessage(`Saya mau cari ${this.state.searchKeyword}`);
+    this.addChatMessage('Me', `Saya mau cari ${this.state.searchKeyword}`);
     this.setState({
       isSearchingSubmitted: true,
       searchKeyword: '',
@@ -107,17 +122,58 @@ class productContainer extends React.Component {
     setTimeout(this.showProductRecommendations, 3000);
   }
 
-  addChatMessage(message: string) {
-    const newChat = { id: 2, sender: 'Me', message, time: '12:30' };
-    const newChats = [...this.state.chats, newChat];
+  addChatMessage(sender: string, message: string) {
+    const { chats } = this.state;
+    const chatsId = chats.map(chat => chat.id);
+    const newChatId = chatsId[chatsId.length - 1] + 1;
+    const newChat = { id: newChatId, sender, message, time: '12:30' };
+    const newChats = [...chats, newChat];
     this.setState({ chats: newChats });
   }
 
   showProductRecommendations() {
+    const self = this;
+    setTimeout(() => {
+      this.setState({
+        isProductsFetching: false,
+        isProductsLoaded: true,
+      });
+      this.displayActionBar({
+        redLabel: 'Batal',
+        redMethod: self.cancelBuyingAction,
+        orangeLabel: 'Cari yang lain',
+        orangeMethod: () => {},
+      });
+    }, 3000);
+  }
+
+  displayActionBar(buttons: Object) {
     this.setState({
-      isProductsFetching: false,
-      isProductsLoaded: true,
+      isActionBarVisible: true,
+      actionBarMenu: buttons,
     });
+  }
+
+  cancelBuyingAction() {
+    this.setState({
+      isActionBarVisible: false,
+      isProductsFetching: false,
+      isProductsLoaded: false,
+      isSearching: false,
+      isSearchingSubmitted: false,
+    });
+    this.addChatMessage('Me', 'Batalin dulu ya Bello!');
+    setTimeout(() => {
+      this.addChatMessage('Bello', 'Oke! Ada lagi yang bisa Bello bantu?');
+      this.displayActionBar({
+        redLabel: 'Tidak ada',
+        redMethod: () => {},
+        orangeLabel: 'Belanja',
+        orangeMethod: () => {},
+        greenLabel: 'Cari Promo',
+        greenMethod: () => {},
+      });
+    }, 1000);
   }
 
   render() {
@@ -131,6 +187,8 @@ class productContainer extends React.Component {
       searchKeyword,
       isProductsFetching,
       isProductsLoaded,
+      isActionBarVisible,
+      actionBarMenu,
     } = this.state;
     return (
       <View style={styles.container}>
@@ -172,6 +230,7 @@ class productContainer extends React.Component {
           <View style={{ height: 150, width: '100%' }} />
         </ScrollView>
         { isDetailPopupActive && <ProductDetailPopup toggleDetailModal={this.toggleDetailModal} /> }
+        { isActionBarVisible && <ActionBar {...actionBarMenu} /> }
       </View>
     );
   }

@@ -1,17 +1,33 @@
 // @flow
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 
 import styles from './styles';
+import GreenButton from '../../Core/GreenButton';
+import OrangeButton from '../../Core/OrangeButton';
+import RedButton from '../../Core/RedButton';
 
-const ChatActionBar = () => (
+type PropTypes = {
+  redLabel: string,
+  redMethod: Function,
+  orangeLabel: string,
+  orangeMethod: Function,
+  greenLabel: string,
+  greenMethod: Function,
+};
+
+const ChatActionBar = ({
+  redLabel,
+  redMethod = () => {},
+  orangeLabel,
+  orangeMethod = () => {},
+  greenLabel,
+  greenMethod = () => {},
+}: PropTypes) => (
   <View style={styles.actionBar}>
-    <TouchableOpacity style={styles.btnGreen} activeOpacity={0.8}>
-      <Text style={styles.btnText}>OKE, KABARIN YA!</Text>
-    </TouchableOpacity>
-    <TouchableOpacity style={styles.btnRed} activeOpacity={0.8}>
-      <Text style={styles.btnText}>BATAL</Text>
-    </TouchableOpacity>
+    { redLabel && <RedButton label={redLabel} handleClick={redMethod} /> }
+    { orangeLabel && <OrangeButton label={orangeLabel} handleClick={orangeMethod} /> }
+    { greenLabel && <GreenButton label={greenLabel} handleClick={greenMethod} /> }
   </View>
 );
 
