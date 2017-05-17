@@ -25,6 +25,7 @@ import data from '../../data/db.json';
 import styles from './chatContainer.styles';
 
 class productContainer extends React.Component {
+  // Header right icon
   static renderRightButton = () => (
     <TouchableOpacity onPress={Actions.cart}>
       <Image source={cartIcon} style={{ width: 25, height: 25, marginTop: 0 }} />
@@ -53,11 +54,12 @@ class productContainer extends React.Component {
       },
     };
 
+    // Chat methods
     this.setSearchKeyword = this.setSearchKeyword.bind(this);
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
     this.addChatMessage = this.addChatMessage.bind(this);
     this.addProductRequestReminder = this.addProductRequestReminder.bind(this);
-    this.showProductRecommendations = this.showProductRecommendations.bind(this);
+    this.displayProductRecommendations = this.displayProductRecommendations.bind(this);
 
     // ActionBar methods
     this.displayActionBar = this.displayActionBar.bind(this);
@@ -91,6 +93,7 @@ class productContainer extends React.Component {
   };
 
   componentDidMount() {
+    // initial greet message
     this.addChatMessage('Bello', 'Bello! Mau beli apa hari ini?');
   }
 
@@ -107,14 +110,14 @@ class productContainer extends React.Component {
   setSearchKeyword: Function;
   handleSearchSubmit: Function;
   addProductRequestReminder: Function;
-  showProductRecommendations: Function;
+  displayProductRecommendations: Function;
   toggleDetailModal: Function;
   setSelectedProductCursor: Function;
 
   scrollViewComponent: ReactElement<any>;
   props: {};
 
-  // Chat methods
+  // Add New Chat Message to Local State
   addChatMessage(sender: string, message: string) {
     const { chats } = this.state;
     const chatsId = chats.map(chat => chat.id);
@@ -129,16 +132,17 @@ class productContainer extends React.Component {
     this.setState({ searchKeyword });
   }
 
+  // Submit Search Form and Start Displaying Recommended Products
   handleSearchSubmit() {
     this.addChatMessage('Me', `Saya mau cari ${this.state.searchKeyword}`);
     this.setState({
       isSearchingSubmitted: true,
       isProductsFetching: true,
     });
-    setTimeout(this.showProductRecommendations, 3000);
+    setTimeout(this.displayProductRecommendations, 3000);
   }
 
-  // User Chat Actions
+  // Display User Action Bar (Footer)
   displayActionBar(buttons: Object) {
     this.setState({
       isActionBarVisible: true,
@@ -146,6 +150,7 @@ class productContainer extends React.Component {
     });
   }
 
+  // Display User Product Search Box
   displaySearchAction() {
     this.setState({
       searchKeyword: '',
@@ -158,11 +163,13 @@ class productContainer extends React.Component {
     this.addChatMessage('Bello', 'Mau cari barang apa?');
   }
 
+  // Navigate to Home Scene
   goBackHomeAction() {
     this.addChatMessage('Bello', 'Oke. Have a nice day!');
     setTimeout(Actions.pop, 1000);
   }
 
+  // Revert to initial user action
   resetAction() {
     this.addChatMessage('Bello', 'Oke, ada lagi yang bisa Bello bantu?');
     this.displayActionBar({
@@ -175,6 +182,7 @@ class productContainer extends React.Component {
     });
   }
 
+  // Cancel user's buying action to trigger cancellation reasons
   cancelBuyingAction() {
     this.setState({
       isActionBarVisible: false,
@@ -195,6 +203,7 @@ class productContainer extends React.Component {
     }, 1000);
   }
 
+  // User Pick a buying cancellation reason
   productNotFoundAction() {
     this.addChatMessage('Bello', 'Kenapa tidak ada barang yang cocok?');
     this.displayActionBar({
@@ -207,6 +216,7 @@ class productContainer extends React.Component {
     });
   }
 
+  // Asks User to decide to add a product reminder request or not
   productRequestConfAction() {
     this.addChatMessage('Bello', 'Oh begitu... kalau ada barang baru yang lebih murah atau lebih cocok, mau Bello reminder tidak?');
     this.displayActionBar({
@@ -217,6 +227,7 @@ class productContainer extends React.Component {
     });
   }
 
+  // add a search keyword as a product search reminder request
   addProductRequestReminder() {
     const { searchKeyword } = this.state;
     // do something with searchKeyword here, save to DB!
@@ -224,8 +235,8 @@ class productContainer extends React.Component {
     setTimeout(this.resetAction, 1000);
   }
 
-  // Product Recommendations methods
-  showProductRecommendations() {
+  // Display list of recommended products based on search keyword
+  displayProductRecommendations() {
     setTimeout(() => {
       this.setState({
         isProductsFetching: false,
@@ -241,6 +252,7 @@ class productContainer extends React.Component {
     }, 3000);
   }
 
+  // toggle selected product detail modal visibility and set selected product value
   toggleDetailModal(product: ProductType, indexCursor: number) {
     const { isDetailPopupActive } = this.state;
     this.setState({ isDetailPopupActive: !isDetailPopupActive });
@@ -265,6 +277,7 @@ class productContainer extends React.Component {
     }
   }
 
+  // change selected product detail cursor to prev or next of the list
   setSelectedProductCursor(direction: string) {
     const currentProductCursor = this.state.selectedProductIndexCursor;
     const cursorMovement = direction === 'next' ? 1 : -1;
