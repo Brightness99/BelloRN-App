@@ -77,6 +77,7 @@ class productContainer extends React.Component {
 
     // ActionBar methods
     this.displaySearchAction = this.displaySearchAction.bind(this);
+    this.goBackHomeAction = this.goBackHomeAction.bind(this);
     this.cancelBuyingAction = this.cancelBuyingAction.bind(this);
 
     this.toggleDetailModal = this.toggleDetailModal.bind(this);
@@ -102,6 +103,7 @@ class productContainer extends React.Component {
   showProductRecommendations: Function;
 
   displayActionBar: Function;
+  goBackHomeAction: Function;
   displaySearchAction: Function;
   cancelBuyingAction: Function;
   toggleDetailModal: Function;
@@ -160,8 +162,17 @@ class productContainer extends React.Component {
   displaySearchAction() {
     this.setState({
       isSearching: true,
+      isSearchingSubmitted: false,
+      isProductsFetching: false,
+      isProductsLoaded: false,
+      isActionBarVisible: false,
     });
     this.addChatMessage('Bello', 'Mau cari barang apa?');
+  }
+
+  goBackHomeAction() {
+    this.addChatMessage('Bello', 'Oke. Have a nice day!');
+    setTimeout(Actions.pop, 1000);
   }
 
   cancelBuyingAction() {
@@ -177,7 +188,7 @@ class productContainer extends React.Component {
       this.addChatMessage('Bello', 'Oke! Ada lagi yang bisa Bello bantu?');
       this.displayActionBar({
         redLabel: 'Tidak ada',
-        redMethod: () => {},
+        redMethod: this.goBackHomeAction,
         orangeLabel: 'Belanja',
         orangeMethod: this.displaySearchAction,
         greenLabel: 'Cari Promo',
@@ -200,9 +211,15 @@ class productContainer extends React.Component {
       isActionBarVisible,
       actionBarMenu,
     } = this.state;
+
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.chatList}>
+        <ScrollView
+          style={styles.chatList}
+          ref={(thisComponent) => { this.scrollViewComponent = thisComponent; }}
+          onContentSizeChange={() => { this.scrollViewComponent.scrollToEnd({ animated: false }); }}
+        >
+          <ChatSectionHeading headingText={'21 Mei 2017'} />
           { chats.map(chat => (<MessageBubble key={chat.id} {...chat} />))}
           { isSearching && (
             <ChatSearch
@@ -211,32 +228,11 @@ class productContainer extends React.Component {
               searchKeyword={searchKeyword}
             />) }
           { isSearchingSubmitted && <MessageBubble sender="Bello" message="Ditunggu sebentar ya... Bello cari dulu!" time="12:30" /> }
-          { isProductsFetching && <Image source={BelloIcon} style={{ width: '35%', height: '30%', alignSelf: 'center', margin: 20 }} /> }
+          { isProductsFetching && <Image source={BelloIcon} style={{ width: 100, height: 100, alignSelf: 'center', margin: 20 }} /> }
           { isSearchingSubmitted && !isProductsFetching && <MessageBubble sender="Bello" message="Pencarian selesai. Bello dapat 10 barang nih!" time="12:30" /> }
           { isProductsLoaded && (
           <ProductRecommendations toggleDetailModal={this.toggleDetailModal} products={products} />
             ) }
-          {
-          // <ChatSectionHeading headingText={'Senin, 25 Mei'} />
-          // <MessageBubble sender="Bello" time="12:30" message="Bello bos! mau beli apa?" />
-          // <ChatSearch />
-          // <MessageBubble sender="Me" time="12:35" message="Beli kaos jersey real mandrit" />
-          // <MessageBubble sender="Bello" time="12:30" message="Dicari dulu ya!" />
-          // <MessageBubble sender="Bello" time="12:30" message="Ketemu 5 barang yang cocok nih bos" />
-          // <ProductRecommendations toggleDetailModal={this.toggleDetailModal} products={products} />
-          // <MessageBubble sender="Me" time="12:35" message="Beli 1 ya Bello!" />
-          // <MessageBubble sender="Bello" time="12:30" message="Barang sudah dibeli. Checkout atau mau belanja lagi?" />
-          // <MessageBubble sender="Me" time="12:35" message="Mau belanja lagi deh" />
-          // <MessageBubble sender="Bello" time="12:30" message="Mau beli apa lagi bos?" />
-          // <ChatSearch />
-          // <MessageBubble sender="Bello" time="12:30" message="Dicari dulu ya!" />
-          // <MessageBubble sender="Bello" time="12:30" message="Tidak ketemu nih, Bello umumin ke pelapak yang tertarik dulu ya. Nanti Bello kabarin lagi deh, gimana?" />
-          // <MessageBubble sender="Me" time="12:35" message="Boleh, nanti kabarin ya Bello!" />
-          // <MessageBubble sender="Bello" time="12:30" message="Siap! nanti Bello kabarin" />
-          // <ChatSectionHeading headingText={'21 Mei 2017'} />
-          // <MessageBubble sender="Bello" time="12:30" message="Bello Hendry! Ada 2 barang yang kemarin kamu cari nih. Cek yuk!" />
-          // <ProductRecommendations toggleDetailModal={this.toggleDetailModal} products={requests} />
-          }
           <View style={{ height: 150, width: '100%' }} />
         </ScrollView>
         { isDetailPopupActive && <ProductDetailPopup toggleDetailModal={this.toggleDetailModal} /> }
