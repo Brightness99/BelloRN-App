@@ -294,22 +294,87 @@ class productContainer extends React.Component {
     }
   }
 
-  render() {
-    const {
-      isDetailPopupActive,
-      products,
-      selectedProduct,
-      requests,
-      chats,
-      isSearching,
-      isSearchingSubmitted,
-      searchKeyword,
-      isProductsFetching,
-      isProductsLoaded,
-      isActionBarVisible,
-      actionBarMenu,
-    } = this.state;
+  renderChatList() {
+    const { chats } = this.state;
+    return chats.map((chat, index, chatsArr) => {
+      const chatDate = moment(chat.time, 'DD-MM-YYYY HH:ss').format('DD MMM YYYY');
+      const chatYesterdayDate = index === 0 ? '' : moment(chatsArr[index - 1].time, 'DD-MM-YYYY HH:ss').format('DD MMM YYYY');
+      if (chatDate !== chatYesterdayDate) {
+        return (
+          <View key={chat.id}>
+            <ChatSectionHeading headingText={chatDate} />
+            <MessageBubble {...chat} />
+          </View>
+        );
+      }
+      return (
+        <View key={chat.id}>
+          <MessageBubble {...chat} />
+        </View>
+      );
+    });
+  }
 
+  renderSearchDialog() {
+    const { isSearching, isSearchingSubmitted, searchKeyword } = this.state;
+    return isSearching && !isSearchingSubmitted && (
+      <ChatSearch
+        handleChange={this.setSearchKeyword}
+        handleSubmit={this.handleSearchSubmit}
+        searchKeyword={searchKeyword}
+      />
+    );
+  }
+
+  renderSearchLoadingDialog() {
+    const { isSearchingSubmitted, isProductsLoaded } = this.state;
+    return isSearchingSubmitted && !isProductsLoaded && (
+      <MessageBubble
+        sender="Bello"
+        message="Ditunggu sebentar ya... Bello cari dulu!"
+        time={moment().format('DD-MM-YYYY HH:mm')}
+      />
+    );
+  }
+
+  renderProductLoading() {
+    const { isProductsFetching } = this.state;
+    return isProductsFetching && (
+      <Image
+        source={BelloIcon}
+        style={{ width: 100, height: 100, alignSelf: 'center', margin: 20 }}
+      />
+    );
+  }
+
+  renderProductLoadedDialog() {
+    const { isProductsLoaded, products } = this.state;
+    return isProductsLoaded && (
+      <ProductRecommendations
+        toggleDetailModal={this.toggleDetailModal}
+        products={products}
+      />
+    );
+  }
+
+  renderProductDetailModal() {
+    const { isDetailPopupActive, selectedProduct } = this.state;
+    return isDetailPopupActive && (
+      <ProductDetailPopup
+        toggleDetailModal={this.toggleDetailModal}
+        productCursorPrev={() => this.setSelectedProductCursor('prev')}
+        productCursorNext={() => this.setSelectedProductCursor('next')}
+        product={selectedProduct}
+      />
+    );
+  }
+
+  renderActionBar() {
+    const { isActionBarVisible, actionBarMenu } = this.state;
+    return isActionBarVisible && <ActionBar {...actionBarMenu} />;
+  }
+
+  render() {
     return (
       <View style={styles.container}>
         <ScrollView
@@ -317,47 +382,15 @@ class productContainer extends React.Component {
           ref={(thisComponent) => { this.scrollViewComponent = thisComponent; }}
           onContentSizeChange={() => { this.scrollViewComponent.scrollToEnd({ animated: false }); }}
         >
-
-          { chats.map((chat, index, chatsArr) => {
-            const chatDate = moment(chat.time, 'DD-MM-YYYY HH:ss').format('DD MMM YYYY');
-            const chatYesterdayDate = index === 0 ? '' : moment(chatsArr[index - 1].time, 'DD-MM-YYYY HH:ss').format('DD MMM YYYY');
-            if (chatDate !== chatYesterdayDate) {
-              return (
-                <View key={chat.id}>
-                  <ChatSectionHeading headingText={chatDate} />
-                  <MessageBubble {...chat} />
-                </View>
-              );
-            }
-            return (
-              <View key={chat.id}>
-                <MessageBubble {...chat} />
-              </View>
-            );
-          })}
-          { isSearching && !isSearchingSubmitted && (
-            <ChatSearch
-              handleChange={this.setSearchKeyword}
-              handleSubmit={this.handleSearchSubmit}
-              searchKeyword={searchKeyword}
-            />) }
-          { isSearchingSubmitted && !isProductsLoaded && <MessageBubble sender="Bello" message="Ditunggu sebentar ya... Bello cari dulu!" time={moment().format('DD-MM-YYYY HH:mm')} /> }
-          { isProductsFetching && <Image source={BelloIcon} style={{ width: 100, height: 100, alignSelf: 'center', margin: 20 }} /> }
-          { isProductsLoaded && (
-          <ProductRecommendations
-            toggleDetailModal={this.toggleDetailModal}
-            products={products}
-          />) }
+          { this.renderChatList() }
+          { this.renderSearchDialog() }
+          { this.renderSearchLoadingDialog() }
+          { this.renderProductLoading() }
+          { this.renderProductLoadedDialog() }
           <View style={{ height: 150, width: '100%' }} />
         </ScrollView>
-        { isDetailPopupActive && (
-          <ProductDetailPopup
-            toggleDetailModal={this.toggleDetailModal}
-            productCursorPrev={() => this.setSelectedProductCursor('prev')}
-            productCursorNext={() => this.setSelectedProductCursor('next')}
-            product={selectedProduct}
-          />) }
-        { isActionBarVisible && <ActionBar {...actionBarMenu} /> }
+        { this.renderProductDetailModal() }
+        { this.renderActionBar() }
       </View>
     );
   }
