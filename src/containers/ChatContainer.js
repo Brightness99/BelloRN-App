@@ -1,20 +1,25 @@
 // @flow
-
 import React from 'react';
 import { View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
+// Chat Components
 import MessageBubble from '../components/Chat/MessageBubble';
 import ChatSearch from '../components/Chat/ChatSearch';
 import ChatSectionHeading from '../components/Chat/SectionHeading';
-import ProductRecommendations from '../components/Product/Recommendations';
-import ProductDetailPopup from '../components/Product/DetailPopup';
 import ActionBar from '../components/Chat/ActionBar';
 
+// Product Recommendations Components
+import ProductRecommendations from '../components/Product/Recommendations';
+import ProductDetailPopup from '../components/Product/DetailPopup';
+
+// StateTypes
+import type { ChatsType, ProductsType } from '../types';
+
+// Static Files
 import cartIcon from '../images/shopping-cart.png';
 import BelloIcon from '../images/bello.png';
 import data from '../../data/db.json';
-import type { ChatsType, ProductsType } from '../types';
 
 const styles = {
   container: {
@@ -73,16 +78,20 @@ class productContainer extends React.Component {
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
     this.addChatMessage = this.addChatMessage.bind(this);
     this.showProductRecommendations = this.showProductRecommendations.bind(this);
-    this.displayActionBar = this.displayActionBar.bind(this);
 
     // ActionBar methods
+    this.displayActionBar = this.displayActionBar.bind(this);
     this.displaySearchAction = this.displaySearchAction.bind(this);
     this.goBackHomeAction = this.goBackHomeAction.bind(this);
+    this.resetAction = this.resetAction.bind(this);
     this.cancelBuyingAction = this.cancelBuyingAction.bind(this);
+    this.productNotFoundAction = this.productNotFoundAction.bind(this);
 
+    // Product Recommendations methods
     this.toggleDetailModal = this.toggleDetailModal.bind(this);
   }
 
+  // static state StateTypes
   state: {
     isDetailPopupActive: boolean,
     products: ProductsType,
@@ -97,22 +106,31 @@ class productContainer extends React.Component {
     actionBarMenu: Object,
   };
 
-  setSearchKeyword: Function;
-  handleSearchSubmit: Function;
+  // static functions StateTypes
   addChatMessage: Function;
-  showProductRecommendations: Function;
-
   displayActionBar: Function;
   goBackHomeAction: Function;
+  resetAction: Function;
   displaySearchAction: Function;
   cancelBuyingAction: Function;
+  productNotFoundAction: Function;
+  setSearchKeyword: Function;
+  handleSearchSubmit: Function;
+  showProductRecommendations: Function;
   toggleDetailModal: Function;
   props: {};
 
-  toggleDetailModal() {
-    this.setState({ isDetailPopupActive: !this.state.isDetailPopupActive });
+  // Chat methods
+  addChatMessage(sender: string, message: string) {
+    const { chats } = this.state;
+    const chatsId = chats.map(chat => chat.id);
+    const newChatId = chatsId[chatsId.length - 1] + 1;
+    const newChat = { id: newChatId, sender, message, time: '12:30' };
+    const newChats = [...chats, newChat];
+    this.setState({ chats: newChats });
   }
 
+  // Product Search methods
   setSearchKeyword(searchKeyword: string) {
     this.setState({ searchKeyword });
   }
@@ -125,30 +143,6 @@ class productContainer extends React.Component {
       isProductsFetching: true,
     });
     setTimeout(this.showProductRecommendations, 3000);
-  }
-
-  addChatMessage(sender: string, message: string) {
-    const { chats } = this.state;
-    const chatsId = chats.map(chat => chat.id);
-    const newChatId = chatsId[chatsId.length - 1] + 1;
-    const newChat = { id: newChatId, sender, message, time: '12:30' };
-    const newChats = [...chats, newChat];
-    this.setState({ chats: newChats });
-  }
-
-  showProductRecommendations() {
-    setTimeout(() => {
-      this.setState({
-        isProductsFetching: false,
-        isProductsLoaded: true,
-      });
-      this.displayActionBar({
-        redLabel: 'Batal',
-        redMethod: this.cancelBuyingAction,
-        orangeLabel: 'Cari yang lain',
-        orangeMethod: this.displaySearchAction,
-      });
-    }, 3000);
   }
 
   // User Chat Actions
@@ -175,6 +169,20 @@ class productContainer extends React.Component {
     setTimeout(Actions.pop, 1000);
   }
 
+  resetAction() {
+    this.addChatMessage('Bello', 'Oke, ada lagi yang bisa Bello bantu?');
+    setTimeout(() => {
+      this.displayActionBar({
+        redLabel: 'Tidak ada',
+        redMethod: this.goBackHomeAction,
+        orangeLabel: 'Belanja',
+        orangeMethod: this.displaySearchAction,
+        greenLabel: 'Cari Promo',
+        greenMethod: () => {},
+      });
+    }, 1000);
+  }
+
   cancelBuyingAction() {
     this.setState({
       isActionBarVisible: false,
@@ -185,16 +193,57 @@ class productContainer extends React.Component {
     });
     this.addChatMessage('Me', 'Batalin dulu ya Bello!');
     setTimeout(() => {
-      this.addChatMessage('Bello', 'Oke! Ada lagi yang bisa Bello bantu?');
+      this.addChatMessage('Bello', 'Wah, kenapa dibatalin?');
       this.displayActionBar({
-        redLabel: 'Tidak ada',
-        redMethod: this.goBackHomeAction,
-        orangeLabel: 'Belanja',
-        orangeMethod: this.displaySearchAction,
-        greenLabel: 'Cari Promo',
-        greenMethod: () => {},
+        redLabel: 'Tidak Ketemu',
+        redMethod: this.productNotFoundAction,
+        orangeLabel: 'Tidak Jadi Beli',
+        orangeMethod: this.resetAction,
       });
     }, 1000);
+    // setTimeout(() => {
+    //   this.addChatMessage('Bello', 'Oke! Ada lagi yang bisa Bello bantu?');
+    //   this.displayActionBar({
+    //     redLabel: 'Tidak ada',
+    //     redMethod: this.goBackHomeAction,
+    //     orangeLabel: 'Belanja',
+    //     orangeMethod: this.displaySearchAction,
+    //     greenLabel: 'Cari Promo',
+    //     greenMethod: () => {},
+    //   });
+    // }, 1000);
+  }
+
+  productNotFoundAction() {
+    this.addChatMessage('Bello', 'Kenapa tidak ada barang yang cocok?');
+    this.displayActionBar({
+      redLabel: 'Harga mahal',
+      redMethod: this.resetAction,
+      orangeLabel: 'Beda Barang',
+      orangeMethod: this.resetAction,
+      greenLabel: 'Lainnya',
+      greenMethod: this.resetAction,
+    });
+  }
+
+  // Product Recommendations methods
+  showProductRecommendations() {
+    setTimeout(() => {
+      this.setState({
+        isProductsFetching: false,
+        isProductsLoaded: true,
+      });
+      this.displayActionBar({
+        redLabel: 'Batal',
+        redMethod: this.cancelBuyingAction,
+        orangeLabel: 'Cari yang lain',
+        orangeMethod: this.displaySearchAction,
+      });
+    }, 3000);
+  }
+
+  toggleDetailModal() {
+    this.setState({ isDetailPopupActive: !this.state.isDetailPopupActive });
   }
 
   render() {
