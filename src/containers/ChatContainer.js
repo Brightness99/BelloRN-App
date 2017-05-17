@@ -144,7 +144,6 @@ class productContainer extends React.Component {
     this.addChatMessage('Me', `Saya mau cari ${this.state.searchKeyword}`);
     this.setState({
       isSearchingSubmitted: true,
-      searchKeyword: '',
       isProductsFetching: true,
     });
     setTimeout(this.showProductRecommendations, 3000);
@@ -160,6 +159,7 @@ class productContainer extends React.Component {
 
   displaySearchAction() {
     this.setState({
+      searchKeyword: '',
       isSearching: true,
       isSearchingSubmitted: false,
       isProductsFetching: false,
@@ -281,7 +281,7 @@ class productContainer extends React.Component {
         >
           <ChatSectionHeading headingText={'21 Mei 2017'} />
           { chats.map(chat => (<MessageBubble key={chat.id} {...chat} />))}
-          { isSearching && (
+          { isSearching && !isSearchingSubmitted && (
             <ChatSearch
               handleChange={this.setSearchKeyword}
               handleSubmit={this.handleSearchSubmit}
