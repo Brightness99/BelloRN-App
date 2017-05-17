@@ -15,7 +15,7 @@ import ProductRecommendations from '../components/Product/Recommendations';
 import ProductDetailPopup from '../components/Product/DetailPopup';
 
 // StateTypes
-import type { ChatsType, ProductsType } from '../types';
+import type { ChatsType, ProductType, ProductsType } from '../types';
 
 // Static Files
 import cartIcon from '../images/shopping-cart.png';
@@ -58,7 +58,7 @@ class productContainer extends React.Component {
     this.state = {
       isDetailPopupActive: false,
       products: data.products,
-      selectedProductId: 0,
+      selectedProduct: {},
       requests: data.requests,
       chats: [],
       isSearching: true,
@@ -97,6 +97,7 @@ class productContainer extends React.Component {
   state: {
     isDetailPopupActive: boolean,
     products: ProductsType,
+    selectedProduct: ProductType,
     requests: ProductsType,
     chats: ChatsType,
     isSearching: boolean,
@@ -256,7 +257,7 @@ class productContainer extends React.Component {
     }, 3000);
   }
 
-  toggleDetailModal() {
+  toggleDetailModal(product) {
     const { isDetailPopupActive } = this.state;
     this.setState({ isDetailPopupActive: !isDetailPopupActive });
     if (isDetailPopupActive) {
@@ -267,6 +268,7 @@ class productContainer extends React.Component {
         orangeMethod: this.displaySearchAction,
       });
     } else {
+      this.setState({ selectedProduct: product })
       this.displayActionBar({
         orangeLabel: 'Tambah ke Wishlist',
         orangeMethod: () => {},
@@ -280,6 +282,7 @@ class productContainer extends React.Component {
     const {
       isDetailPopupActive,
       products,
+      selectedProduct,
       requests,
       chats,
       isSearching,
@@ -329,7 +332,11 @@ class productContainer extends React.Component {
             ) }
           <View style={{ height: 150, width: '100%' }} />
         </ScrollView>
-        { isDetailPopupActive && <ProductDetailPopup toggleDetailModal={this.toggleDetailModal} /> }
+        { isDetailPopupActive && (
+          <ProductDetailPopup
+            toggleDetailModal={this.toggleDetailModal}
+            product={selectedProduct}
+          />) }
         { isActionBarVisible && <ActionBar {...actionBarMenu} /> }
       </View>
     );

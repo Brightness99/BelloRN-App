@@ -13,7 +13,7 @@ type PropTypes = {
 };
 
 const ProductItem = ({ toggleDetailModal, name, owner, price, image }: PropTypes) => (
-  <TouchableOpacity style={styles.productCard} onPress={toggleDetailModal} activeOpacity={0.8}>
+  <TouchableOpacity style={styles.productCard} onPress={toggleDetailModal} activeOpacity={0.95}>
     <View style={styles.productCardImage}>
       <Image style={styles.productImage} source={{ uri: image }} />
     </View>

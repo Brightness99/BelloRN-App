@@ -1,5 +1,6 @@
 // @flow
 export type ProductType = {
+  id: number,
   name: string,
   owner: string,
   price: number,
