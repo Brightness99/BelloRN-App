@@ -3,6 +3,7 @@ import React from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
+import numeral from 'numeral';
 
 // Chat Components
 import MessageBubble from '../components/Chat/MessageBubble';
@@ -327,13 +328,15 @@ class productContainer extends React.Component {
       isProductsFetching: false,
     });
     this.addChatMessage('Me', `Mau beli ${selectedProduct.name} yang ini ya.`);
-    this.addChatMessage('Bello', `Mau beli ${selectedProduct.name} berapa item?`);
+    setTimeout(() => {
+      this.addChatMessage('Bello', `Mau beli ${selectedProduct.name} berapa item?`);
+    }, 500);
     this.toggleDetailModal(); // close the modal
   }
 
   setSelectedProductQuantity(increment: number) {
     const { selectedProduct } = this.state;
-    if (increment === -1 && selectedProduct.quantity <= 0) {
+    if (increment === -1 && selectedProduct.quantity <= 1) {
       // do nothing?
       return false;
     }
@@ -451,6 +454,9 @@ class productContainer extends React.Component {
           </Text>
           <GreyButton label={'+'} handleClick={() => this.setSelectedProductQuantity(1)} />
         </View>
+        <Text style={{ fontWeight: 'bold', fontSize: 20, color: '#FFFFFF', textAlign: 'center' }}>
+          { `Rp.${numeral(selectedProduct.price * selectedProduct.quantity).format('0,0[.]00')}` }
+        </Text>
         <OrangeButton label={'Lanjut'} handleClick={this.addProductToCart} />
       </View>
     );
