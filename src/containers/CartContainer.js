@@ -35,8 +35,8 @@ class CartContainer extends React.Component {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.productList}>
-          {data.products.concat(data.requests).map((product, i) => (
-            <ProductItem key={i} {...product} toggleDetailModal={() => console.log('s')} />
+          {data.products.map(product => (
+            <ProductItem key={product.id} {...product} toggleDetailModal={() => {}} />
           ))}
           <View style={{ height: 150, width: '100%' }} />
         </ScrollView>
