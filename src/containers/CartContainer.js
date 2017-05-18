@@ -27,7 +27,7 @@ const styles = {
 class CartContainer extends React.Component {
   static renderRightButton = () => (
     <TouchableOpacity onPress={() => console.log('onRightPressed')}>
-      <Text>Clear All</Text>
+      <Text style={{ color: '#D91E18' }}>Clear All</Text>
     </TouchableOpacity>
   );
 

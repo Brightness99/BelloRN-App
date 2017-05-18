@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
+import numeral from 'numeral';
 
 import styles from './styles';
 
@@ -20,7 +21,7 @@ const ProductItem = ({ toggleDetailModal, name, owner, price, image }: PropTypes
     <View style={styles.productCardContent}>
       <Text style={styles.productTitle}>{ name }</Text>
       <Text style={styles.productDescription}>oleh { owner }</Text>
-      <Text style={styles.productPrice}>{ price }</Text>
+      <Text style={styles.productPrice}>{ `Rp.${numeral(price).format('0,0[.]00')}` }</Text>
     </View>
   </TouchableOpacity>
 );

@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import numeral from 'numeral';
 
 import styles from './styles';
 import ReviewItem from '../ReviewItem';
@@ -34,7 +35,7 @@ const ProductDetailPopup = ({
       <Image style={styles.productImage} source={{ uri: product.image }} />
       <Text style={styles.productTitle}>{ product.name }</Text>
       <Text style={styles.productDescription}>{ product.owner }</Text>
-      <Text style={styles.productPrice}>{ product.price }</Text>
+      <Text style={styles.productPrice}>{ `Rp.${numeral(product.price).format('0,0[.]00')}` }</Text>
       <Text style={{ fontWeight: 'bold' }}>Reviews</Text>
       <ScrollView horizontal style={styles.reviews}>
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((productRec, i) => (
