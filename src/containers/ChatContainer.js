@@ -10,12 +10,16 @@ import ChatSearch from '../components/Chat/ChatSearch';
 import ChatSectionHeading from '../components/Chat/SectionHeading';
 import ActionBar from '../components/Chat/ActionBar';
 
+// Core Components
+import GreyButton from '../components/Core/GreyButton';
+import OrangeButton from '../components/Core/OrangeButton';
+
 // Product Recommendations Components
 import ProductRecommendations from '../components/Product/Recommendations';
 import ProductDetailPopup from '../components/Product/DetailPopup';
 
 // StateTypes
-import type { ChatsType, ProductType, ProductsType } from '../types';
+import type { ChatsType, ProductType, ProductsType, CartType } from '../types';
 
 // Static Files
 import cartIcon from '../images/shopping-cart.png';
@@ -45,7 +49,7 @@ class productContainer extends React.Component {
     this.state = {
       isDetailPopupActive: false,
       products: data.products,
-      selectedProduct: { id: 0, name: '', owner: '', price: 0, image: '' },
+      selectedProduct: { id: 0, name: '', owner: '', price: 0, image: '', quantity: 0 },
       selectedProductIndexCursor: 0,
       requests: data.requests,
       chats: [], // TODO reduxify this state
@@ -54,6 +58,7 @@ class productContainer extends React.Component {
       searchKeyword: '',
       isProductsFetching: false,
       isProductsLoaded: false,
+      isSettingProductQuantity: false,
       isActionBarVisible: false,
       actionBarMenu: {
         redLabel: 'Batal',
@@ -82,6 +87,7 @@ class productContainer extends React.Component {
     // Product Recommendations methods
     this.toggleDetailModal = this.toggleDetailModal.bind(this);
     this.setSelectedProductCursor = this.setSelectedProductCursor.bind(this);
+    this.updateProductQuantity = this.updateProductQuantity.bind(this);
     this.addProductToCart = this.addProductToCart.bind(this);
   }
 
@@ -98,6 +104,7 @@ class productContainer extends React.Component {
     searchKeyword: string,
     isProductsFetching: boolean,
     isProductsLoaded: boolean,
+    isSettingProductQuantity: boolean,
     isActionBarVisible: boolean,
     actionBarMenu: Object,
     carts: ProductsType,
@@ -261,7 +268,7 @@ class productContainer extends React.Component {
         orangeLabel: 'Cari yang lain',
         orangeMethod: this.displaySearchAction,
       });
-    }, 3000);
+    }, 1500);
   }
 
   // toggle selected product detail modal visibility and set selected product value
@@ -284,7 +291,7 @@ class productContainer extends React.Component {
         orangeLabel: 'Tambah ke Wishlist',
         orangeMethod: () => {},
         greenLabel: 'Beli',
-        greenMethod: this.addProductToCart,
+        greenMethod: this.updateProductQuantity,
       });
     }
   }
@@ -306,20 +313,35 @@ class productContainer extends React.Component {
     }
   }
 
-  // Add Product to Cart with 1 Quantity
-  addProductToCart() {
-    const { selectedProduct, carts } = this.state;
-    const newCarts = [...carts, selectedProduct];
+  // Set quantity for a product to be added to cart
+  updateProductQuantity() {
+    const { selectedProduct } = this.state;
     this.setState({
-      carts: newCarts,
+      selectedProduct: { ...selectedProduct, quantity: 1 },
+      isSettingProductQuantity: true,
       isSearching: false,
       isSearchingSubmitted: false,
       isProductsLoaded: false,
       isProductsFetching: false,
     });
-    globalCartLength += 1; // global cart length hack, remove this later
-    this.addChatMessage('Bello', `${selectedProduct.name} sudah Bello masukin ke cart ya! Apakah ada lagi yang mau dibeli?`);
+    this.addChatMessage('Me', `Mau beli ${selectedProduct.name} yang ini ya.`);
+    this.addChatMessage('Bello', `Mau beli ${selectedProduct.name} berapa item?`);
     this.toggleDetailModal(); // close the modal
+  }
+
+  // Add Product to Cart with Some Quantity
+  addProductToCart() {
+    const { selectedProduct, carts } = this.state;
+    const newCarts = [...carts, selectedProduct];
+    this.setState({
+      carts: newCarts,
+      isSettingProductQuantity: false,
+    });
+    globalCartLength += 1; // global cart length hack, remove this later
+    this.addChatMessage('Me', `Pesan ${selectedProduct.quantity} item ya!`);
+    setTimeout(() => {
+      this.addChatMessage('Bello', `Siap! ${selectedProduct.name} sudah Bello masukin ke cart. Apakah ada lagi yang mau dibeli?`);
+    }, 500);
     this.displayActionBar({
       orangeLabel: 'Cari Barang Lain',
       orangeMethod: this.displaySearchAction,
@@ -405,6 +427,22 @@ class productContainer extends React.Component {
     );
   }
 
+  renderProductQuantitySetting() {
+    const { isSettingProductQuantity, selectedProduct } = this.state;
+    return isSettingProductQuantity && (
+      <View style={{ padding: 10 }}>
+        <View style={{ flexDirection: 'row', width: '60%', alignSelf: 'center', margin: 10 }}>
+          <GreyButton label={'-'} handleClick={() => {}} />
+          <Text style={{ padding: 10, fontSize: 16, color: '#FFFFFF' }}>
+            { selectedProduct.quantity }
+          </Text>
+          <GreyButton label={'+'} handleClick={() => {}} />
+        </View>
+        <OrangeButton label={'Lanjut'} handleClick={this.addProductToCart} />
+      </View>
+    );
+  }
+
   renderActionBar() {
     const { isActionBarVisible, actionBarMenu } = this.state;
     return isActionBarVisible && <ActionBar {...actionBarMenu} />;
@@ -423,6 +461,7 @@ class productContainer extends React.Component {
           { this.renderSearchLoadingDialog() }
           { this.renderProductLoading() }
           { this.renderProductLoadedDialog() }
+          { this.renderProductQuantitySetting() }
           <View style={{ height: 150, width: '100%' }} />
         </ScrollView>
         { this.renderProductDetailModal() }
