@@ -24,13 +24,18 @@ import data from '../../data/db.json';
 
 import styles from './chatContainer.styles';
 
+// TODO a quick hack! put this into redux and connect it to renderRightButton
+let globalCartLength = 0;
+
 class productContainer extends React.Component {
   // Header right icon
   static renderRightButton = () => (
     <TouchableOpacity onPress={Actions.cart}>
       <Image source={cartIcon} style={{ width: 25, height: 25, marginTop: 0 }} />
       <View style={{ backgroundColor: '#96281B', position: 'absolute', width: 15, height: 15, borderRadius: 7, right: -5, top: -5 }}>
-        <Text style={{ color: '#FFFFFF', textAlign: 'center', fontSize: 12 }}>2</Text>
+        <Text style={{ color: '#FFFFFF', textAlign: 'center', fontSize: 12 }}>
+          { globalCartLength }
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -43,7 +48,7 @@ class productContainer extends React.Component {
       selectedProduct: { id: 0, name: '', owner: '', price: 0, image: '' },
       selectedProductIndexCursor: 0,
       requests: data.requests,
-      chats: [],
+      chats: [], // TODO reduxify this state
       isSearching: true,
       isSearchingSubmitted: false,
       searchKeyword: '',
@@ -55,6 +60,7 @@ class productContainer extends React.Component {
         orangeLabel: 'Cari yang lain',
         greenLabel: '',
       },
+      carts: [], // TODO reduxify this state
     };
 
     // Chat methods
@@ -76,6 +82,7 @@ class productContainer extends React.Component {
     // Product Recommendations methods
     this.toggleDetailModal = this.toggleDetailModal.bind(this);
     this.setSelectedProductCursor = this.setSelectedProductCursor.bind(this);
+    this.addProductToCart = this.addProductToCart.bind(this);
   }
 
   // static state StateTypes
@@ -116,6 +123,7 @@ class productContainer extends React.Component {
   displayProductRecommendations: Function;
   toggleDetailModal: Function;
   setSelectedProductCursor: Function;
+  addProductToCart: Function;
 
   scrollViewComponent: ReactElement<any>;
   props: {};
@@ -180,8 +188,8 @@ class productContainer extends React.Component {
       redMethod: this.goBackHomeAction,
       orangeLabel: 'Belanja',
       orangeMethod: this.displaySearchAction,
-      greenLabel: 'Cari Promo',
-      greenMethod: () => {},
+      greenLabel: 'Buka Cart',
+      greenMethod: Actions.cart,
     });
   }
 
@@ -275,7 +283,7 @@ class productContainer extends React.Component {
         orangeLabel: 'Tambah ke Wishlist',
         orangeMethod: () => {},
         greenLabel: 'Beli',
-        greenMethod: () => {},
+        greenMethod: this.addProductToCart,
       });
     }
   }
@@ -296,6 +304,29 @@ class productContainer extends React.Component {
       selectedProduct = this.state.selectedProduct;
     }
   }
+
+  // Add Product to Cart with 1 Quantity
+  addProductToCart() {
+    const { selectedProduct, carts } = this.state;
+    this.setState({
+      carts: [...carts, selectedProduct],
+      isSearching: false,
+      isSearchingSubmitted: false,
+      isProductsLoaded: false,
+      isProductsFetching: false,
+    });
+    globalCartLength += 1; // global cart length hack, remove this later
+    this.addChatMessage('Bello', `${selectedProduct.name} sudah Bello masukin ke cart ya! Apakah ada lagi yang mau dibeli?`);
+    this.toggleDetailModal(); // close the modal
+    this.displayActionBar({
+      orangeLabel: 'Cari Barang Lain',
+      orangeMethod: this.displaySearchAction,
+      greenLabel: 'Tidak',
+      greenMethod: this.resetAction,
+    });
+  }
+
+  // Components Render Methods
 
   renderChatList() {
     const { chats } = this.state;
