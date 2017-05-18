@@ -19,7 +19,7 @@ import ProductRecommendations from '../components/Product/Recommendations';
 import ProductDetailPopup from '../components/Product/DetailPopup';
 
 // StateTypes
-import type { ChatsType, ProductType, ProductsType, CartType } from '../types';
+import type { ChatsType, ProductType, ProductsType } from '../types';
 
 // Static Files
 import cartIcon from '../images/shopping-cart.png';
@@ -87,7 +87,7 @@ class productContainer extends React.Component {
     // Product Recommendations methods
     this.toggleDetailModal = this.toggleDetailModal.bind(this);
     this.setSelectedProductCursor = this.setSelectedProductCursor.bind(this);
-    this.updateProductQuantity = this.updateProductQuantity.bind(this);
+    this.displayProductQuantitySelector = this.displayProductQuantitySelector.bind(this);
     this.addProductToCart = this.addProductToCart.bind(this);
   }
 
@@ -131,6 +131,8 @@ class productContainer extends React.Component {
   displayProductRecommendations: Function;
   toggleDetailModal: Function;
   setSelectedProductCursor: Function;
+  displayProductQuantitySelector: Function;
+  setSelectedProductQuantity: Function;
   addProductToCart: Function;
 
   scrollViewComponent: ReactElement<any>;
@@ -291,7 +293,7 @@ class productContainer extends React.Component {
         orangeLabel: 'Tambah ke Wishlist',
         orangeMethod: () => {},
         greenLabel: 'Beli',
-        greenMethod: this.updateProductQuantity,
+        greenMethod: this.displayProductQuantitySelector,
       });
     }
   }
@@ -313,8 +315,8 @@ class productContainer extends React.Component {
     }
   }
 
-  // Set quantity for a product to be added to cart
-  updateProductQuantity() {
+  // Display quantity selector for a product to be added to cart
+  displayProductQuantitySelector() {
     const { selectedProduct } = this.state;
     this.setState({
       selectedProduct: { ...selectedProduct, quantity: 1 },
@@ -327,6 +329,17 @@ class productContainer extends React.Component {
     this.addChatMessage('Me', `Mau beli ${selectedProduct.name} yang ini ya.`);
     this.addChatMessage('Bello', `Mau beli ${selectedProduct.name} berapa item?`);
     this.toggleDetailModal(); // close the modal
+  }
+
+  setSelectedProductQuantity(increment: number) {
+    const { selectedProduct } = this.state;
+    if (increment === -1 && selectedProduct.quantity <= 0) {
+      // do nothing?
+      return false;
+    }
+    const newProduct = { ...selectedProduct, quantity: selectedProduct.quantity + increment };
+    this.setState({ selectedProduct: newProduct });
+    return true;
   }
 
   // Add Product to Cart with Some Quantity
@@ -432,11 +445,11 @@ class productContainer extends React.Component {
     return isSettingProductQuantity && (
       <View style={{ padding: 10 }}>
         <View style={{ flexDirection: 'row', width: '60%', alignSelf: 'center', margin: 10 }}>
-          <GreyButton label={'-'} handleClick={() => {}} />
+          <GreyButton label={'-'} handleClick={() => this.setSelectedProductQuantity(-1)} />
           <Text style={{ padding: 10, fontSize: 16, color: '#FFFFFF' }}>
             { selectedProduct.quantity }
           </Text>
-          <GreyButton label={'+'} handleClick={() => {}} />
+          <GreyButton label={'+'} handleClick={() => this.setSelectedProductQuantity(1)} />
         </View>
         <OrangeButton label={'Lanjut'} handleClick={this.addProductToCart} />
       </View>
