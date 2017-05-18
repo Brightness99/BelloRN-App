@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
 
@@ -29,6 +29,9 @@ class productContainer extends React.Component {
   static renderRightButton = () => (
     <TouchableOpacity onPress={Actions.cart}>
       <Image source={cartIcon} style={{ width: 25, height: 25, marginTop: 0 }} />
+      <View style={{ backgroundColor: '#96281B', position: 'absolute', width: 15, height: 15, borderRadius: 7, right: -5, top: -5 }}>
+        <Text style={{ color: '#FFFFFF', textAlign: 'center', fontSize: 12 }}>2</Text>
+      </View>
     </TouchableOpacity>
   );
 
