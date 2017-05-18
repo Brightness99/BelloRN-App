@@ -31,11 +31,27 @@ class CartContainer extends React.Component {
     </TouchableOpacity>
   );
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      carts: data.products,
+    };
+
+    this.clearCart = this.clearCart.bind(this);
+  }
+
+  clearCart() {
+    this.setState = {
+      carts: [],
+    };
+  }
+
   render() {
+    const { carts } = this.state;
     return (
       <View style={styles.container}>
         <ScrollView style={styles.productList}>
-          {data.products.map(product => (
+          {carts.map(product => (
             <ProductItem key={product.id} {...product} toggleDetailModal={() => {}} />
           ))}
           <View style={{ height: 150, width: '100%' }} />
