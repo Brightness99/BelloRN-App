@@ -100,6 +100,7 @@ class productContainer extends React.Component {
     isProductsLoaded: boolean,
     isActionBarVisible: boolean,
     actionBarMenu: Object,
+    carts: ProductsType,
   };
 
   componentDidMount() {
@@ -308,8 +309,9 @@ class productContainer extends React.Component {
   // Add Product to Cart with 1 Quantity
   addProductToCart() {
     const { selectedProduct, carts } = this.state;
+    const newCarts = [...carts, selectedProduct];
     this.setState({
-      carts: [...carts, selectedProduct],
+      carts: newCarts,
       isSearching: false,
       isSearchingSubmitted: false,
       isProductsLoaded: false,

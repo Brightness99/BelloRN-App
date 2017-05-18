@@ -7,6 +7,7 @@ import ProductItem from '../components/Product/Item';
 import FooterActionButton from '../components/FooterActionButton';
 
 import data from '../../data/db.json';
+import type { ProductsType } from '../types';
 
 const styles = {
   container: {
@@ -31,7 +32,7 @@ class CartContainer extends React.Component {
     </TouchableOpacity>
   );
 
-  constructor(props) {
+  constructor(props: Object) {
     super(props);
     this.state = {
       carts: data.products,
@@ -40,10 +41,16 @@ class CartContainer extends React.Component {
     this.clearCart = this.clearCart.bind(this);
   }
 
+  state: {
+    carts: ProductsType,
+  }
+
+  clearCart: Function;
+
   clearCart() {
-    this.setState = {
+    this.setState({
       carts: [],
-    };
+    });
   }
 
   render() {

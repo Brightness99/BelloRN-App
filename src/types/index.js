@@ -7,7 +7,7 @@ export type ProductType = {
   image: string,
 };
 
-export type ProductsType = [ ProductType ];
+export type ProductsType = ProductType[];
 
 export type ChatType = {
   id?: number,
@@ -16,7 +16,7 @@ export type ChatType = {
   time: string,
 };
 
-export type ChatsType = [ ChatType ] | [];
+export type ChatsType = ChatType[];
 
 export type ButtonPropTypes = {
   label: string,
