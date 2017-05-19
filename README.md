@@ -1,6 +1,8 @@
 # Bello RN App
 [![Build Status](https://travis-ci.org/adhywiranata/bello-client-rn.svg?branch=master)](https://travis-ci.org/adhywiranata/bello-client-rn)
 [![dependencies Status](https://david-dm.org/adhywiranata/bello-client-rn/status.png)](https://david-dm.org/adhywiranata/bello-client-rn)
+[![devDependencies Status](https://david-dm.org/adhywiranata/bello-client-rn/dev-status.svg)](https://david-dm.org/adhywiranata/bello-client-rn?type=dev)
+[![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg)](https://codeclimate.com/github/codeclimate/codeclimate)
 
 ## Setup ✈️
 
