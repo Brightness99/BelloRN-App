@@ -1,5 +1,6 @@
-# bello-app-rn
+# Bello RN App
 [![Build Status](https://travis-ci.org/adhywiranata/bello-client-rn.svg?branch=master)](https://travis-ci.org/adhywiranata/bello-client-rn)
+[![dependencies Status](https://david-dm.org/adhywiranata/bello-client-rn/status.png)](https://david-dm.org/adhywiranata/bello-client-rn)
 
 ## Setup ✈️
 
@@ -29,19 +30,25 @@ react-native run-android
 
 This app uses jest to run snapshot test for React Native and unit test for Redux, as well as integration tests for API integration.
 
-`yarn test`
+```
+yarn test
+```
 
 ### Lint 📓
 
 This app uses Airbnb as Eslint preset, and Flowtype plugin since we're using Flow.
 
-`yarn run lint`
+```
+yarn run lint
+```
 
 ### Flow 🌄
 
 This app uses facebook's Flow to ensure app's predictability. __always__ run this before deploying.
 
-`yarn run flow`
+```
+yarn run flow
+```
 
 ### Built With 🔗
 
