@@ -4,11 +4,10 @@ import { Text, View, ScrollView, Image, TouchableOpacity, TextInput } from 'reac
 import { Actions } from 'react-native-router-flux';
 
 import OrangeButton from '../components/Core/OrangeButton';
+import GreyButton from '../components/Core/GreyButton';
 
 import BelloLogo from '../images/bello.png';
 import bukalapakLogo from '../images/white_bukalapak.png';
-
-// const deviceHeight = Dimensions.get('window').height;
 
 const styles = {
   container: {
@@ -24,9 +23,7 @@ const styles = {
   },
   welcome: {
     flex: 1,
-    // minHeight: deviceHeight,
-    // height: 1000,
-    paddingTop: 100,
+    paddingTop: 50,
     paddingBottom: 50,
     flexDirection: 'column',
     alignItems: 'center',
@@ -106,39 +103,68 @@ const styles = {
   },
 };
 
-const FormTextInput = ({ formValue, placeholder, name, handleChange }: {formValue: string, placeholder: string, name: string, handleChange: Function}) => (
-  <TextInput
-    placeholder={placeholder}
-    style={styles.formInput}
-    onChangeText={val => handleChange(name, val)}
-    value={formValue}
-    underlineColorAndroid={'rgba(255, 255, 255, 0)'}
-  />
+type FormTextInputPropTypes = {
+  formValue: string,
+  placeholder: string,
+  name: string,
+  handleChange: Function,
+};
+
+const FormTextInput = ({
+  formValue,
+  placeholder,
+  name,
+  handleChange }: FormTextInputPropTypes) => (
+    <TextInput
+      placeholder={placeholder}
+      style={styles.formInput}
+      onChangeText={val => handleChange(name, val)}
+      value={formValue}
+      underlineColorAndroid={'rgba(255, 255, 255, 0)'}
+    />
 );
 
-const SecureFormTextInput = ({ formValue, placeholder, name, handleChange }: {formValue: string, placeholder: string, name: string, handleChange: Function}) => (
-  <TextInput
-    secureTextEntry
-    placeholder={placeholder}
-    style={styles.formInput}
-    onChangeText={val => handleChange(name, val)}
-    value={formValue}
-    underlineColorAndroid={'rgba(255, 255, 255, 0)'}
-  />
+const SecureFormTextInput = ({
+  formValue,
+  placeholder,
+  name,
+  handleChange }: FormTextInputPropTypes) => (
+    <TextInput
+      secureTextEntry
+      placeholder={placeholder}
+      style={styles.formInput}
+      onChangeText={val => handleChange(name, val)}
+      value={formValue}
+      underlineColorAndroid={'rgba(255, 255, 255, 0)'}
+    />
 );
 
-const FormGroup = ({ formValue, label, placeholder, name, type, required = false, handleChange }: {formValue: string, label: string, placeholder: string, name: string, type: string, required: boolean, handleChange: Function}) => (
-  <View>
-    <Text style={styles.formLabel}>{label}</Text>
-    { type === 'text' && <FormTextInput formValue={formValue} placeholder={placeholder} name={name} handleChange={handleChange} /> }
-    { type === 'password' && <SecureFormTextInput formValue={formValue} placeholder={placeholder} name={name} handleChange={handleChange} /> }
-  </View>
+type FromGroupPropTypes = {
+  formValue: string,
+  label: string,
+  placeholder: string,
+  name: string,
+  type: string,
+  handleChange: Function,
+};
+
+const FormGroup = ({
+  formValue,
+  label,
+  placeholder,
+  name,
+  type,
+  handleChange }: FromGroupPropTypes) => (
+    <View>
+      <Text style={styles.formLabel}>{label}</Text>
+      { type === 'text' && <FormTextInput formValue={formValue} placeholder={placeholder} name={name} handleChange={handleChange} /> }
+      { type === 'password' && <SecureFormTextInput formValue={formValue} placeholder={placeholder} name={name} handleChange={handleChange} /> }
+    </View>
 );
 
 class AuthContainer extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       isLogin: false,
       isRegister: false,
@@ -153,8 +179,10 @@ class AuthContainer extends React.Component {
 
     this.setFormVisibility = this.setFormVisibility.bind(this);
     this.setFormValue = this.setFormValue.bind(this);
+    this.submitLoginForm = this.submitLoginForm.bind(this);
     this.submitRegisterForm = this.submitRegisterForm.bind(this);
 
+    this.renderMain = this.renderMain.bind(this);
     this.renderLoginForm = this.renderLoginForm.bind(this);
     this.renderRegisterForm = this.renderRegisterForm.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
@@ -181,12 +209,96 @@ class AuthContainer extends React.Component {
     });
   }
 
+  submitLoginForm() {
+    const { email, password } = this.state.formData;
+    if (email === '') {
+      alert('Email harus diisi!');
+      return false;
+    } else if (password === '') {
+      alert('Password harus diisi!');
+      return false;
+    }
+    Actions.home();
+    return true;
+  }
+
   submitRegisterForm() {
-    alert(JSON.stringify(this.state));
+    const { email, username, name, password, confPassword } = this.state.formData;
+    if (email === '') {
+      alert('Email harus diisi!');
+      return false;
+    } else if (username === '') {
+      alert('Username harus diisi!');
+      return false;
+    } else if (name === '') {
+      alert('Nama harus diisi!');
+      return false;
+    } else if (password === '') {
+      alert('Password harus diisi!');
+      return false;
+    } else if (confPassword === '') {
+      alert('Password konfirmasi harus diisi!');
+      return false;
+    } else if (confPassword !== password) {
+      alert('Password konfirmasi harus sama dengan password!');
+      return false;
+    }
+    Actions.home();
+    return true;
+  }
+
+  renderMain() {
+    if (!this.state.isLogin && !this.state.isRegister) {
+      return (
+        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          <Image source={BelloLogo} style={styles.belloImage} />
+          <TouchableOpacity
+            onPress={() => this.setFormVisibility('login')}
+            style={styles.btn}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.btnText}>Masuk</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.setFormVisibility('register')}
+            style={styles.btn}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.btnText}>Daftar</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+    return null;
   }
 
   renderLoginForm() {
-    return (<Text>logging</Text>);
+    if (this.state.isLogin) {
+      return (
+        <View style={styles.form}>
+          <Text style={styles.formHeading}>LOGIN KE BUKALAPAK</Text>
+          <FormGroup
+            type={'text'}
+            label={'Email'}
+            placeholder={'Masukkan email'}
+            name={'email'}
+            formValue={this.state.email}
+            handleChange={this.setFormValue}
+          />
+          <FormGroup
+            type={'password'}
+            label={'Password'}
+            placeholder={'Masukkan password'}
+            name={'password'}
+            formValue={this.state.password}
+            handleChange={this.setFormValue}
+          />
+          <OrangeButton label={'Login'} handleClick={this.submitLoginForm} />
+          <GreyButton label={'Belum punya akun?'} handleClick={() => this.setFormVisibility('register')} />
+        </View>
+      );
+    }
+    return null;
   }
 
   renderRegisterForm() {
@@ -235,6 +347,7 @@ class AuthContainer extends React.Component {
             handleChange={this.setFormValue}
           />
           <OrangeButton label={'Daftar Sekarang'} handleClick={this.submitRegisterForm} />
+          <GreyButton label={'Sudah punya akun?'} handleClick={() => this.setFormVisibility('login')} />
         </View>
       );
     }
@@ -257,17 +370,8 @@ class AuthContainer extends React.Component {
           <View style={styles.welcome}>
             <Text style={styles.logo}>Bello</Text>
             <Text style={styles.tagline}>Belanja Semudah Bilang Hello!</Text>
-            <Image source={BelloLogo} style={styles.belloImage} />
-            <TouchableOpacity onPress={Actions.home} style={styles.btn} activeOpacity={0.8}>
-              <Text style={styles.btnText}>Masuk</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => this.setFormVisibility('register')}
-              style={styles.btn}
-              activeOpacity={0.8}
-            >
-              <Text style={styles.btnText}>Daftar</Text>
-            </TouchableOpacity>
+            { this.renderMain() }
+            { this.renderLoginForm() }
             { this.renderRegisterForm() }
             { /* this.renderFooter() */ }
           </View>
