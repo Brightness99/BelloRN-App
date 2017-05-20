@@ -26,16 +26,12 @@
     {
       "id": 1,
       "name": "Keyboard Laptop Wireless",
-      "owner": "Makmur Gadget",
-      "price": 20000000,
-      "image": "https://s0.bukalapak.com/img/055041563/medium/image20160822_135.jpg"
+      "maxPrice": 2000000
     },
     {
       "id": 2,
       "name": "Keyboard Laptop Wire",
-      "owner": "Makmur Gadget",
-      "price": 20000000,
-      "image": "https://s0.bukalapak.com/img/096467426/s-194-194/36208486_099b62e6_d402_41e4_b41f_c88d438ffcd3.jpg"
+      "maxPrice": 20000000,
     }
   ]
 }

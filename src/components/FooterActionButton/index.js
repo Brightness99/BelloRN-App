@@ -5,11 +5,11 @@ import { View } from 'react-native';
 import styles from './styles';
 import OrangeButton from '../Core/OrangeButton';
 
-type PropTypes = { text: string };
+type PropTypes = { text: string, handlePress: Function };
 
-const FooterActionButton = ({ text }: PropTypes) => (
+const FooterActionButton = ({ text, handlePress }: PropTypes) => (
   <View style={styles.actionBar}>
-    <OrangeButton label={text} handleClick={() => {}} />
+    <OrangeButton label={text} handleClick={handlePress} />
   </View>
 );
 

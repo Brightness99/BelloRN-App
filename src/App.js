@@ -10,6 +10,7 @@ import {
   ProductContainer,
   CartContainer,
   AnalyticsContainer,
+  RequestContainer,
 } from '../src/containers';
 
 const styles = {
@@ -53,6 +54,7 @@ const MainRouter = () => (
       <SceneWithNavbar key="product" component={ProductContainer} title="PRODUCT" />
       <SceneWithNavbar key="cart" component={CartContainer} title="CART" />
       <SceneWithNavbar key="analytics" component={AnalyticsContainer} title="ANALISA" />
+      <SceneWithNavbar key="request" component={RequestContainer} title="REQUEST" />
     </Scene>
   </Router>
 );
