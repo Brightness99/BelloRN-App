@@ -13,8 +13,6 @@ to install this project on your local development machine, make sure you have no
 ### Starting Out ⏰
 
 to start the project's development server (to update the js bundle), simply use npm/yarn start. You won't be needing this on OSX, since the packager will automatically be prompted when you start debugging on your device.
-<<<<<<< HEAD
-=======
 
 ```
 yarn start
@@ -24,32 +22,6 @@ yarn start
 
 For now, the app only fully supports Android, although it will work just fine on iOS, with several design aspect limitations and quirks.
 
-```
-react-native run-android
-```
-
-## Development 🔧
-
-### Testing 👷
-
-This app uses jest to run snapshot test for React Native and unit test for Redux, as well as integration tests for API integration.
->>>>>>> 15efa2d... update README
-
-```
-yarn start
-```
-
-<<<<<<< HEAD
-### Debugging on Device/Emulator 👷
-=======
-### Lint 📓
-
-This app uses Airbnb as Eslint preset, and Flowtype plugin since we're using Flow.
->>>>>>> 15efa2d... update README
-
-For now, the app only fully supports Android, although it will work just fine on iOS, with several design aspect limitations and quirks.
-
-<<<<<<< HEAD
 ```
 react-native run-android
 ```
@@ -79,13 +51,6 @@ This app uses facebook's Flow to ensure app's predictability. __always__ run thi
 ```
 yarn run flow
 ```
-=======
-### Flow 🌄
-
-This app uses facebook's Flow to ensure app's predictability. __always__ run this before deploying.
-
-`yarn run flow`
->>>>>>> 15efa2d... update README
 
 ### Built With 🔗
 
