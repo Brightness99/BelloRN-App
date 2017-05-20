@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { Text, View, ScrollView, Image, TouchableOpacity, TextInput } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -105,28 +106,32 @@ const styles = {
   },
 };
 
-const FormTextInput = ({ placeholder, name }) => (
+const FormTextInput = ({ formValue, placeholder, name, handleChange }: {formValue: string, placeholder: string, name: string, handleChange: Function}) => (
   <TextInput
     placeholder={placeholder}
     style={styles.formInput}
+    onChangeText={val => handleChange(name, val)}
+    value={formValue}
     underlineColorAndroid={'rgba(255, 255, 255, 0)'}
   />
 );
 
-const SecureFormTextInput = ({ placeholder, name }) => (
+const SecureFormTextInput = ({ formValue, placeholder, name, handleChange }: {formValue: string, placeholder: string, name: string, handleChange: Function}) => (
   <TextInput
     secureTextEntry
     placeholder={placeholder}
     style={styles.formInput}
+    onChangeText={val => handleChange(name, val)}
+    value={formValue}
     underlineColorAndroid={'rgba(255, 255, 255, 0)'}
   />
 );
 
-const FormGroup = ({ label, placeholder, name, type }) => (
+const FormGroup = ({ formValue, label, placeholder, name, type, required = false, handleChange }: {formValue: string, label: string, placeholder: string, name: string, type: string, required: boolean, handleChange: Function}) => (
   <View>
     <Text style={styles.formLabel}>{label}</Text>
-    { type === 'text' && <FormTextInput placeholder={placeholder} name={name} /> }
-    { type === 'password' && <SecureFormTextInput placeholder={placeholder} name={name} /> }
+    { type === 'text' && <FormTextInput formValue={formValue} placeholder={placeholder} name={name} handleChange={handleChange} /> }
+    { type === 'password' && <SecureFormTextInput formValue={formValue} placeholder={placeholder} name={name} handleChange={handleChange} /> }
   </View>
 );
 
@@ -137,9 +142,19 @@ class AuthContainer extends React.Component {
     this.state = {
       isLogin: false,
       isRegister: false,
+      formData: {
+        email: '',
+        username: '',
+        name: '',
+        password: '',
+        confPassword: '',
+      },
     };
 
     this.setFormVisibility = this.setFormVisibility.bind(this);
+    this.setFormValue = this.setFormValue.bind(this);
+    this.submitRegisterForm = this.submitRegisterForm.bind(this);
+
     this.renderLoginForm = this.renderLoginForm.bind(this);
     this.renderRegisterForm = this.renderRegisterForm.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
@@ -157,6 +172,19 @@ class AuthContainer extends React.Component {
     }
   }
 
+  setFormValue(inputKey, inputValue) {
+    const { formData } = this.state;
+    const newFormData = { ...formData };
+    newFormData[inputKey] = inputValue;
+    this.setState({
+      formData: newFormData,
+    });
+  }
+
+  submitRegisterForm() {
+    alert(JSON.stringify(this.state));
+  }
+
   renderLoginForm() {
     return (<Text>logging</Text>);
   }
@@ -171,32 +199,42 @@ class AuthContainer extends React.Component {
             label={'Email'}
             placeholder={'Masukkan email'}
             name={'email'}
+            formValue={this.state.email}
+            handleChange={this.setFormValue}
           />
           <FormGroup
             type={'text'}
             label={'Username'}
             placeholder={'Masukkan username'}
             name={'username'}
+            formValue={this.state.username}
+            handleChange={this.setFormValue}
           />
           <FormGroup
             type={'text'}
             label={'Name'}
             placeholder={'Masukkan nama'}
             name={'name'}
+            formValue={this.state.name}
+            handleChange={this.setFormValue}
           />
           <FormGroup
             type={'password'}
             label={'Password'}
             placeholder={'Masukkan password'}
             name={'password'}
+            formValue={this.state.password}
+            handleChange={this.setFormValue}
           />
           <FormGroup
             type={'password'}
             label={'Confirmation Password'}
             placeholder={'Masukkan password konfirmasi'}
             name={'confPassword'}
+            formValue={this.state.confPassword}
+            handleChange={this.setFormValue}
           />
-          <OrangeButton label={'Daftar Sekarang'} handleClick={() => {}} />
+          <OrangeButton label={'Daftar Sekarang'} handleClick={this.submitRegisterForm} />
         </View>
       );
     }
