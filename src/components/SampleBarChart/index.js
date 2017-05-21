@@ -21,27 +21,27 @@ const SampleBarChart = () => (
   <Svg preserveAspectRatio="xMinYMin meet" style={{ width: '100%', height: '84%', padding: 0, backgroundColor: 'transparent' }}>
     <G fill="none" font-size="10" font-family="sans-serif" text-anchor="end">
       <Path class="domain" stroke="#000" d="M-6,300.5H0.5V0.5H-6" />
-      <G class="tick" opacity="1" transform="translate(0,300)">
+      <G class="tick" opacity="1" x="0" y="300">
         <Line stroke="#000" x2="-6" y1="0.5" y2="0.5" />
         <Text fill="#000" x="-9" y="0.5" dy="0.32em">0</Text>
       </G>
-      <G class="tick" opacity="1" transform="translate(0,240)">
+      <G class="tick" opacity="1" x="0" y="240">
         <Line stroke="#000" x2="-6" y1="0.5" y2="0.5" />
         <Text fill="#000" x="-9" y="0.5" dy="0.32em">5</Text>
       </G>
-      <G class="tick" opacity="1" transform="translate(0,180)">
+      <G class="tick" opacity="1" x="0" y="180">
         <Line stroke="#000" x2="-6" y1="0.5" y2="0.5" />
         <Text fill="#000" x="-9" y="0.5" dy="0.32em">10</Text>
       </G>
-      <G class="tick" opacity="1" transform="translate(0,120)">
+      <G class="tick" opacity="1" x="0" y="120">
         <Line stroke="#000" x2="-6" y1="0.5" y2="0.5" />
         <Text fill="#000" x="-9" y="0.5" dy="0.32em">15</Text>
       </G>
-      <G class="tick" opacity="1" transform="translate(0,60)">
+      <G class="tick" opacity="1" x="0" y="60">
         <Line stroke="#000" x2="-6" y1="0.5" y2="0.5" />
         <Text fill="#000" x="-9" y="0.5" dy="0.32em">20</Text>
       </G>
-      <G class="tick" opacity="1" transform="translate(0,0)">
+      <G class="tick" opacity="1" x="0" y="0">
         <Line stroke="#000" x2="-6" y1="0.5" y2="0.5" />
         <Text fill="#000" x="-9" y="0.5" dy="0.32em">25</Text>
       </G>
@@ -51,7 +51,8 @@ const SampleBarChart = () => (
       font-size="10"
       font-family="sans-serif"
       text-anchor="middle"
-      transform="translate(0,300)"
+      x="0"
+      y="300"
     />
 
     <Rect fill="#96281B" x="51" width="33" y="240" height="60" />

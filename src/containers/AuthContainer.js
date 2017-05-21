@@ -211,6 +211,9 @@ class AuthContainer extends React.Component {
 
   submitLoginForm() {
     const { email, password } = this.state.formData;
+    // QUICK HACK
+    Actions.home();
+    return true;
     if (email === '') {
       alert('Email harus diisi!');
       return false;
