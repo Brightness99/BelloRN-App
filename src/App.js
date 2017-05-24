@@ -10,6 +10,7 @@ import {
   ProductContainer,
   CartContainer,
   AnalyticsContainer,
+  ManageAnalyticsContainer,
   RequestContainer,
 } from '../src/containers';
 
@@ -54,6 +55,7 @@ const MainRouter = () => (
       <SceneWithNavbar key="product" component={ProductContainer} title="PRODUCT" />
       <SceneWithNavbar key="cart" component={CartContainer} title="CART" />
       <SceneWithNavbar key="analytics" component={AnalyticsContainer} title="ANALISA" />
+      <SceneWithNavbar key="manageAnalytics" component={ManageAnalyticsContainer} title="PENGATURAN" />
       <SceneWithNavbar key="request" component={RequestContainer} title="REQUEST" />
     </Scene>
   </Router>

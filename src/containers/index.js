@@ -4,6 +4,7 @@ import ChatContainer from './ChatContainer';
 import ProductContainer from './ProductContainer';
 import CartContainer from './CartContainer';
 import AnalyticsContainer from './AnalyticsContainer';
+import ManageAnalyticsContainer from './ManageAnalyticsContainer';
 import RequestContainer from './RequestContainer';
 
 export {
@@ -13,5 +14,6 @@ export {
   ProductContainer,
   CartContainer,
   AnalyticsContainer,
+  ManageAnalyticsContainer,
   RequestContainer,
 };

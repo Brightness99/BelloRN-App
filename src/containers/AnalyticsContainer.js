@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 import SampleBarChart from '../components/SampleBarChart';
 import TrendLineChart from '../components/TrendLineChart';
@@ -42,7 +43,7 @@ class AnalyticsContainer extends React.Component {
           <TrendLineChart />
           <View style={{ height: 150, width: '100%' }} />
         </ScrollView>
-        <FooterActionButton text="+ Tambah Analisa Baru" handlePress={() => {}} />
+        <FooterActionButton text="+ Tambah Analisa Baru" handlePress={Actions.manageAnalytics} />
       </View>
     );
   }

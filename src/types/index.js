@@ -29,6 +29,15 @@ export type CartType = {
 
 export type CartsType = CartType[];
 
+export type DemandType = {
+  id: number,
+  demand: string,
+  voter: number,
+  category: string,
+};
+
+export type DemandsType = DemandType[];
+
 export type ButtonPropTypes = {
   label: string,
   handleClick: Function,
