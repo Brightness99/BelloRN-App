@@ -30,8 +30,9 @@ import data from '../../data/db.json';
 import styles from './chatContainer.styles';
 
 // Redux Actions
-import { connect } from 'react-redux'
-import { getProductRecommendation } from '../actions/recommendation'
+import { connect } from 'react-redux';
+import { getProductRecommendation } from '../actions/recommendation';
+import { sendBuyRequest } from '../actions/buyrequest';
 
 
 // TODO a quick hack! put this into redux and connect it to renderRightButton
@@ -167,7 +168,15 @@ class productContainer extends React.Component {
       isProductsFetching: true,
     });
     //setTimeout(this.displayProductRecommendations, 3000);
-    this.props.getProductRecommendation(this.state.searchKeyword)
+    this.props.getProductRecommendation(this.state.searchKeyword);
+    /*this.props.sendBuyRequest({
+      user_id: data.user_id,
+      keyword: data.keyword,
+      is_purchase: 0,
+      reminder_schedule: data.reminder_schedule,
+      is_cancel: data.is_cancel,
+      cancelation_reason: data.cancelation_reason,
+    });*/
   }
 
   // Display User Action Bar (Footer)
@@ -509,12 +518,14 @@ class productContainer extends React.Component {
 
 
 const mapDispatchToProps = dispatch => ({
-  getProductRecommendation: (keyword) => dispatch(getProductRecommendation(keyword))
-})
+  getProductRecommendation: keyword => dispatch(getProductRecommendation(keyword)),
+  sendBuyRequest: requestData => dispatch(sendBuyRequest(requestData)),
+});
 
 const mapStateToProps = state => ({
   isFetchingProduct: state.recommendation.isFetching,
-  productResult: state.recommendation.result
-})
+  productResult: state.recommendation.result,
+  userdata: state.userdata.result,
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(productContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(productContainer);

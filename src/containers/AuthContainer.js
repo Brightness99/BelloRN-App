@@ -385,6 +385,7 @@ class AuthContainer extends React.Component {
         )
 
         const userdata = {
+          id : nextProps.loginResult.id,
           email : nextProps.loginResult.email,
           username : nextProps.loginResult.username,
           name : nextProps.loginResult.name,
