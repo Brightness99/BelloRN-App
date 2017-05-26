@@ -29,6 +29,11 @@ import data from '../../data/db.json';
 
 import styles from './chatContainer.styles';
 
+// Redux Actions
+import { connect } from 'react-redux'
+import { getProductRecommendation } from '../actions/recommendation'
+
+
 // TODO a quick hack! put this into redux and connect it to renderRightButton
 let globalCartLength = 0;
 
@@ -49,7 +54,7 @@ class productContainer extends React.Component {
     super(props);
     this.state = {
       isDetailPopupActive: false,
-      products: data.products,
+      products: [],
       selectedProduct: { id: 0, name: '', owner: '', price: 0, image: '', quantity: 0 },
       selectedProductIndexCursor: 0,
       requests: data.requests,
@@ -161,7 +166,8 @@ class productContainer extends React.Component {
       isSearchingSubmitted: true,
       isProductsFetching: true,
     });
-    setTimeout(this.displayProductRecommendations, 3000);
+    //setTimeout(this.displayProductRecommendations, 3000);
+    this.props.getProductRecommendation(this.state.searchKeyword)
   }
 
   // Display User Action Bar (Footer)
@@ -467,6 +473,17 @@ class productContainer extends React.Component {
     return isActionBarVisible && <ActionBar {...actionBarMenu} />;
   }
 
+
+  componentWillReceiveProps = (nextProps) => {
+    if(this.props.isFetchingProduct && !nextProps.isFetchingProduct){
+      this.displayProductRecommendations()
+      this.setState({
+        products: nextProps.productResult.length > 0 ? nextProps.productResult : []
+      })
+    }
+  }
+
+
   render() {
     return (
       <View style={styles.container}>
@@ -490,4 +507,14 @@ class productContainer extends React.Component {
   }
 }
 
-export default productContainer;
+
+const mapDispatchToProps = dispatch => ({
+  getProductRecommendation: (keyword) => dispatch(getProductRecommendation(keyword))
+})
+
+const mapStateToProps = state => ({
+  isFetchingProduct: state.recommendation.isFetching,
+  productResult: state.recommendation.result
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(productContainer)

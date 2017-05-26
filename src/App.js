@@ -4,6 +4,7 @@ import { Scene, Router } from 'react-native-router-flux';
 
 import store from '../src/store/configureStore';
 import {
+  SplashContainer,
   HomeContainer,
   AuthContainer,
   ChatContainer,
@@ -47,6 +48,7 @@ const SceneWithNavbar = props => (
 const MainRouter = () => (
   <Router>
     <Scene key="root" navigationBarStyle={styles.rootNavbar}>
+      <SceneWithoutNavbar key="splash" component={SplashContainer} title="splash" hideNavBar />
       <SceneWithoutNavbar key="login" component={AuthContainer} title="login" hideNavBar />
       <SceneMenu key="home" component={HomeContainer} title="BELLO" hideNavBar={false} />
       <SceneWithNavbar key="chat" component={ChatContainer} title="Bello" />

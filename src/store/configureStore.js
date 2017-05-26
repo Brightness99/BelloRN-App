@@ -1,7 +1,8 @@
-// @flow
+import { createLogger } from 'redux-logger'
+import thunkMiddleware from 'redux-thunk'
+import { createStore, applyMiddleware } from 'redux'
+import rootReducer from '../reducers'
 
-import { createStore, applyMiddleware } from 'redux';
+const loggerMiddleware = createLogger({predicate: (getState, action) => __DEV__})
 
-import rootReducer from '../reducers';
-
-export default createStore(rootReducer, applyMiddleware());
+export default createStore(rootReducer, applyMiddleware(thunkMiddleware, loggerMiddleware))

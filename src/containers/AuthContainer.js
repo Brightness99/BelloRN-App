@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Text, View, ScrollView, Image, TouchableOpacity, TextInput } from 'react-native';
+import { Text, View, ScrollView, Image, TouchableOpacity, TextInput, Dimensions, Alert, AsyncStorage, ActivityIndicator } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import OrangeButton from '../components/Core/OrangeButton';
@@ -8,6 +8,14 @@ import GreyButton from '../components/Core/GreyButton';
 
 import BelloLogo from '../images/bello.png';
 import bukalapakLogo from '../images/white_bukalapak.png';
+
+import { connect } from 'react-redux'
+import { submitLogin } from '../actions/auth'
+import { saveUserdata } from '../actions/userdata'
+
+
+const deviceWidth = Dimensions.get('window').width
+const deviceHeight = Dimensions.get('window').height
 
 const styles = {
   container: {
@@ -218,7 +226,8 @@ class AuthContainer extends React.Component {
       alert('Password harus diisi!');
       return false;
     }
-    Actions.home();
+
+    this.props.submitLogin(email, password)
     return true;
   }
 
@@ -363,6 +372,42 @@ class AuthContainer extends React.Component {
     );
   }
 
+
+  componentWillReceiveProps = (nextProps) => {
+    if(nextProps.loginResult != null){
+      if(nextProps.loginResult.login_status == "Login Succeed"){
+        Alert.alert(
+          'Login Succeed',
+          'You\'ve logged in as ' + nextProps.loginResult.name
+        )
+
+        const userdata = {
+          email : nextProps.loginResult.email,
+          username : nextProps.loginResult.username,
+          name : nextProps.loginResult.name,
+          token : nextProps.loginResult.token
+        }
+        this.setLoggedUserData(userdata).done()
+        this.props.saveUserdata(userdata)
+        Actions.home()
+      } else {
+        Alert.alert(
+          'Login Failed',
+          'Invalid Username or Password'
+        )
+      }
+    }
+  }
+
+  setLoggedUserData = async (user) => {
+    try {
+      await AsyncStorage.setItem('@Bello:user', JSON.stringify(user))
+    } catch (error) {
+      alert('Error Saving Data : ' + error)
+    }
+  }
+
+
   render() {
     return (
       <View style={styles.container}>
@@ -374,6 +419,12 @@ class AuthContainer extends React.Component {
             { this.renderLoginForm() }
             { this.renderRegisterForm() }
             { /* this.renderFooter() */ }
+
+            {
+              (this.props.isFetching) &&
+              <ActivityIndicator style={{ width: 70, height: 70, position: 'absolute', left: deviceWidth/2-35, top: deviceHeight/2-35 }}
+                size="large" color='#efefef' />
+            }
           </View>
         </ScrollView>
       </View>
@@ -381,4 +432,15 @@ class AuthContainer extends React.Component {
   }
 }
 
-export default AuthContainer;
+
+const mapDispatchToProps = dispatch => ({
+  submitLogin: (username, password) => dispatch(submitLogin(username, password)),
+  saveUserdata: (data) => dispatch(saveUserdata(data))
+})
+
+const mapStateToProps = state => ({
+  isFetching: state.auth.isFetching,
+  loginResult: state.auth.result
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthContainer)
