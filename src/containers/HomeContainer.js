@@ -102,24 +102,24 @@ class HomeContainer extends React.Component {
               <Text style={styles.homeTitle}>ANALISA</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.homeCard} onPress={Actions.product} activeOpacity={0.8}>
+          <TouchableOpacity style={styles.homeCard} onPress={Actions.request} activeOpacity={0.8}>
             <View style={styles.homeCardContent}>
-              <Image source={profileIcon} style={styles.homeIcon} />
-              <Text style={styles.homeTitle}>PROFIL</Text>
+              <Image source={reminderIcon} style={styles.homeIcon} />
+              <Text style={styles.homeTitle}>REQUEST</Text>
             </View>
           </TouchableOpacity>
         </View>
         <View style={styles.homeList}>
-          <TouchableOpacity style={styles.homeCard} onPress={Actions.request} activeOpacity={0.8}>
-            <View style={styles.homeCardContent}>
-              <Image source={reminderIcon} style={styles.homeIcon} />
-              <Text style={styles.homeTitle}>REMINDER</Text>
-            </View>
-          </TouchableOpacity>
           <TouchableOpacity style={styles.homeCard} onPress={Actions.product} activeOpacity={0.8}>
             <View style={styles.homeCardContent}>
               <Image source={notificationIcon} style={styles.homeIcon} />
               <Text style={styles.homeTitle}>NOTIFIKASI</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.homeCard} onPress={Actions.product} activeOpacity={0.8}>
+            <View style={styles.homeCardContent}>
+              <Image source={profileIcon} style={styles.homeIcon} />
+              <Text style={styles.homeTitle}>PROFIL</Text>
             </View>
           </TouchableOpacity>
         </View>
