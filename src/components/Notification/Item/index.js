@@ -18,7 +18,6 @@ const NotificationItem = ({ notification, isRead }: PropTypes) => (
       <Text style={styles.title}>{ notification }</Text>
       <View style={{ flexDirection: 'row' }}>
         <OrangeButton label={'Lihat'} handleClick={() => {}} />
-        <RedButton label={'Batalkan'} handleClick={() => {}} />
       </View>
     </View>
   </TouchableOpacity>
