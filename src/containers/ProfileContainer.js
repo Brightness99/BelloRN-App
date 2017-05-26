@@ -6,10 +6,12 @@ import { Actions } from 'react-native-router-flux';
 import ChatSectionHeading from '../components/Chat/SectionHeading';
 import RedButton from '../components/Core/RedButton';
 
+import * as colors from '../constants/colors';
+
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: '#3498DB',
+    backgroundColor: colors.grey,
     alignItems: 'center',
     justifyContent: 'center',
   },

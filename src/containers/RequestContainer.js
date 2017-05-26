@@ -7,13 +7,14 @@ import RequestItem from '../components/Request/Item';
 import FooterActionButton from '../components/FooterActionButton';
 import ChatSectionHeading from '../components/Chat/SectionHeading';
 
+import * as colors from '../constants/colors';
 import data from '../../data/db.json';
 import type { ProductsType } from '../types';
 
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: '#3498DB',
+    backgroundColor: colors.grey,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -27,31 +28,15 @@ const styles = {
 };
 
 class RequestContainer extends React.Component {
-  static renderRightButton = () => (
-    <TouchableOpacity onPress={() => {}}>
-      <Text style={{ color: '#D91E18' }}>Clear All</Text>
-    </TouchableOpacity>
-  );
-
   constructor(props: Object) {
     super(props);
     this.state = {
       requests: data.requests,
     };
-
-    this.clearRequest = this.clearRequest.bind(this);
   }
 
   state: {
     carts: ProductsType,
-  }
-
-  clearRequest: Function;
-
-  clearRequest() {
-    this.setState({
-      requests: [],
-    });
   }
 
   render() {

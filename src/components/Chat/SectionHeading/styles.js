@@ -1,3 +1,5 @@
+import * as colors from '../../../constants/colors';
+
 export default {
   chatSectionHeading: {
     paddingLeft: 20,
@@ -5,6 +7,7 @@ export default {
   },
   chatSectionText: {
     fontWeight: 'bold',
-    color: '#FFF',
+    color: colors.blue,
+    fontSize: 18,
   },
 };

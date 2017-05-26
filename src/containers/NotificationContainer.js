@@ -5,12 +5,13 @@ import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import NotificationItem from '../components/Notification/Item';
 import ChatSectionHeading from '../components/Chat/SectionHeading';
 
+import * as colors from '../constants/colors';
 import type { ProductsType } from '../types';
 
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: '#3498DB',
+    backgroundColor: colors.grey,
     alignItems: 'center',
     justifyContent: 'center',
   },

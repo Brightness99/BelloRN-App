@@ -2,8 +2,7 @@ import React from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
-import MessageBubble from '../components/Chat/MessageBubble';
-
+import * as colors from '../constants/colors';
 import cartIcon from '../images/shopping-cart.png';
 import notificationIcon from '../images/bell.png';
 import reminderIcon from '../images/hourglass.png';
@@ -14,7 +13,7 @@ import profileIcon from '../images/user.png';
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: '#3498DB',
+    backgroundColor: colors.grey,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 30,
@@ -31,7 +30,7 @@ const styles = {
     margin: 10,
     width: '45%',
     height: '80%',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.white,
     borderRadius: 10,
     paddingLeft: 5,
     paddingRight: 5,
@@ -57,19 +56,7 @@ const styles = {
     fontWeight: 'bold',
     fontSize: 12,
     textAlign: 'center',
-    color: '#555',
-  },
-  homePrice: {
-    fontWeight: 'bold',
-    fontSize: 14,
-    color: '#EB9532',
-  },
-  homeSeller: {
-    fontSize: 14,
-    color: '#26A65B',
-  },
-  homeDescription: {
-    color: '#666666',
+    color: colors.darkGrey,
   },
 };
 

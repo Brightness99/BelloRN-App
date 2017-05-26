@@ -3,6 +3,7 @@ import { Provider, connect } from 'react-redux';
 import { Scene, Router } from 'react-native-router-flux';
 
 import store from '../src/store/configureStore';
+import * as colors from './constants/colors';
 import {
   SplashContainer,
   HomeContainer,
@@ -19,7 +20,7 @@ import {
 
 const styles = {
   rootNavbar: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#3498DB',
     borderBottomColor: 'transparent',
     elevation: 2,
   },
@@ -50,7 +51,7 @@ const SceneWithNavbar = props => (
 
 const MainRouter = () => (
   <Router>
-    <Scene key="root" navigationBarStyle={styles.rootNavbar}>
+    <Scene key="root" navigationBarStyle={styles.rootNavbar} titleStyle={{ fontWeight: 'bold', color: '#FFFFFF' }} barButtonIconStyle={{ tintColor: colors.white }}>
       <SceneWithoutNavbar key="splash" component={SplashContainer} title="splash" hideNavBar />
       <SceneWithoutNavbar key="login" component={AuthContainer} title="login" hideNavBar />
       <SceneMenu key="home" component={HomeContainer} title="BELLO" hideNavBar={false} />

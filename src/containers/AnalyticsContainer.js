@@ -3,15 +3,16 @@ import React from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
-import SampleBarChart from '../components/SampleBarChart';
 import TrendLineChart from '../components/TrendLineChart';
 import ChatSectionHeading from '../components/Chat/SectionHeading';
 import FooterActionButton from '../components/FooterActionButton';
 
+import * as colors from '../constants/colors';
+
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: '#3498DB',
+    backgroundColor: colors.grey,
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingTop: 60,

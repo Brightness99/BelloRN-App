@@ -24,6 +24,7 @@ import Svg, {
 import MessageBubble from '../../components/Chat/MessageBubble';
 import OrangeButton from '../../components/Core/OrangeButton';
 import RedButton from '../../components/Core/RedButton';
+import * as colors from '../../constants/colors';
 
 const deviceWidth = Dimensions.get('window').width;
 const svgWidth = deviceWidth * 0.86;
@@ -38,7 +39,7 @@ const styles = {
     borderBottomWidth: 1,
   },
   topicTitle: {
-    color: '#FFFFFF',
+    color: colors.darkGrey,
     fontSize: 18,
     margin: 10,
   },
@@ -137,7 +138,7 @@ class TrendLineChart extends React.Component {
                 <Text
                   x="5"
                   y="5"
-                  fill="#FFFFFF"
+                  fill={colors.darkGrey}
                   fontWeight="bold"
                   fontSize="20"
                 >
