@@ -1,7 +1,9 @@
+import * as colors from '../constants/colors';
+
 export default {
   container: {
     flex: 1,
-    backgroundColor: '#3498DB',
+    backgroundColor: colors.grey,
     alignItems: 'center',
     justifyContent: 'center',
   },

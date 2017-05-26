@@ -1,7 +1,9 @@
+import * as colors from '../../../constants/colors';
+
 export default {
   container: {
     flex: 1,
-    backgroundColor: '#3498DB',
+    backgroundColor: colors.grey,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -99,10 +101,10 @@ export default {
   },
   senderName: {
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: colors.blue,
   },
   messageTime: {
-    color: '#F5F5F5',
+    color: colors.darkGrey,
     fontSize: 12,
   },
 };

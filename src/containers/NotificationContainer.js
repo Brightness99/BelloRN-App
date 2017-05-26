@@ -25,12 +25,6 @@ const styles = {
 };
 
 class NotificationContainer extends React.Component {
-  static renderRightButton = () => (
-    <TouchableOpacity onPress={() => {}}>
-      <Text style={{ color: '#D91E18' }}>Clear All</Text>
-    </TouchableOpacity>
-  );
-
   constructor(props: Object) {
     super(props);
     this.state = {
