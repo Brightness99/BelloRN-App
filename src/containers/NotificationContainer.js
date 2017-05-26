@@ -1,10 +1,8 @@
 // @flow
 import React from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 
 import NotificationItem from '../components/Notification/Item';
-import FooterActionButton from '../components/FooterActionButton';
 import ChatSectionHeading from '../components/Chat/SectionHeading';
 
 import type { ProductsType } from '../types';
@@ -68,7 +66,6 @@ class NotificationContainer extends React.Component {
           ))}
           <View style={{ height: 150, width: '100%' }} />
         </ScrollView>
-        <FooterActionButton text="Selesaikan Pembayaran" handlePress={Actions.home} />
       </View>
     );
   }
