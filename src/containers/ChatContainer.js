@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
 import numeral from 'numeral';
@@ -30,8 +31,7 @@ import data from '../../data/db.json';
 import styles from './chatContainer.styles';
 
 // Redux Actions
-import { connect } from 'react-redux'
-import { getProductRecommendation } from '../actions/recommendation'
+import { getProductRecommendation } from '../actions/recommendation';
 
 
 // TODO a quick hack! put this into redux and connect it to renderRightButton
@@ -166,8 +166,8 @@ class productContainer extends React.Component {
       isSearchingSubmitted: true,
       isProductsFetching: true,
     });
-    //setTimeout(this.displayProductRecommendations, 3000);
-    this.props.getProductRecommendation(this.state.searchKeyword)
+    // setTimeout(this.displayProductRecommendations, 3000);
+    this.props.getProductRecommendation(this.state.searchKeyword);
   }
 
   // Display User Action Bar (Footer)
@@ -237,7 +237,7 @@ class productContainer extends React.Component {
     this.displayActionBar({
       redLabel: 'Harga mahal',
       redMethod: this.productRequestConfAction,
-      orangeLabel: 'Beda Barang',
+      orangeLabel: 'Kurang Info',
       orangeMethod: this.productRequestConfAction,
       greenLabel: 'Lainnya',
       greenMethod: this.productRequestConfAction,
@@ -475,14 +475,13 @@ class productContainer extends React.Component {
 
 
   componentWillReceiveProps = (nextProps) => {
-    if(this.props.isFetchingProduct && !nextProps.isFetchingProduct){
-      this.displayProductRecommendations()
+    if (this.props.isFetchingProduct && !nextProps.isFetchingProduct) {
+      this.displayProductRecommendations();
       this.setState({
-        products: nextProps.productResult.length > 0 ? nextProps.productResult : []
-      })
+        products: nextProps.productResult.length > 0 ? nextProps.productResult : [],
+      });
     }
   }
-
 
   render() {
     return (
@@ -509,12 +508,12 @@ class productContainer extends React.Component {
 
 
 const mapDispatchToProps = dispatch => ({
-  getProductRecommendation: (keyword) => dispatch(getProductRecommendation(keyword))
-})
+  getProductRecommendation: keyword => dispatch(getProductRecommendation(keyword)),
+});
 
 const mapStateToProps = state => ({
   isFetchingProduct: state.recommendation.isFetching,
-  productResult: state.recommendation.result
-})
+  productResult: state.recommendation.result,
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(productContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(productContainer);
