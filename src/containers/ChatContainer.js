@@ -297,8 +297,6 @@ class productContainer extends React.Component {
         selectedProductIndexCursor: indexCursor,
       });
       this.displayActionBar({
-        orangeLabel: 'Tambah ke Wishlist',
-        orangeMethod: () => {},
         greenLabel: 'Beli',
         greenMethod: this.displayProductQuantitySelector,
       });
