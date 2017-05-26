@@ -77,12 +77,20 @@ class TrendLineChart extends React.Component {
         { id: 11, frequency: 10, month: 'Nov' },
         { id: 12, frequency: 12, month: 'Dec' },
       ],
+      isCollapsed: false,
     };
+
+    this.collapseChart = this.collapseChart.bind(this);
+  }
+
+  collapseChart() {
+    this.setState({
+      isCollapsed: !this.state.isCollapsed,
+    });
   }
 
   render() {
-    // const bars = d3.
-    const { dataset } = this.state;
+    const { dataset, isCollapsed } = this.state;
     const frequencies = dataset.map(data => data.frequency);
     const maxData = d3.max(frequencies);
     const yScale = d3.scaleLinear()
@@ -91,57 +99,64 @@ class TrendLineChart extends React.Component {
     return (
       <View style={styles.chartContainer}>
         <RNText style={styles.topicTitle}>Iphone 10 Searches Trends</RNText>
-        <View style={styles.svgContainer}>
-          <Svg style={styles.svgWrapper}>
-            { dataset.map((data, index) => (
-              <G key={data.id}>
-                <Rect
-                  x={index * ((svgWidth / 13) + 2)}
-                  y={svgHeight - yScale(data.frequency)}
-                  width={svgWidth / 13}
-                  height={yScale(data.frequency)}
-                  fill={data.frequency <= maxData / 3 ? '#C0392B' : (data.frequency <= maxData / 2 ? '#EB9532' : '#16A085')}
-                />
+        { !isCollapsed && (
+          <View>
+            <View style={styles.svgContainer}>
+              <Svg style={styles.svgWrapper}>
+                { dataset.map((data, index) => (
+                  <G key={data.id}>
+                    <Rect
+                      x={index * ((svgWidth / 13) + 2)}
+                      y={svgHeight - yScale(data.frequency)}
+                      width={svgWidth / 13}
+                      height={yScale(data.frequency)}
+                      fill={data.frequency <= maxData / 3 ? '#C0392B' : (data.frequency <= maxData / 2 ? '#EB9532' : '#16A085')}
+                    />
+                    <Text
+                      x={(index * ((svgWidth / 13) + 2)) + 6}
+                      y={svgHeight - 12}
+                      fill="#FFFFFF"
+                      textAnchor="start"
+                      fontSize="8"
+                    >
+                      { data.month }
+                    </Text>
+                    <Text
+                      x={(index * ((svgWidth / 13) + 2)) + 5}
+                      y={svgHeight - yScale(data.frequency)}
+                      width={svgWidth / 13}
+                      fill="#FFFFFF"
+                      textAnchor="middle"
+                      fontSize="8"
+                      fontWeight="bold"
+                    >
+                      { data.frequency }
+                    </Text>
+                  </G>
+                ))}
                 <Text
-                  x={(index * ((svgWidth / 13) + 2)) + 6}
-                  y={svgHeight - 12}
+                  x="5"
+                  y="5"
                   fill="#FFFFFF"
-                  textAnchor="start"
-                  fontSize="8"
-                >
-                  { data.month }
-                </Text>
-                <Text
-                  x={(index * ((svgWidth / 13) + 2)) + 5}
-                  y={svgHeight - yScale(data.frequency)}
-                  width={svgWidth / 13}
-                  fill="#FFFFFF"
-                  textAnchor="middle"
-                  fontSize="8"
                   fontWeight="bold"
+                  fontSize="20"
                 >
-                  { data.frequency }
-                </Text>
-              </G>
-            ))}
-            <Text
-              x="5"
-              y="5"
-              fill="#FFFFFF"
-              fontWeight="bold"
-              fontSize="20"
-            >
-            2017
-          </Text>
-          </Svg>
-        </View>
-        <MessageBubble
-          sender="Bello"
-          message="Bello saranin sih bos coba jualan iPhone 10. Baru ada 15 barang yang dijual lho!"
-          time={moment().format('DD-MM-YYYY HH:mm')}
-        />
+                2017
+              </Text>
+              </Svg>
+            </View>
+            <MessageBubble
+              sender="Bello"
+              message="Bello saranin sih bos coba jualan iPhone 10. Baru ada 15 barang yang dijual lho!"
+              time={moment().format('DD-MM-YYYY HH:mm')}
+            />
+          </View>
+        )}
         <View style={{ marginTop: 10, flexDirection: 'row' }}>
-          <OrangeButton label="Sembunyikan Analisa ini" />
+          <OrangeButton
+            label={isCollapsed ? 'Munculkan Chart' : 'Sembunyikan Chart'}
+            handleClick={this.collapseChart}
+          />
           <RedButton label="Hapus Analisa" />
         </View>
       </View>
