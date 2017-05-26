@@ -20,7 +20,7 @@ class SplashContainer extends React.Component {
         this.props.saveUserdata(data);
         Actions.home();
       } else {
-        Actions.login();
+        setTimeout(() => Actions.login(), 500);
       }
     } catch (error) {
       alert(`Error Retrieving Data : ${error}`);
@@ -29,8 +29,8 @@ class SplashContainer extends React.Component {
 
   render() {
     return (
-      <View>
-        <Image source={belloIcon} style={{ width: 200, height: 200 }} />
+      <View style={{ flex: 1, backgroundColor: '#3498DB', alignItems: 'center', justifyContent: 'center' }}>
+        <Image source={belloIcon} style={{ width: 150, height: 150, alignSelf: 'center' }} />
       </View>
     );
   }
