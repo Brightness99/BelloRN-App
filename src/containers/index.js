@@ -8,6 +8,7 @@ import AnalyticsContainer from './AnalyticsContainer';
 import ManageAnalyticsContainer from './ManageAnalyticsContainer';
 import RequestContainer from './RequestContainer';
 import ProfileContainer from './ProfileContainer';
+import NotificationContainer from './NotificationContainer';
 
 export {
   SplashContainer,
@@ -20,4 +21,5 @@ export {
   ManageAnalyticsContainer,
   RequestContainer,
   ProfileContainer,
+  NotificationContainer,
 };

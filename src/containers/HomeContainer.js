@@ -110,7 +110,11 @@ class HomeContainer extends React.Component {
           </TouchableOpacity>
         </View>
         <View style={styles.homeList}>
-          <TouchableOpacity style={styles.homeCard} onPress={Actions.product} activeOpacity={0.8}>
+          <TouchableOpacity
+            style={styles.homeCard}
+            onPress={Actions.notification}
+            activeOpacity={0.8}
+          >
             <View style={styles.homeCardContent}>
               <Image source={notificationIcon} style={styles.homeIcon} />
               <Text style={styles.homeTitle}>NOTIFIKASI</Text>
