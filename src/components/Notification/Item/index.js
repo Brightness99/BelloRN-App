@@ -1,25 +1,26 @@
 // @flow
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import numeral from 'numeral';
 
 import styles from './styles';
 
+import OrangeButton from '../../../components/Core/OrangeButton';
 import RedButton from '../../../components/Core/RedButton';
 
 type PropTypes = {
-  name: string,
+  notification: string,
+  isRead: boolean,
 };
 
-const RequestItem = ({ name }: PropTypes) => (
+const NotificationItem = ({ notification, isRead }: PropTypes) => (
   <TouchableOpacity style={styles.card} onPress={() => {}} activeOpacity={0.95}>
     <View style={styles.cardContent}>
-      <Text style={styles.title}>{ name }</Text>
+      <Text style={styles.title}>{ notification }</Text>
       <View style={{ flexDirection: 'row' }}>
-        <RedButton label={'Batalkan'} handleClick={() => {}} />
+        <OrangeButton label={'Lihat'} handleClick={() => {}} />
       </View>
     </View>
   </TouchableOpacity>
 );
 
-export default RequestItem;
+export default NotificationItem;

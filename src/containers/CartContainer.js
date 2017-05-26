@@ -1,7 +1,6 @@
 // @flow
-
 import React from 'react';
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, Linking } from 'react-native';
 
 import ProductItem from '../components/Product/Item';
 import FooterActionButton from '../components/FooterActionButton';
@@ -39,6 +38,7 @@ class CartContainer extends React.Component {
     };
 
     this.clearCart = this.clearCart.bind(this);
+    this.openBukalapakWeb = this.openBukalapakWeb.bind(this);
   }
 
   state: {
@@ -53,6 +53,11 @@ class CartContainer extends React.Component {
     });
   }
 
+  openBukalapakWeb() {
+    const url = 'https://bukalapak.com';
+    Linking.openURL(url).catch(err => console.error('An error occurred', err));
+  }
+
   render() {
     const { carts } = this.state;
     return (
@@ -63,7 +68,7 @@ class CartContainer extends React.Component {
           ))}
           <View style={{ height: 150, width: '100%' }} />
         </ScrollView>
-        <FooterActionButton text="CHECKOUT" />
+        <FooterActionButton text="CHECKOUT" handlePress={this.openBukalapakWeb} />
       </View>
     );
   }

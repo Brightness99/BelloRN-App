@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
 import numeral from 'numeral';
@@ -167,6 +168,7 @@ class productContainer extends React.Component {
       isSearchingSubmitted: true,
       isProductsFetching: true,
     });
+
     //setTimeout(this.displayProductRecommendations, 3000);
     this.props.getProductRecommendation(this.state.searchKeyword);
     /*this.props.sendBuyRequest({
@@ -246,7 +248,7 @@ class productContainer extends React.Component {
     this.displayActionBar({
       redLabel: 'Harga mahal',
       redMethod: this.productRequestConfAction,
-      orangeLabel: 'Beda Barang',
+      orangeLabel: 'Kurang Info',
       orangeMethod: this.productRequestConfAction,
       greenLabel: 'Lainnya',
       greenMethod: this.productRequestConfAction,
@@ -306,8 +308,6 @@ class productContainer extends React.Component {
         selectedProductIndexCursor: indexCursor,
       });
       this.displayActionBar({
-        orangeLabel: 'Tambah ke Wishlist',
-        orangeMethod: () => {},
         greenLabel: 'Beli',
         greenMethod: this.displayProductQuantitySelector,
       });
@@ -484,14 +484,13 @@ class productContainer extends React.Component {
 
 
   componentWillReceiveProps = (nextProps) => {
-    if(this.props.isFetchingProduct && !nextProps.isFetchingProduct){
-      this.displayProductRecommendations()
+    if (this.props.isFetchingProduct && !nextProps.isFetchingProduct) {
+      this.displayProductRecommendations();
       this.setState({
-        products: nextProps.productResult.length > 0 ? nextProps.productResult : []
-      })
+        products: nextProps.productResult.length > 0 ? nextProps.productResult : [],
+      });
     }
   }
-
 
   render() {
     return (
