@@ -1,3 +1,4 @@
+import SplashContainer from './SplashContainer';
 import HomeContainer from './HomeContainer';
 import AuthContainer from './AuthContainer';
 import ChatContainer from './ChatContainer';
@@ -8,6 +9,7 @@ import ManageAnalyticsContainer from './ManageAnalyticsContainer';
 import RequestContainer from './RequestContainer';
 
 export {
+  SplashContainer,
   HomeContainer,
   AuthContainer,
   ChatContainer,
