@@ -13,6 +13,7 @@ import {
   AnalyticsContainer,
   ManageAnalyticsContainer,
   RequestContainer,
+  ProfileContainer,
 } from '../src/containers';
 
 const styles = {
@@ -59,6 +60,7 @@ const MainRouter = () => (
       <SceneWithNavbar key="analytics" component={AnalyticsContainer} title="ANALISA" />
       <SceneWithNavbar key="manageAnalytics" component={ManageAnalyticsContainer} title="PENGATURAN" />
       <SceneWithNavbar key="request" component={RequestContainer} title="REQUEST" />
+      <SceneWithNavbar key="profile" component={ProfileContainer} title="PROFILE" />
     </Scene>
   </Router>
 );

@@ -7,6 +7,7 @@ import CartContainer from './CartContainer';
 import AnalyticsContainer from './AnalyticsContainer';
 import ManageAnalyticsContainer from './ManageAnalyticsContainer';
 import RequestContainer from './RequestContainer';
+import ProfileContainer from './ProfileContainer';
 
 export {
   SplashContainer,
@@ -18,4 +19,5 @@ export {
   AnalyticsContainer,
   ManageAnalyticsContainer,
   RequestContainer,
+  ProfileContainer,
 };
