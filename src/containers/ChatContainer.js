@@ -56,7 +56,7 @@ class productContainer extends React.Component {
       products: [],
       selectedProduct: { id: 0, name: '', owner: '', price: 0, image: '', quantity: 0 },
       selectedProductIndexCursor: 0,
-      requests: data.requests,
+      requests: [],
       chats: [], // TODO reduxify this state
       isSearching: true,
       isSearchingSubmitted: false,
