@@ -2,8 +2,7 @@ import React from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
-import MessageBubble from '../components/Chat/MessageBubble';
-
+import * as colors from '../constants/colors';
 import cartIcon from '../images/shopping-cart.png';
 import notificationIcon from '../images/bell.png';
 import reminderIcon from '../images/hourglass.png';
@@ -11,10 +10,12 @@ import buyIcon from '../images/shopping-bag.png';
 import analyticsIcon from '../images/bar-chart.png';
 import profileIcon from '../images/user.png';
 
+import ActionSuccessInfo from '../components/Core/ActionSuccessInfo';
+
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: '#3498DB',
+    backgroundColor: colors.grey,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 30,
@@ -31,7 +32,7 @@ const styles = {
     margin: 10,
     width: '45%',
     height: '80%',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.white,
     borderRadius: 10,
     paddingLeft: 5,
     paddingRight: 5,
@@ -57,25 +58,35 @@ const styles = {
     fontWeight: 'bold',
     fontSize: 12,
     textAlign: 'center',
-    color: '#555',
-  },
-  homePrice: {
-    fontWeight: 'bold',
-    fontSize: 14,
-    color: '#EB9532',
-  },
-  homeSeller: {
-    fontSize: 14,
-    color: '#26A65B',
-  },
-  homeDescription: {
-    color: '#666666',
+    color: colors.darkGrey,
   },
 };
 
 class HomeContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      successInfo: false,
+      successInfoMessage: 'Sukses Login! Selamat Datang',
+    };
+
+    this.renderSuccessInfo = this.renderSuccessInfo.bind(this);
+  }
+
   componentDidMount() {
-    // do something about sessions here!
+    // setTimeout(() => this.setState({ successInfo: true }), 300);
+    // setTimeout(() => this.setState({ successInfo: false }), 2000);
+  }
+
+  renderSuccessInfo() {
+    const { successInfo, successInfoMessage } = this.state;
+
+    if (successInfo) {
+      return (
+        <ActionSuccessInfo label={successInfoMessage} />
+      );
+    }
+    return null;
   }
 
   render() {
@@ -127,6 +138,7 @@ class HomeContainer extends React.Component {
             </View>
           </TouchableOpacity>
         </View>
+        { this.renderSuccessInfo() }
       </View>
     );
   }

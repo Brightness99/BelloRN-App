@@ -1,7 +1,9 @@
+import * as colors from '../../constants/colors';
+
 export default {
   actionBar: {
-    backgroundColor: '#EB9532',
-    borderTopColor: '#3498DB',
+    backgroundColor: colors.orange,
+    borderTopColor: colors.grey,
     borderTopWidth: 5,
     padding: 0,
     width: '100%',

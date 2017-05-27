@@ -1,17 +1,20 @@
 // @flow
 import React from 'react';
-import { Text, View, ScrollView, TouchableOpacity, Linking } from 'react-native';
+import { Text, View, ScrollView, Linking } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
+import ChatSectionHeading from '../components/Chat/SectionHeading';
+import HeadingDescription from '../components/Core/HeadingDescription';
 import ProductItem from '../components/Product/Item';
 import FooterActionButton from '../components/FooterActionButton';
 
-import data from '../../data/db.json';
+import * as colors from '../constants/colors';
 import type { ProductsType } from '../types';
 
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: '#3498DB',
+    backgroundColor: colors.grey,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -19,38 +22,23 @@ const styles = {
     flex: 1,
     width: '100%',
     padding: 20,
-    paddingTop: 100,
+    paddingTop: 60,
     flexDirection: 'column',
   },
 };
 
 class CartContainer extends React.Component {
-  static renderRightButton = () => (
-    <TouchableOpacity onPress={() => console.log('onRightPressed')}>
-      <Text style={{ color: '#D91E18' }}>Clear All</Text>
-    </TouchableOpacity>
-  );
-
   constructor(props: Object) {
     super(props);
     this.state = {
-      carts: data.products,
+      carts: [],
     };
 
-    this.clearCart = this.clearCart.bind(this);
     this.openBukalapakWeb = this.openBukalapakWeb.bind(this);
   }
 
   state: {
     carts: ProductsType,
-  }
-
-  clearCart: Function;
-
-  clearCart() {
-    this.setState({
-      carts: [],
-    });
   }
 
   openBukalapakWeb() {
@@ -63,6 +51,9 @@ class CartContainer extends React.Component {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.productList}>
+          <ChatSectionHeading headingText={'Keranjang Belanja'} />
+          <HeadingDescription text={'Keranjang belanja otomatis masuk ke keranjang belanja akun Bukalapak kamu. Checkout untuk masuk ke pembayaran melalui bukalapak'} />
+          <View style={{ height: 30 }} />
           {carts.map(product => (
             <ProductItem key={product.id} {...product} toggleDetailModal={() => {}} />
           ))}

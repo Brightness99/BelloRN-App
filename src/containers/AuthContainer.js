@@ -3,6 +3,7 @@ import React from 'react';
 import { Text, View, ScrollView, Image, TouchableOpacity, TextInput, Dimensions, Alert, AsyncStorage, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
 
 import OrangeButton from '../components/Core/OrangeButton';
 import GreyButton from '../components/Core/GreyButton';
@@ -10,10 +11,8 @@ import GreyButton from '../components/Core/GreyButton';
 import BelloLogo from '../images/bello.png';
 import bukalapakLogo from '../images/white_bukalapak.png';
 
-
 import { submitLogin } from '../actions/auth';
 import { saveUserdata } from '../actions/userdata';
-
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;

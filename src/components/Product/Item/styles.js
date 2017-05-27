@@ -1,11 +1,11 @@
 export default {
   productCard: {
-    margin: 10,
+    margin: 5,
     backgroundColor: '#FFFFFF',
     borderRadius: 5,
     padding: 5,
-    paddingTop: 20,
-    paddingBottom: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
     flex: 1,
     elevation: 3,
     flexDirection: 'row',
@@ -41,5 +41,6 @@ export default {
   },
   productDescription: {
     color: '#666666',
+    fontSize: 12,
   },
 };

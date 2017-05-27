@@ -1,19 +1,21 @@
 // @flow
 import React from 'react';
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import RequestItem from '../components/Request/Item';
 import FooterActionButton from '../components/FooterActionButton';
 import ChatSectionHeading from '../components/Chat/SectionHeading';
+import HeadingDescription from '../components/Core/HeadingDescription';
+import ActionSuccessInfo from '../components/Core/ActionSuccessInfo';
 
-import data from '../../data/db.json';
+import * as colors from '../constants/colors';
 import type { ProductsType } from '../types';
 
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: '#3498DB',
+    backgroundColor: colors.grey,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -21,37 +23,47 @@ const styles = {
     flex: 1,
     width: '100%',
     padding: 20,
-    paddingTop: 100,
+    paddingTop: 60,
     flexDirection: 'column',
   },
 };
 
 class RequestContainer extends React.Component {
-  static renderRightButton = () => (
-    <TouchableOpacity onPress={() => {}}>
-      <Text style={{ color: '#D91E18' }}>Clear All</Text>
-    </TouchableOpacity>
-  );
-
   constructor(props: Object) {
     super(props);
     this.state = {
-      requests: data.requests,
+      requests: [],
+      successInfo: false,
+      successInfoMessage: '',
     };
 
-    this.clearRequest = this.clearRequest.bind(this);
+    this.deleteRequest = this.deleteRequest.bind(this);
   }
 
   state: {
     carts: ProductsType,
   }
 
-  clearRequest: Function;
-
-  clearRequest() {
+  deleteRequest() {
     this.setState({
-      requests: [],
+      successInfo: true,
+      successInfoMessage: 'Request Sukses Dihapus!',
     });
+    setTimeout(() => this.setState({
+      successInfo: false,
+      successInfoMessage: '',
+    }), 2000);
+  }
+
+  renderSuccessInfo() {
+    const { successInfo, successInfoMessage } = this.state;
+
+    if (successInfo) {
+      return (
+        <ActionSuccessInfo label={successInfoMessage} />
+      );
+    }
+    return null;
   }
 
   render() {
@@ -59,13 +71,16 @@ class RequestContainer extends React.Component {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.productList}>
-          <ChatSectionHeading headingText={'List barang yang kamu cari. Bello akan mengabari secepatnya apabila ada barang baru yang sesuai.'} />
+          <ChatSectionHeading headingText={'List Request'} />
+          <HeadingDescription text={'List barang yang kamu request dan akan direminder oleh Bello'} />
+          <View style={{ height: 30 }} />
           {requests.map(request => (
-            <RequestItem key={request.id} {...request} />
+            <RequestItem key={request.id} {...request} deleteRequest={this.deleteRequest} />
           ))}
           <View style={{ height: 150, width: '100%' }} />
         </ScrollView>
         <FooterActionButton text="+ Cari Barang Baru" handlePress={Actions.chat} />
+        { this.renderSuccessInfo() }
       </View>
     );
   }

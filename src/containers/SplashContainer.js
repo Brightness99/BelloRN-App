@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage, View, Image } from 'react-native';
+import { AsyncStorage, View, Animated, Easing } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import { connect } from 'react-redux';
@@ -9,7 +9,13 @@ import belloIcon from '../images/bello.png';
 
 
 class SplashContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.spinValue = new Animated.Value(0);
+  }
+
   componentDidMount = () => {
+    this.spin();
     this.loadLoggedUserData().done();
   }
 
@@ -21,17 +27,41 @@ class SplashContainer extends React.Component {
         this.props.saveUserdata(data);
         Actions.home();
       } else {
-        setTimeout(() => Actions.login(), 500);
+        setTimeout(() => Actions.login(), 3000);
       }
     } catch (error) {
-      alert(`Error Retrieving Data : ${error}`);
+      // alert(`Error Retrieving Data : ${error}`);
     }
   }
 
+  spin() {
+    this.spinValue.setValue(0);
+    Animated.timing(
+      this.spinValue,
+      {
+        toValue: 1,
+        duration: 500,
+        easing: Easing.bounce,
+      },
+    ).start(() => this.spin());
+  }
+
   render() {
+    const spin = this.spinValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, 10],
+    });
     return (
       <View style={{ flex: 1, backgroundColor: '#3498DB', alignItems: 'center', justifyContent: 'center' }}>
-        <Image source={belloIcon} style={{ width: 150, height: 150, alignSelf: 'center' }} />
+        <Animated.Image
+          style={{
+            width: 150,
+            height: 150,
+            alignSelf: 'center',
+            transform: [{ translateY: spin }],
+          }}
+          source={belloIcon}
+        />
       </View>
     );
   }

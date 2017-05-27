@@ -1,17 +1,20 @@
 // @flow
 import React from 'react';
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
-import SampleBarChart from '../components/SampleBarChart';
 import TrendLineChart from '../components/TrendLineChart';
 import ChatSectionHeading from '../components/Chat/SectionHeading';
+import HeadingDescription from '../components/Core/HeadingDescription';
+import ActionSuccessInfo from '../components/Core/ActionSuccessInfo';
 import FooterActionButton from '../components/FooterActionButton';
+
+import * as colors from '../constants/colors';
 
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: '#3498DB',
+    backgroundColor: colors.grey,
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingTop: 60,
@@ -29,21 +32,48 @@ class AnalyticsContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      analytics: []
+      analytics: [],
+      successInfo: false,
+      successInfoMessage: '',
     };
+
+    this.deleteChart = this.deleteChart.bind(this);
+  }
+
+  deleteChart() {
+    this.setState({
+      successInfo: true,
+      successInfoMessage: 'Analisa sukses Dihapus!',
+    });
+    setTimeout(() => this.setState({
+      successInfo: false,
+      successInfoMessage: '',
+    }), 2000);
+  }
+
+  renderSuccessInfo() {
+    const { successInfo, successInfoMessage } = this.state;
+
+    if (successInfo) {
+      return (
+        <ActionSuccessInfo label={successInfoMessage} />
+      );
+    }
+    return null;
   }
 
   render() {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.list}>
-          <ChatSectionHeading headingText={'Kamu Belum Punya Analisa Barang Apapun. Mulai analisa tren sekarang!'} />
-          <TrendLineChart />
-          <TrendLineChart />
-          <TrendLineChart />
-          <View style={{ height: 150, width: '100%' }} />
+          <ChatSectionHeading headingText={'List Analisa'} />
+          <HeadingDescription text={'Kamu Belum Punya Analisa Barang Apapun. Mulai analisa tren sekarang!'} />
+          <TrendLineChart deleteChart={this.deleteChart} />
+          <TrendLineChart deleteChart={this.deleteChart} />
+          <TrendLineChart deleteChart={this.deleteChart} />
         </ScrollView>
         <FooterActionButton text="+ Tambah Analisa Baru" handlePress={Actions.manageAnalytics} />
+        { this.renderSuccessInfo() }
       </View>
     );
   }
