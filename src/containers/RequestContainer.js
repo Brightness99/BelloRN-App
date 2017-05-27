@@ -6,6 +6,7 @@ import { Actions } from 'react-native-router-flux';
 import RequestItem from '../components/Request/Item';
 import FooterActionButton from '../components/FooterActionButton';
 import ChatSectionHeading from '../components/Chat/SectionHeading';
+import HeadingDescription from '../components/Core/HeadingDescription';
 
 import * as colors from '../constants/colors';
 import data from '../../data/db.json';
@@ -45,7 +46,7 @@ class RequestContainer extends React.Component {
       <View style={styles.container}>
         <ScrollView style={styles.productList}>
           <ChatSectionHeading headingText={'List Request'} />
-          <Text style={{ color: '#000' }}>List barang yang kamu request dan akan direminder oleh Bello</Text>
+          <HeadingDescription text={'List barang yang kamu request dan akan direminder oleh Bello'} />
           <View style={{ height: 30 }} />
           {requests.map(request => (
             <RequestItem key={request.id} {...request} />

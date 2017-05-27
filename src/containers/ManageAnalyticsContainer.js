@@ -4,6 +4,7 @@ import { Text, View, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import ChatSectionHeading from '../components/Chat/SectionHeading';
+import HeadingDescription from '../components/Core/HeadingDescription';
 import UserDemandItem from '../components/UserDemand/Item';
 import FooterActionButton from '../components/FooterActionButton';
 
@@ -49,6 +50,7 @@ class ManageAnalyticsContainer extends React.Component {
       <View style={styles.container}>
         <ScrollView style={styles.list}>
           <ChatSectionHeading headingText={'Pencarian Terbesar'} />
+          <HeadingDescription text={'Cari keyword barang yang paling sering dicari oleh user'} />
           {demands.map(demand => (
             <UserDemandItem key={demand.id} {...demand} toggleDetailModal={() => {}} />
           ))}

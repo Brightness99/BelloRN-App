@@ -4,6 +4,7 @@ import { Text, View, ScrollView } from 'react-native';
 
 import NotificationItem from '../components/Notification/Item';
 import ChatSectionHeading from '../components/Chat/SectionHeading';
+import HeadingDescription from '../components/Core/HeadingDescription';
 
 import * as colors from '../constants/colors';
 import type { ProductsType } from '../types';
@@ -56,7 +57,7 @@ class NotificationContainer extends React.Component {
       <View style={styles.container}>
         <ScrollView style={styles.productList}>
           <ChatSectionHeading headingText={'Notifikasimu'} />
-          <Text style={{ color: '#000' }}>List barang yang kamu request dan akan direminder oleh Bello</Text>  
+          <HeadingDescription text={'List barang yang kamu request dan akan direminder oleh Bello'} />
           <View style={{ height: 30 }} />
           {notifications.map(notification => (
             <NotificationItem key={notification.id} {...notification} />

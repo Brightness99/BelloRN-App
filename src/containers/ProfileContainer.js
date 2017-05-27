@@ -4,6 +4,7 @@ import { View, Text, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import ChatSectionHeading from '../components/Chat/SectionHeading';
+import HeadingDescription from '../components/Core/HeadingDescription';
 import RedButton from '../components/Core/RedButton';
 
 import * as colors from '../constants/colors';
@@ -35,7 +36,8 @@ class ProfileContainer extends React.Component {
         <ScrollView style={styles.list}>
           <View>
             <ChatSectionHeading headingText={'My Profile'} />
-            <View style={{ padding: 10 }}>
+            <HeadingDescription text={'Profil account Bukalapak'} />
+            <View style={{ padding: 10, backgroundColor: colors.white, marginTop: 10, borderRadius: 0, elevation: 2 }}>
               <Text style={styles.profileField}>Name: Hendruy</Text>
               <Text style={styles.profileField}>Email: hendruy@gmail.com</Text>
               <RedButton label={'Logout'} handleClick={() => Actions.pop()} />

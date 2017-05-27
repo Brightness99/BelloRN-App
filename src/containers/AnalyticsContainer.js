@@ -5,6 +5,7 @@ import { Actions } from 'react-native-router-flux';
 
 import TrendLineChart from '../components/TrendLineChart';
 import ChatSectionHeading from '../components/Chat/SectionHeading';
+import HeadingDescription from '../components/Core/HeadingDescription';
 import FooterActionButton from '../components/FooterActionButton';
 
 import * as colors from '../constants/colors';
@@ -39,7 +40,7 @@ class AnalyticsContainer extends React.Component {
       <View style={styles.container}>
         <ScrollView style={styles.list}>
           <ChatSectionHeading headingText={'List Analisa'} />
-          <Text>Kamu Belum Punya Analisa Barang Apapun. Mulai analisa tren sekarang!</Text>
+          <HeadingDescription text={'Kamu Belum Punya Analisa Barang Apapun. Mulai analisa tren sekarang!'} />
           <TrendLineChart />
           <TrendLineChart />
           <TrendLineChart />

@@ -1,8 +1,10 @@
 // @flow
 import React from 'react';
-import { Text, View, ScrollView, TouchableOpacity, Linking } from 'react-native';
+import { Text, View, ScrollView, Linking } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
+import ChatSectionHeading from '../components/Chat/SectionHeading';
+import HeadingDescription from '../components/Core/HeadingDescription';
 import ProductItem from '../components/Product/Item';
 import FooterActionButton from '../components/FooterActionButton';
 
@@ -21,7 +23,7 @@ const styles = {
     flex: 1,
     width: '100%',
     padding: 20,
-    paddingTop: 100,
+    paddingTop: 60,
     flexDirection: 'column',
   },
 };
@@ -50,6 +52,9 @@ class CartContainer extends React.Component {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.productList}>
+          <ChatSectionHeading headingText={'Keranjang Belanja'} />
+          <HeadingDescription text={'Keranjang belanja otomatis masuk ke keranjang belanja akun Bukalapak kamu. Checkout untuk masuk ke pembayaran melalui bukalapak'} />
+          <View style={{ height: 30 }} />
           {carts.map(product => (
             <ProductItem key={product.id} {...product} toggleDetailModal={() => {}} />
           ))}
