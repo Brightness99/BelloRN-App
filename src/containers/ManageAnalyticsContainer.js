@@ -1,19 +1,20 @@
 // @flow
 import React from 'react';
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import ChatSectionHeading from '../components/Chat/SectionHeading';
 import UserDemandItem from '../components/UserDemand/Item';
 import FooterActionButton from '../components/FooterActionButton';
 
+import * as colors from '../constants/colors';
 import data from '../../data/db.json';
 import type { DemandsType } from '../types';
 
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: '#3498DB',
+    backgroundColor: colors.grey,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -21,7 +22,7 @@ const styles = {
     flex: 1,
     width: '100%',
     padding: 20,
-    paddingTop: 100,
+    paddingTop: 60,
     flexDirection: 'column',
   },
 };

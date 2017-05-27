@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import TrendLineChart from '../components/TrendLineChart';
@@ -30,7 +30,7 @@ class AnalyticsContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      analytics: []
+      analytics: [],
     };
   }
 
@@ -38,7 +38,8 @@ class AnalyticsContainer extends React.Component {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.list}>
-          <ChatSectionHeading headingText={'Kamu Belum Punya Analisa Barang Apapun. Mulai analisa tren sekarang!'} />
+          <ChatSectionHeading headingText={'List Analisa'} />
+          <Text>Kamu Belum Punya Analisa Barang Apapun. Mulai analisa tren sekarang!</Text>
           <TrendLineChart />
           <TrendLineChart />
           <TrendLineChart />

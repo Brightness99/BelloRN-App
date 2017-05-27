@@ -6,6 +6,7 @@ export default {
     backgroundColor: colors.grey,
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 20,
   },
   chatList: {
     flex: 1,
