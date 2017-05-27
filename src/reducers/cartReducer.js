@@ -1,25 +1,25 @@
-import { FETCH_BUY_REQUEST, SEND_BUY_REQUEST, UPDATE_BUY_REQUEST } from '../actions/types';
+import { FETCH_CART, GET_CART, ADD_TO_CART } from '../actions/types';
 
 const initialState = {
   isFetching: false,
-  result: null,
+  result: [],
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case FETCH_BUY_REQUEST :
+    case FETCH_CART :
       return {
         isFetching: true,
         result: state.result,
       };
 
-    case SEND_BUY_REQUEST :
-    case UPDATE_BUY_REQUEST :
+    case GET_CART :
       return {
         isFetching: false,
-        result: state.result,
+        result: action.result,
       };
 
+    case ADD_TO_CART :
     default :
       return state;
   }

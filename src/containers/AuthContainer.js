@@ -3,7 +3,6 @@ import React from 'react';
 import { Text, View, ScrollView, Image, TouchableOpacity, TextInput, Dimensions, Alert, AsyncStorage, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { connect } from 'react-redux';
 
 import OrangeButton from '../components/Core/OrangeButton';
 import GreyButton from '../components/Core/GreyButton';

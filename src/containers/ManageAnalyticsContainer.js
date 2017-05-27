@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, ActivityIndicator } from 'react-native';
+import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
 import ChatSectionHeading from '../components/Chat/SectionHeading';
@@ -8,6 +9,8 @@ import HeadingDescription from '../components/Core/HeadingDescription';
 import ActionSuccessInfo from '../components/Core/ActionSuccessInfo';
 import UserDemandItem from '../components/UserDemand/Item';
 import FooterActionButton from '../components/FooterActionButton';
+
+import { getDemandData } from '../actions/demand';
 
 import * as colors from '../constants/colors';
 import type { DemandsType } from '../types';
@@ -48,6 +51,12 @@ class ManageAnalyticsContainer extends React.Component {
     demands: DemandsType,
   }
 
+
+  componentDidMount = () => {
+    this.props.getDemandData();
+  }
+
+
   addChart() {
     this.setState({
       successInfo: true,
@@ -71,24 +80,26 @@ class ManageAnalyticsContainer extends React.Component {
   }
 
   render() {
-    const { demands } = this.state;
+    const demands = this.props.result;
     return (
       <View style={styles.container}>
         <ScrollView style={styles.list}>
           <ChatSectionHeading headingText={'Pencarian Terbesar'} />
           <HeadingDescription text={'Cari keyword barang yang paling sering dicari oleh user'} />
-          {demands.map(demand => (
-            <UserDemandItem
-              key={demand.id}
-              {...demand}
-              addChart={this.addChart}
-              toggleDetailModal={() => {}}
-            />
-          ))}
-          <ChatSectionHeading headingText={'Pencarian Sesuai Minat Kamu'} />
-          {demands.map(demand => (
-            <UserDemandItem key={demand.id} {...demand} toggleDetailModal={() => {}} />
-          ))}
+          {
+            (
+              (demands.length > 0) &&
+              demands.map(demand => (
+                <UserDemandItem
+                  key={demand.id}
+                  {...demand}
+                  addChart={this.addChart}
+                  toggleDetailModal={() => {}}
+                />
+              ))
+            ) ||
+            <ActivityIndicator size="large" color="#3498db" style={{ paddingTop: 30 }} />
+          }
         </ScrollView>
         <FooterActionButton text="< Kembali ke Analisa" handlePress={Actions.pop} />
         { this.renderSuccessInfo() }
@@ -97,4 +108,14 @@ class ManageAnalyticsContainer extends React.Component {
   }
 }
 
-export default ManageAnalyticsContainer;
+
+const mapDispatchToProps = dispatch => ({
+  getDemandData: () => dispatch(getDemandData()),
+});
+
+const mapStateToProps = state => ({
+  isFetching: state.demand.isFetching,
+  result: state.demand.result,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ManageAnalyticsContainer);

@@ -49,7 +49,7 @@ const ProductDetailPopup = ({
           </ScrollView>
         ) ||
         <Text
-          style={{ paddingTop: 50, paddingBottom: 50 }}
+          style={{ paddingTop: 35, paddingBottom: 35 }}
         >
           Maaf, belum ada Review untuk produk ini
         </Text>

@@ -10,10 +10,11 @@ type PropTypes = {
   name: string,
   owner: string,
   price: number,
+  quantity: number,
   image: string,
 };
 
-const ProductItem = ({ toggleDetailModal, name, owner, price, image }: PropTypes) => (
+const ProductItem = ({ toggleDetailModal, name, owner, price, quantity, image }: PropTypes) => (
   <TouchableOpacity style={styles.productCard} onPress={toggleDetailModal} activeOpacity={0.95}>
     <View style={styles.productCardImage}>
       <Image style={styles.productImage} source={{ uri: image }} />
@@ -21,7 +22,10 @@ const ProductItem = ({ toggleDetailModal, name, owner, price, image }: PropTypes
     <View style={styles.productCardContent}>
       <Text style={styles.productTitle}>{ name }</Text>
       <Text style={styles.productDescription}>oleh { owner }</Text>
-      <Text style={styles.productPrice}>{ `Rp.${numeral(price).format('0,0[.]00')}` }</Text>
+      <Text style={styles.productPrice}>
+        { quantity ? `${quantity} x ` : '' }
+        { `Rp ${numeral(price).format('0,0[.]00')}` }
+      </Text>
     </View>
   </TouchableOpacity>
 );

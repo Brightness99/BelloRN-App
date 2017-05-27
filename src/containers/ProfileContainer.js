@@ -60,8 +60,12 @@ class ProfileContainer extends React.Component {
               borderRadius: 0,
               elevation: 2 }}
             >
-              <Text style={styles.profileField}>Name: Hendruy</Text>
-              <Text style={styles.profileField}>Email: hendruy@gmail.com</Text>
+              <Text style={styles.profileField}>Email: {this.props.userdata.email}</Text>
+              <Text style={styles.profileField}>Username: {this.props.userdata.username}</Text>
+              <Text style={styles.profileField}>Name: {this.props.userdata.name}</Text>
+
+              <Text style={{ paddingTop: 10, paddingBottom: 10 }}> </Text>
+
               <RedButton label={'Logout'} handleClick={() => this.removeLoggedUserData().done()} />
             </View>
           </View>
@@ -76,4 +80,8 @@ const mapDispatchToProps = dispatch => ({
   removeUserdata: () => dispatch(removeUserdata()),
 });
 
-export default connect(null, mapDispatchToProps)(ProfileContainer);
+const mapStateToProps = state => ({
+  userdata: state.userdata.result,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer);
