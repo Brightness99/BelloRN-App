@@ -1,11 +1,12 @@
 // @flow
 import React from 'react';
-import { Text, View, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import TrendLineChart from '../components/TrendLineChart';
 import ChatSectionHeading from '../components/Chat/SectionHeading';
 import HeadingDescription from '../components/Core/HeadingDescription';
+import ActionSuccessInfo from '../components/Core/ActionSuccessInfo';
 import FooterActionButton from '../components/FooterActionButton';
 
 import * as colors from '../constants/colors';
@@ -32,7 +33,33 @@ class AnalyticsContainer extends React.Component {
     super(props);
     this.state = {
       analytics: [],
+      successInfo: false,
+      successInfoMessage: '',
     };
+
+    this.deleteChart = this.deleteChart.bind(this);
+  }
+
+  deleteChart() {
+    this.setState({
+      successInfo: true,
+      successInfoMessage: 'Analisa sukses Dihapus!',
+    });
+    setTimeout(() => this.setState({
+      successInfo: false,
+      successInfoMessage: '',
+    }), 2000);
+  }
+
+  renderSuccessInfo() {
+    const { successInfo, successInfoMessage } = this.state;
+
+    if (successInfo) {
+      return (
+        <ActionSuccessInfo label={successInfoMessage} />
+      );
+    }
+    return null;
   }
 
   render() {
@@ -41,12 +68,12 @@ class AnalyticsContainer extends React.Component {
         <ScrollView style={styles.list}>
           <ChatSectionHeading headingText={'List Analisa'} />
           <HeadingDescription text={'Kamu Belum Punya Analisa Barang Apapun. Mulai analisa tren sekarang!'} />
-          <TrendLineChart />
-          <TrendLineChart />
-          <TrendLineChart />
-          <View style={{ height: 150, width: '100%' }} />
+          <TrendLineChart deleteChart={this.deleteChart} />
+          <TrendLineChart deleteChart={this.deleteChart} />
+          <TrendLineChart deleteChart={this.deleteChart} />
         </ScrollView>
         <FooterActionButton text="+ Tambah Analisa Baru" handlePress={Actions.manageAnalytics} />
+        { this.renderSuccessInfo() }
       </View>
     );
   }

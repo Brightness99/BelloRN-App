@@ -13,7 +13,7 @@ type PropTypes = {
   category: string,
 };
 
-const UserDemandItem = ({ demand, voter, category }: PropTypes) => (
+const UserDemandItem = ({ demand, voter, category, addChart }: PropTypes) => (
   <TouchableOpacity style={styles.card} onPress={() => {}} activeOpacity={0.95}>
     <View style={styles.cardContent}>
       <View style={{ alignItems: 'center' }}>
@@ -22,7 +22,7 @@ const UserDemandItem = ({ demand, voter, category }: PropTypes) => (
         <Text style={styles.smaller}>Category: { category }</Text>
       </View>
       <View style={{ flexDirection: 'row', paddingTop: 15, paddingLeft: 10, paddingRight: 10 }}>
-        <GreenButton label={'Pilih'} handleClick={() => {}} />
+        <GreenButton label={'Pilih'} handleClick={addChart} />
       </View>
     </View>
   </TouchableOpacity>

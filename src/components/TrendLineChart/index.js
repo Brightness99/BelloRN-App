@@ -107,7 +107,6 @@ class TrendLineChart extends React.Component {
       isCollapsed: !isCollapsed,
       // collapsibleMaxHeight: maxHeight,
     });
-    console.log(animation);
   }
 
   render() {
@@ -180,7 +179,7 @@ class TrendLineChart extends React.Component {
             label={isCollapsed ? 'Munculkan Chart' : 'Sembunyikan Chart'}
             handleClick={this.collapseChart}
           />
-          <RedButton label="Hapus Analisa" />
+          <RedButton label="Hapus Analisa" handleClick={this.props.deleteChart} />
         </View>
       </View>
     );
