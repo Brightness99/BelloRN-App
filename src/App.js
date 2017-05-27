@@ -74,8 +74,17 @@ const mapStateToProps = state => ({ scene: state.scene });
 const ConnectedRouter = connect(mapStateToProps, null)(MainRouter);
 
 class App extends React.Component {
+  componentWillMount() {
+    OneSignal.addEventListener('ids', this.onIds);
+  }
+
   componentDidMount() {
     OneSignal.configure({});
+  }
+
+  onIds(device) {
+    const onesignalId = device.userId;
+    // TODO update user's onesignalID
   }
 
   render() {
