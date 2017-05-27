@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import ChatSectionHeading from '../components/Chat/SectionHeading';
@@ -15,12 +15,16 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
   },
-  productList: {
+  list: {
     flex: 1,
     width: '100%',
     padding: 20,
-    paddingTop: 100,
+    paddingTop: 60,
     flexDirection: 'column',
+  },
+  profileField: {
+    color: colors.darkGrey,
+    margin: 10,
   },
 };
 
@@ -28,10 +32,14 @@ class ProfileContainer extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.productList}>
+        <ScrollView style={styles.list}>
           <View>
             <ChatSectionHeading headingText={'My Profile'} />
-            <RedButton label={'Logout'} handleClick={() => Actions.pop()} />
+            <View style={{ padding: 10 }}>
+              <Text style={styles.profileField}>Name: Hendruy</Text>
+              <Text style={styles.profileField}>Email: hendruy@gmail.com</Text>
+              <RedButton label={'Logout'} handleClick={() => Actions.pop()} />
+            </View>
           </View>
         </ScrollView>
       </View>

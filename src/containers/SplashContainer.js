@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage, View, Image, Animated, Easing } from 'react-native';
+import { AsyncStorage, View, Animated, Easing } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import { connect } from 'react-redux';
@@ -29,7 +29,7 @@ class SplashContainer extends React.Component {
         setTimeout(() => Actions.login(), 3000);
       }
     } catch (error) {
-      alert(`Error Retrieving Data : ${error}`);
+      // alert(`Error Retrieving Data : ${error}`);
     }
   }
 

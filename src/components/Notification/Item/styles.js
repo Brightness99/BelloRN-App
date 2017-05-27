@@ -1,9 +1,9 @@
 export default {
   card: {
-    margin: 10,
+    margin: 3,
     backgroundColor: '#FFFFFF',
     borderRadius: 5,
-    padding: 20,
+    padding: 10,
     flex: 1,
     elevation: 3,
     flexDirection: 'row',

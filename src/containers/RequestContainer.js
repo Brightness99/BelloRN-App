@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import RequestItem from '../components/Request/Item';
@@ -22,7 +22,7 @@ const styles = {
     flex: 1,
     width: '100%',
     padding: 20,
-    paddingTop: 100,
+    paddingTop: 60,
     flexDirection: 'column',
   },
 };
@@ -44,7 +44,9 @@ class RequestContainer extends React.Component {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.productList}>
-          <ChatSectionHeading headingText={'List barang yang kamu cari. Bello akan mengabari secepatnya apabila ada barang baru yang sesuai.'} />
+          <ChatSectionHeading headingText={'List Request'} />
+          <Text style={{ color: '#000' }}>List barang yang kamu request dan akan direminder oleh Bello</Text>
+          <View style={{ height: 30 }} />
           {requests.map(request => (
             <RequestItem key={request.id} {...request} />
           ))}

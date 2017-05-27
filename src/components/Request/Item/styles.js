@@ -1,9 +1,9 @@
 export default {
   card: {
-    margin: 10,
+    margin: 3,
     backgroundColor: '#FFFFFF',
     borderRadius: 5,
-    padding: 20,
+    padding: 10,
     flex: 1,
     elevation: 3,
     flexDirection: 'row',
@@ -15,7 +15,8 @@ export default {
   },
   title: {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 14,
+    textAlign: 'center',
   },
   maxPrice: {
     fontWeight: 'bold',

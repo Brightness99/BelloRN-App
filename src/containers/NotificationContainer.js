@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
 
 import NotificationItem from '../components/Notification/Item';
 import ChatSectionHeading from '../components/Chat/SectionHeading';
@@ -19,7 +19,7 @@ const styles = {
     flex: 1,
     width: '100%',
     padding: 20,
-    paddingTop: 100,
+    paddingTop: 60,
     flexDirection: 'column',
   },
 };
@@ -29,9 +29,9 @@ class NotificationContainer extends React.Component {
     super(props);
     this.state = {
       notifications: [
-        { id: 1, notification: 'Ada barang baru untuk pencarian iPhone 10', isRead: false },
-        { id: 2, notification: 'Ada barang baru untuk pencarian baju koko', isRead: false },
-        { id: 3, notification: 'Ada barang baru untuk pencarian celana renang', isRead: true },
+        { id: 1, notification: '5 barang baru untuk pencarian iPhone 10', isRead: false },
+        { id: 2, notification: '3 barang baru untuk pencarian baju koko', isRead: false },
+        { id: 3, notification: '7 barang baru untuk pencarian celana renang', isRead: true },
       ],
     };
 
@@ -56,6 +56,8 @@ class NotificationContainer extends React.Component {
       <View style={styles.container}>
         <ScrollView style={styles.productList}>
           <ChatSectionHeading headingText={'Notifikasimu'} />
+          <Text style={{ color: '#000' }}>List barang yang kamu request dan akan direminder oleh Bello</Text>  
+          <View style={{ height: 30 }} />
           {notifications.map(notification => (
             <NotificationItem key={notification.id} {...notification} />
           ))}
