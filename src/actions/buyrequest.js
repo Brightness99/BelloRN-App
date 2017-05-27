@@ -31,6 +31,7 @@ export function sendBuyRequest(data) {
         reminder_schedule: data.reminder_schedule,
         is_cancel: data.is_cancel,
         cancelation_reason: data.cancelation_reason,
+        is_delete: data.is_delete
       }),
       headers: header,
     })

@@ -37,13 +37,23 @@ const ProductDetailPopup = ({
       <Text style={styles.productDescription}>{ product.owner }</Text>
       <Text style={styles.productPrice}>{ `Rp.${numeral(product.price).format('0,0[.]00')}` }</Text>
       <Text style={{ fontWeight: 'bold' }}>Reviews</Text>
-      <ScrollView horizontal style={styles.reviews}>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((productRec, i) => (
-          <View key={i} style={styles.reviewWrapper}>
-            <ReviewItem />
-          </View>
-        ))}
-      </ScrollView>
+      {
+        (
+          (product.reviews !== '') &&
+          <ScrollView horizontal style={styles.reviews}>
+            {product.reviews.map((productRec, i) => (
+              <View key={productRec.id} style={styles.reviewWrapper}>
+                <ReviewItem review={productRec} />
+              </View>
+            ))}
+          </ScrollView>
+        ) ||
+        <Text
+          style={{ paddingTop: 50, paddingBottom: 50 }}
+        >
+          Maaf, belum ada Review untuk produk ini
+        </Text>
+      }
       <View style={styles.btnWrapper}>
         <GreyButton label="<< Sebelumnya" handleClick={productCursorPrev} />
         <GreyButton label="Selanjutnya >>" handleClick={productCursorNext} />

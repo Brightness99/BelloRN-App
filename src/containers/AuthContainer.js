@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { Text, View, ScrollView, Image, TouchableOpacity, TextInput, Dimensions, Alert, AsyncStorage, ActivityIndicator } from 'react-native';
+import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
 import OrangeButton from '../components/Core/OrangeButton';
@@ -9,13 +10,13 @@ import GreyButton from '../components/Core/GreyButton';
 import BelloLogo from '../images/bello.png';
 import bukalapakLogo from '../images/white_bukalapak.png';
 
-import { connect } from 'react-redux'
-import { submitLogin } from '../actions/auth'
-import { saveUserdata } from '../actions/userdata'
+
+import { submitLogin } from '../actions/auth';
+import { saveUserdata } from '../actions/userdata';
 
 
-const deviceWidth = Dimensions.get('window').width
-const deviceHeight = Dimensions.get('window').height
+const deviceWidth = Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height;
 
 const styles = {
   container: {
@@ -200,14 +201,6 @@ class AuthContainer extends React.Component {
     // do something about login sessions here!
   }
 
-  setFormVisibility(formToDisplay) {
-    switch (formToDisplay) {
-      case 'login': this.setState({ isLogin: true, isRegister: false }); break;
-      case 'register': this.setState({ isLogin: false, isRegister: true }); break;
-      default: this.setState({ isLogin: false, isRegister: false });
-    }
-  }
-
   setFormValue(inputKey, inputValue) {
     const { formData } = this.state;
     const newFormData = { ...formData };
@@ -219,9 +212,7 @@ class AuthContainer extends React.Component {
 
   submitLoginForm() {
     const { email, password } = this.state.formData;
-    // QUICK HACK
-    Actions.home();
-    return true;
+
     if (email === '') {
       alert('Email harus diisi!');
       return false;
@@ -230,7 +221,7 @@ class AuthContainer extends React.Component {
       return false;
     }
 
-    this.props.submitLogin(email, password)
+    this.props.submitLogin(email, password);
     return true;
   }
 
@@ -366,6 +357,7 @@ class AuthContainer extends React.Component {
     return null;
   }
 
+
   renderFooter() {
     return (
       <View style={styles.footerSponsor}>
@@ -377,37 +369,45 @@ class AuthContainer extends React.Component {
 
 
   componentWillReceiveProps = (nextProps) => {
-    if(nextProps.loginResult != null){
-      if(nextProps.loginResult.login_status == "Login Succeed"){
+    if (nextProps.loginResult != null) {
+      if (nextProps.loginResult.login_status === "Login Succeed") {
         Alert.alert(
           'Login Succeed',
-          'You\'ve logged in as ' + nextProps.loginResult.name
-        )
+          `You've logged in as ${nextProps.loginResult.name}`,
+        );
 
         const userdata = {
-          id : nextProps.loginResult.id,
-          email : nextProps.loginResult.email,
-          username : nextProps.loginResult.username,
-          name : nextProps.loginResult.name,
-          token : nextProps.loginResult.token
-        }
-        this.setLoggedUserData(userdata).done()
-        this.props.saveUserdata(userdata)
-        Actions.home()
+          id: nextProps.loginResult.id,
+          email: nextProps.loginResult.email,
+          username: nextProps.loginResult.username,
+          name: nextProps.loginResult.name,
+          token: nextProps.loginResult.token,
+        };
+        this.setLoggedUserData(userdata).done();
+        this.props.saveUserdata(userdata);
+        Actions.home();
       } else {
         Alert.alert(
           'Login Failed',
-          'Invalid Username or Password'
-        )
+          'Invalid Username or Password',
+        );
       }
     }
   }
 
   setLoggedUserData = async (user) => {
     try {
-      await AsyncStorage.setItem('@Bello:user', JSON.stringify(user))
+      await AsyncStorage.setItem('@Bello:user', JSON.stringify(user));
     } catch (error) {
-      alert('Error Saving Data : ' + error)
+      alert(`Error Saving Data ${error}`);
+    }
+  }
+
+  setFormVisibility(formToDisplay) {
+    switch (formToDisplay) {
+      case 'login': this.setState({ isLogin: true, isRegister: false }); break;
+      case 'register': this.setState({ isLogin: false, isRegister: true }); break;
+      default: this.setState({ isLogin: false, isRegister: false });
     }
   }
 
@@ -426,8 +426,7 @@ class AuthContainer extends React.Component {
 
             {
               (this.props.isFetching) &&
-              <ActivityIndicator style={{ width: 70, height: 70, position: 'absolute', left: deviceWidth/2-35, top: deviceHeight/2-35 }}
-                size="large" color='#efefef' />
+              <ActivityIndicator style={{ width: 70, height: 70, position: 'absolute', left: ((deviceWidth / 2) - 35), top: ((deviceHeight / 2) - 35) }} size="large" color="#efefef" />
             }
           </View>
         </ScrollView>
@@ -439,12 +438,12 @@ class AuthContainer extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   submitLogin: (username, password) => dispatch(submitLogin(username, password)),
-  saveUserdata: (data) => dispatch(saveUserdata(data))
-})
+  saveUserdata: data => dispatch(saveUserdata(data)),
+});
 
 const mapStateToProps = state => ({
   isFetching: state.auth.isFetching,
-  loginResult: state.auth.result
-})
+  loginResult: state.auth.result,
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(AuthContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(AuthContainer);

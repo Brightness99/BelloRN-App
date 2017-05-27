@@ -31,7 +31,6 @@ import data from '../../data/db.json';
 import styles from './chatContainer.styles';
 
 // Redux Actions
-import { connect } from 'react-redux';
 import { getProductRecommendation } from '../actions/recommendation';
 import { sendBuyRequest } from '../actions/buyrequest';
 
@@ -118,10 +117,21 @@ class productContainer extends React.Component {
     carts: ProductsType,
   };
 
+
   componentDidMount() {
     // initial greet message
     this.addChatMessage('Bello', 'Bello! Mau beli apa hari ini?');
   }
+
+  componentWillReceiveProps = (nextProps) => {
+    if (this.props.isFetchingProduct && !nextProps.isFetchingProduct) {
+      this.displayProductRecommendations();
+      this.setState({
+        products: nextProps.productResult.length > 0 ? nextProps.productResult : [],
+      });
+    }
+  }
+
 
   // static functions StateTypes
   addChatMessage: Function;
@@ -144,7 +154,10 @@ class productContainer extends React.Component {
   addProductToCart: Function;
 
   scrollViewComponent: ReactElement<any>;
-  props: {};
+  props: {
+    getProductRecommendation: Function,
+    sendBuyRequest: Function
+  };
 
   // Add New Chat Message to Local State
   addChatMessage(sender: string, message: string) {
@@ -169,16 +182,18 @@ class productContainer extends React.Component {
       isProductsFetching: true,
     });
 
-    //setTimeout(this.displayProductRecommendations, 3000);
+    // setTimeout(this.displayProductRecommendations, 3000);
     this.props.getProductRecommendation(this.state.searchKeyword);
-    /*this.props.sendBuyRequest({
-      user_id: data.user_id,
-      keyword: data.keyword,
+    this.props.sendBuyRequest({
+      user_id: this.props.userdata.id,
+      keyword: this.state.searchKeyword,
       is_purchase: 0,
-      reminder_schedule: data.reminder_schedule,
-      is_cancel: data.is_cancel,
-      cancelation_reason: data.cancelation_reason,
-    });*/
+      reminder_schedule: moment().format('YYYY-MM-DD'),
+      is_cancel: 0,
+      cancelation_reason: '',
+      is_delete: 0
+    });
+    // alert(moment().add(14, 'days').format('YYYY-MM-DD'));
   }
 
   // Display User Action Bar (Footer)
@@ -368,8 +383,12 @@ class productContainer extends React.Component {
       carts: newCarts,
       isSettingProductQuantity: false,
     });
-    globalCartLength += 1; // global cart length hack, remove this later
+
     this.addChatMessage('Me', `Pesan ${selectedProduct.quantity} item ya!`);
+
+    console.log('Product');
+    console.log(this.state.selectedProduct);
+
     setTimeout(() => {
       this.addChatMessage('Bello', `Siap! ${selectedProduct.name} sudah Bello masukin ke cart. Apakah ada lagi yang mau dibeli?`);
     }, 500);
@@ -470,7 +489,7 @@ class productContainer extends React.Component {
           <GreyButton label={'+'} handleClick={() => this.setSelectedProductQuantity(1)} />
         </View>
         <Text style={{ fontWeight: 'bold', fontSize: 20, color: '#FFFFFF', textAlign: 'center' }}>
-          { `Rp.${numeral(selectedProduct.price * selectedProduct.quantity).format('0,0[.]00')}` }
+          { `Rp ${numeral(selectedProduct.price * selectedProduct.quantity).format('0,0[.]00')}` }
         </Text>
         <OrangeButton label={'Lanjut'} handleClick={this.addProductToCart} />
       </View>
@@ -480,16 +499,6 @@ class productContainer extends React.Component {
   renderActionBar() {
     const { isActionBarVisible, actionBarMenu } = this.state;
     return isActionBarVisible && <ActionBar {...actionBarMenu} />;
-  }
-
-
-  componentWillReceiveProps = (nextProps) => {
-    if (this.props.isFetchingProduct && !nextProps.isFetchingProduct) {
-      this.displayProductRecommendations();
-      this.setState({
-        products: nextProps.productResult.length > 0 ? nextProps.productResult : [],
-      });
-    }
   }
 
   render() {

@@ -4,12 +4,16 @@ import { Text, View } from 'react-native';
 
 import styles from './styles';
 
-const ReviewItem = () => (
+const ReviewItem = ({
+  review,
+}: {
+  review: Object
+}) => (
   <View style={styles.card}>
     <View style={styles.cardContent}>
-      <Text style={styles.title}>Hendry Setiadi</Text>
+      <Text style={styles.title}>{review.sender_name}</Text>
       <Text style={styles.description}>
-        Kualitas barangnya bagus, packaging rapi, dan sesuai dengan ekspektasi. 2 thumbs up!
+        {review.body}
       </Text>
     </View>
   </View>
