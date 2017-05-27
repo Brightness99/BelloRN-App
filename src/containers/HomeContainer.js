@@ -10,6 +10,8 @@ import buyIcon from '../images/shopping-bag.png';
 import analyticsIcon from '../images/bar-chart.png';
 import profileIcon from '../images/user.png';
 
+import ActionSuccessInfo from '../components/Core/ActionSuccessInfo';
+
 const styles = {
   container: {
     flex: 1,
@@ -61,8 +63,30 @@ const styles = {
 };
 
 class HomeContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      successInfo: false,
+      successInfoMessage: 'Sukses Login! Selamat Datang',
+    };
+
+    this.renderSuccessInfo = this.renderSuccessInfo.bind(this);
+  }
+
   componentDidMount() {
-    // do something about sessions here!
+    // setTimeout(() => this.setState({ successInfo: true }), 300);
+    // setTimeout(() => this.setState({ successInfo: false }), 2000);
+  }
+
+  renderSuccessInfo() {
+    const { successInfo, successInfoMessage } = this.state;
+
+    if (successInfo) {
+      return (
+        <ActionSuccessInfo label={successInfoMessage} />
+      );
+    }
+    return null;
   }
 
   render() {
@@ -114,6 +138,7 @@ class HomeContainer extends React.Component {
             </View>
           </TouchableOpacity>
         </View>
+        { this.renderSuccessInfo() }
       </View>
     );
   }

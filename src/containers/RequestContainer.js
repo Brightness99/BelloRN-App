@@ -7,6 +7,7 @@ import RequestItem from '../components/Request/Item';
 import FooterActionButton from '../components/FooterActionButton';
 import ChatSectionHeading from '../components/Chat/SectionHeading';
 import HeadingDescription from '../components/Core/HeadingDescription';
+import ActionSuccessInfo from '../components/Core/ActionSuccessInfo';
 
 import * as colors from '../constants/colors';
 import data from '../../data/db.json';
@@ -33,11 +34,37 @@ class RequestContainer extends React.Component {
     super(props);
     this.state = {
       requests: data.requests,
+      successInfo: false,
+      successInfoMessage: '',
     };
+
+    this.deleteRequest = this.deleteRequest.bind(this);
   }
 
   state: {
     carts: ProductsType,
+  }
+
+  deleteRequest() {
+    this.setState({
+      successInfo: true,
+      successInfoMessage: 'Request Sukses Dihapus!',
+    });
+    setTimeout(() => this.setState({
+      successInfo: false,
+      successInfoMessage: '',
+    }), 2000);
+  }
+
+  renderSuccessInfo() {
+    const { successInfo, successInfoMessage } = this.state;
+
+    if (successInfo) {
+      return (
+        <ActionSuccessInfo label={successInfoMessage} />
+      );
+    }
+    return null;
   }
 
   render() {
@@ -49,11 +76,12 @@ class RequestContainer extends React.Component {
           <HeadingDescription text={'List barang yang kamu request dan akan direminder oleh Bello'} />
           <View style={{ height: 30 }} />
           {requests.map(request => (
-            <RequestItem key={request.id} {...request} />
+            <RequestItem key={request.id} {...request} deleteRequest={this.deleteRequest} />
           ))}
           <View style={{ height: 150, width: '100%' }} />
         </ScrollView>
         <FooterActionButton text="+ Cari Barang Baru" handlePress={Actions.chat} />
+        { this.renderSuccessInfo() }
       </View>
     );
   }
