@@ -31,6 +31,8 @@ import styles from './chatContainer.styles';
 
 // Redux Actions
 import { getProductRecommendation } from '../actions/recommendation';
+import { sendBuyRequest, updateBuyRequest } from '../actions/buyrequest';
+import { addToCart } from '../actions/cart';
 
 
 // TODO a quick hack! put this into redux and connect it to renderRightButton
@@ -115,10 +117,21 @@ class productContainer extends React.Component {
     carts: ProductsType,
   };
 
+
   componentDidMount() {
     // initial greet message
     this.addChatMessage('Bello', 'Bello! Mau beli apa hari ini?');
   }
+
+  componentWillReceiveProps = (nextProps) => {
+    if (this.props.isFetchingProduct && !nextProps.isFetchingProduct) {
+      this.displayProductRecommendations(nextProps.productResult.length);
+      this.setState({
+        products: nextProps.productResult.length > 0 ? nextProps.productResult : [],
+      });
+    }
+  }
+
 
   // static functions StateTypes
   addChatMessage: Function;
@@ -141,7 +154,16 @@ class productContainer extends React.Component {
   addProductToCart: Function;
 
   scrollViewComponent: ReactElement<any>;
-  props: {};
+  props: {
+    getProductRecommendation: Function,
+    sendBuyRequest: Function,
+    updateBuyRequest: Function,
+    addToCart: Function,
+
+    isFetchingProduct: boolean,
+    productResult: array,
+    userdata: Object,
+  };
 
   // Add New Chat Message to Local State
   addChatMessage(sender: string, message: string) {
@@ -165,8 +187,17 @@ class productContainer extends React.Component {
       isSearchingSubmitted: true,
       isProductsFetching: true,
     });
-    // setTimeout(this.displayProductRecommendations, 3000);
+
     this.props.getProductRecommendation(this.state.searchKeyword);
+    this.props.sendBuyRequest({
+      user_id: this.props.userdata.id,
+      keyword: this.state.searchKeyword,
+      is_purchase: 0,
+      reminder_schedule: moment().format('YYYY-MM-DD'),
+      is_cancel: 0,
+      cancelation_reason: '',
+      is_delete: 0,
+    });
   }
 
   // Display User Action Bar (Footer)
@@ -234,17 +265,17 @@ class productContainer extends React.Component {
   productNotFoundAction() {
     this.addChatMessage('Bello', 'Kenapa tidak ada barang yang cocok?');
     this.displayActionBar({
-      redLabel: 'Harga mahal',
-      redMethod: this.productRequestConfAction,
+      redLabel: 'Harga Mahal',
+      redMethod: () => this.productRequestConfAction('Harga Mahal'),
       orangeLabel: 'Kurang Info',
-      orangeMethod: this.productRequestConfAction,
+      orangeMethod: () => this.productRequestConfAction('Kurang Info'),
       greenLabel: 'Lainnya',
-      greenMethod: this.productRequestConfAction,
+      greenMethod: () => this.productRequestConfAction('Lainnya'),
     });
   }
 
   // Asks User to decide to add a product reminder request or not
-  productRequestConfAction() {
+  productRequestConfAction(cancellationReason) {
     this.addChatMessage('Bello', 'Oh begitu... kalau ada barang baru yang lebih murah atau lebih cocok, mau Bello reminder tidak?');
     this.displayActionBar({
       redLabel: 'Tidak',
@@ -252,31 +283,53 @@ class productContainer extends React.Component {
       greenLabel: 'Boleh',
       greenMethod: this.addProductRequestReminder,
     });
+
+    // Update Buy Request Cancellation
+    this.props.updateBuyRequest({
+      user_id: this.props.userdata.id,
+      keyword: this.state.searchKeyword,
+      is_purchase: 0,
+      reminder_schedule: false,
+      is_cancel: 1,
+      cancelation_reason: cancellationReason,
+      is_delete: false,
+    });
   }
 
   // add a search keyword as a product search reminder request
   addProductRequestReminder() {
     const { searchKeyword } = this.state;
-    // do something with searchKeyword here, save to DB!
+
+    // Update Buy Request Reminder
+    this.props.updateBuyRequest({
+      user_id: this.props.userdata.id,
+      keyword: this.state.searchKeyword,
+      is_purchase: false,
+      reminder_schedule: moment().add(14, 'days').format('YYYY-MM-DD'),
+      is_cancel: false,
+      cancelation_reason: false,
+      is_delete: false,
+    });
+
     this.addChatMessage('Bello', `Siap, nanti Bello kabarin kalau ada ${searchKeyword} yang baru dan sesuai dengan keinginan ya! Kalau mau membatalkan, kamu bisa masuk ke pengaturan untuk menghapus reminder request.`);
     setTimeout(this.resetAction, 1000);
   }
 
   // Display list of recommended products based on search keyword
-  displayProductRecommendations() {
-    setTimeout(() => {
-      this.setState({
-        isProductsFetching: false,
-        isProductsLoaded: true,
-      });
-      this.addChatMessage('Bello', `Pencarian selesai. Bello dapat 10 barang yang sesuai dengan ${this.state.searchKeyword}.`);
-      this.displayActionBar({
-        redLabel: 'Batal',
-        redMethod: this.cancelBuyingAction,
-        orangeLabel: 'Cari yang lain',
-        orangeMethod: this.displaySearchAction,
-      });
-    }, 1500);
+  displayProductRecommendations(productLength) {
+    // setTimeout(() => {
+    this.setState({
+      isProductsFetching: false,
+      isProductsLoaded: true,
+    });
+    this.addChatMessage('Bello', `Pencarian selesai. Bello dapat ${productLength} barang yang sesuai dengan ${this.state.searchKeyword}.`);
+    this.displayActionBar({
+      redLabel: 'Batal',
+      redMethod: this.cancelBuyingAction,
+      orangeLabel: 'Cari yang lain',
+      orangeMethod: this.displaySearchAction,
+    });
+    // }, 1500);
   }
 
   // toggle selected product detail modal visibility and set selected product value
@@ -356,8 +409,28 @@ class productContainer extends React.Component {
       carts: newCarts,
       isSettingProductQuantity: false,
     });
-    globalCartLength += 1; // global cart length hack, remove this later
+
     this.addChatMessage('Me', `Pesan ${selectedProduct.quantity} item ya!`);
+
+    // Add To Cart
+    this.props.addToCart({
+      product_id: this.state.selectedProduct.id,
+      quantity: this.state.selectedProduct.quantity,
+      user_id: this.props.userdata.id,
+      token: this.props.userdata.token,
+    });
+
+    // Update Buy Request is_purchase data
+    this.props.updateBuyRequest({
+      user_id: this.props.userdata.id,
+      keyword: this.state.searchKeyword,
+      is_purchase: 1,
+      reminder_schedule: false,
+      is_cancel: false,
+      cancelation_reason: false,
+      is_delete: false,
+    });
+
     setTimeout(() => {
       this.addChatMessage('Bello', `Siap! ${selectedProduct.name} sudah Bello masukin ke cart. Apakah ada lagi yang mau dibeli?`);
     }, 500);
@@ -425,11 +498,12 @@ class productContainer extends React.Component {
   }
 
   renderProductLoadedDialog() {
-    const { isProductsLoaded, products } = this.state;
+    const { isProductsLoaded, products, searchKeyword } = this.state;
     return isProductsLoaded && (
       <ProductRecommendations
         toggleDetailModal={this.toggleDetailModal}
         products={products}
+        searchKeyword={searchKeyword}
       />
     );
   }
@@ -458,7 +532,7 @@ class productContainer extends React.Component {
           <GreyButton label={'+'} handleClick={() => this.setSelectedProductQuantity(1)} />
         </View>
         <Text style={{ fontWeight: 'bold', fontSize: 20, color: '#FFFFFF', textAlign: 'center' }}>
-          { `Rp.${numeral(selectedProduct.price * selectedProduct.quantity).format('0,0[.]00')}` }
+          { `Rp ${numeral(selectedProduct.price * selectedProduct.quantity).format('0,0[.]00')}` }
         </Text>
         <OrangeButton label={'Lanjut'} handleClick={this.addProductToCart} />
       </View>
@@ -468,16 +542,6 @@ class productContainer extends React.Component {
   renderActionBar() {
     const { isActionBarVisible, actionBarMenu } = this.state;
     return isActionBarVisible && <ActionBar {...actionBarMenu} />;
-  }
-
-
-  componentWillReceiveProps = (nextProps) => {
-    if (this.props.isFetchingProduct && !nextProps.isFetchingProduct) {
-      this.displayProductRecommendations();
-      this.setState({
-        products: nextProps.productResult.length > 0 ? nextProps.productResult : [],
-      });
-    }
   }
 
   render() {
@@ -506,11 +570,15 @@ class productContainer extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   getProductRecommendation: keyword => dispatch(getProductRecommendation(keyword)),
+  sendBuyRequest: requestData => dispatch(sendBuyRequest(requestData)),
+  updateBuyRequest: requestData => dispatch(updateBuyRequest(requestData)),
+  addToCart: requestData => dispatch(addToCart(requestData)),
 });
 
 const mapStateToProps = state => ({
   isFetchingProduct: state.recommendation.isFetching,
   productResult: state.recommendation.result,
+  userdata: state.userdata.result,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(productContainer);

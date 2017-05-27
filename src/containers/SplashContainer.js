@@ -7,6 +7,7 @@ import { saveUserdata } from '../actions/userdata';
 
 import belloIcon from '../images/bello.png';
 
+
 class SplashContainer extends React.Component {
   constructor(props) {
     super(props);
