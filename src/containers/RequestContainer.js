@@ -10,7 +10,6 @@ import HeadingDescription from '../components/Core/HeadingDescription';
 import ActionSuccessInfo from '../components/Core/ActionSuccessInfo';
 
 import * as colors from '../constants/colors';
-import data from '../../data/db.json';
 import type { ProductsType } from '../types';
 
 const styles = {
@@ -33,7 +32,7 @@ class RequestContainer extends React.Component {
   constructor(props: Object) {
     super(props);
     this.state = {
-      requests: data.requests,
+      requests: [],
       successInfo: false,
       successInfoMessage: '',
     };

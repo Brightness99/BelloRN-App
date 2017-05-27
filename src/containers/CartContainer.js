@@ -9,7 +9,6 @@ import ProductItem from '../components/Product/Item';
 import FooterActionButton from '../components/FooterActionButton';
 
 import * as colors from '../constants/colors';
-import data from '../../data/db.json';
 import type { ProductsType } from '../types';
 
 const styles = {
@@ -32,7 +31,7 @@ class CartContainer extends React.Component {
   constructor(props: Object) {
     super(props);
     this.state = {
-      carts: data.products,
+      carts: [],
     };
 
     this.openBukalapakWeb = this.openBukalapakWeb.bind(this);

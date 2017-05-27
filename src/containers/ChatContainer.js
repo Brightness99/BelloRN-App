@@ -26,7 +26,6 @@ import type { ChatsType, ProductType, ProductsType } from '../types';
 // Static Files
 import cartIcon from '../images/shopping-cart.png';
 import BelloIcon from '../images/bello.png';
-import data from '../../data/db.json';
 
 import styles from './chatContainer.styles';
 
