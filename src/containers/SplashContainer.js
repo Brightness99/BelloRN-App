@@ -26,7 +26,7 @@ class SplashContainer extends React.Component {
         this.props.saveUserdata(data);
         Actions.home();
       } else {
-        setTimeout(() => Actions.login(), 1000);
+        setTimeout(() => Actions.login(), 3000);
       }
     } catch (error) {
       alert(`Error Retrieving Data : ${error}`);
@@ -39,7 +39,7 @@ class SplashContainer extends React.Component {
       this.spinValue,
       {
         toValue: 1,
-        duration: 1000,
+        duration: 500,
         easing: Easing.bounce,
       },
     ).start(() => this.spin());
@@ -48,7 +48,7 @@ class SplashContainer extends React.Component {
   render() {
     const spin = this.spinValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [5, 0],
+      outputRange: [0, 10],
     });
     return (
       <View style={{ flex: 1, backgroundColor: '#3498DB', alignItems: 'center', justifyContent: 'center' }}>
