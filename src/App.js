@@ -1,6 +1,7 @@
 import React from 'react';
 import { Provider, connect } from 'react-redux';
 import { Scene, Router } from 'react-native-router-flux';
+import OneSignal from 'react-native-onesignal';
 
 import store from '../src/store/configureStore';
 import * as colors from './constants/colors';
@@ -72,10 +73,18 @@ const mapStateToProps = state => ({ scene: state.scene });
 
 const ConnectedRouter = connect(mapStateToProps, null)(MainRouter);
 
-const App = () => (
-  <Provider store={store}>
-    <ConnectedRouter />
-  </Provider>
-);
+class App extends React.Component {
+  componentDidMount() {
+    OneSignal.configure({});
+  }
+
+  render() {
+    return (
+      <Provider store={store}>
+        <ConnectedRouter />
+      </Provider>
+    );
+  }
+}
 
 export default App;

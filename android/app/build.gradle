@@ -88,6 +88,8 @@ android {
 
     defaultConfig {
         applicationId "com.belloclientapp"
+        manifestPlaceholders = [onesignal_app_id: "384198bc-be93-4699-b152-5d79ab74a7f8",
+                                onesignal_google_project_number: "801142029934"]
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
@@ -126,6 +128,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-onesignal')
     compile project(':react-native-svg')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"
