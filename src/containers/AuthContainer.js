@@ -23,14 +23,17 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 0,
   },
   scrollableContainer: {
     flex: 1,
     flexDirection: 'column',
+    width: '100%',
+    padding: 20,
   },
   welcome: {
     flex: 1,
-    paddingTop: 50,
+    paddingTop: 10,
     paddingBottom: 50,
     flexDirection: 'column',
     alignItems: 'center',
@@ -68,7 +71,7 @@ const styles = {
   form: {
     flexDirection: 'column',
     width: '100%',
-    padding: 20,
+    padding: 0,
   },
   formHeading: {
     color: '#FFFFFF',
@@ -173,7 +176,7 @@ class AuthContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLogin: false,
+      isLogin: true,
       isRegister: false,
       formData: {
         email: '',
