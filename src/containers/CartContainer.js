@@ -67,7 +67,7 @@ class CartContainer extends React.Component {
 
 
   openBukalapakWeb = () => {
-    const url = 'https://bukalapak.com';
+    const url = 'https://www.bukalapak.com/cart/carts';
     Linking.openURL(url).catch((err) => {});
   }
 
