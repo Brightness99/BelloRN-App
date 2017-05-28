@@ -41,9 +41,9 @@ let globalCartLength = 0;
 class productContainer extends React.Component {
   // Header right icon
   static renderRightButton = () => (
-    <TouchableOpacity onPress={Actions.cart}>
-      <Image source={cartIcon} style={{ width: 25, height: 25, marginTop: 0 }} />
-      <View style={{ backgroundColor: '#D91E18', position: 'absolute', width: 15, height: 15, borderRadius: 7, right: -5, top: -5 }}>
+    <TouchableOpacity onPress={Actions.cart} activeOpacity={1}>
+      <Image source={cartIcon} style={{ width: 25, height: 25, marginTop: 0, marginRight: 10 }} />
+      <View style={{ backgroundColor: '#D91E18', position: 'absolute', width: 15, height: 15, borderRadius: 7, right: 0, top: 0 }}>
         <Text style={{ color: '#FFFFFF', textAlign: 'center', fontSize: 12, fontWeight: 'bold' }}>
           { globalCartLength }
         </Text>
