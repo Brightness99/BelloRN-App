@@ -39,20 +39,29 @@ export function getRequestData(data) {
   };
 }
 
-export function deleteRequestData(data) {
+
+export function setDeleteResponse({ status }) {
+  return {
+    type: DELETE_REQUEST_DATA,
+    status,
+  };
+}
+
+export function deleteRequestData(id, userId) {
   return (dispatch) => {
     dispatch(fetchRequestData());
 
-    return fetch(`${url}buyrequest/reminder`, {
+    return fetch(`${url}buyrequest/delete/${id}`, {
       method: 'POST',
       body: JSON.stringify({
-        user_id: data.user_id,
+        id,
       }),
       headers: header,
     })
     .then(response => response.json())
     .then((responseData) => {
-      dispatch(setRequestResponse({ result: responseData }));
+      dispatch(setDeleteResponse({ status: responseData }))
+      dispatch(getRequestData({ user_id: userId }));
     })
     .done();
   };

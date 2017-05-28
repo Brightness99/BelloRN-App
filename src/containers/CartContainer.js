@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import ChatSectionHeading from '../components/Chat/SectionHeading';
 import HeadingDescription from '../components/Core/HeadingDescription';
 import ActionSuccessInfo from '../components/Core/ActionSuccessInfo';
+import SceneMessage from '../components/Core/SceneMessage';
 import ProductItem from '../components/Product/Item';
 import FooterActionButton from '../components/FooterActionButton';
 
@@ -108,6 +109,10 @@ class CartContainer extends React.Component {
         <ScrollView style={styles.productList}>
           <ChatSectionHeading headingText={'Keranjang Belanja'} />
           <HeadingDescription text={'Keranjang belanja otomatis masuk ke keranjang belanja akun Bukalapak kamu. Checkout untuk masuk ke pembayaran melalui bukalapak'} />
+          { carts.length < 1 && (
+            <SceneMessage>
+              Kamu belum punya barang di keranjang belanja. Pesan yuk via Bello!
+            </SceneMessage>) }
           <View style={{ height: 30 }} />
           {
             (

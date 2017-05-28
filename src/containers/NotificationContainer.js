@@ -7,6 +7,7 @@ import { Actions } from 'react-native-router-flux';
 import NotificationItem from '../components/Notification/Item';
 import ChatSectionHeading from '../components/Chat/SectionHeading';
 import HeadingDescription from '../components/Core/HeadingDescription';
+import SceneMessage from '../components/Core/SceneMessage';
 
 import { getNotificationData } from '../actions/notification';
 import { getReminderRecommendation } from '../actions/recommendation';
@@ -68,6 +69,10 @@ class NotificationContainer extends React.Component {
         <ScrollView style={styles.productList}>
           <ChatSectionHeading headingText={'Notifikasimu'} />
           <HeadingDescription text={'List barang yang kamu request dan akan direminder oleh Bello'} />
+          { notifications.length < 1 && (
+            <SceneMessage>
+              Kamu belum punya notifikasi yang belum dibaca
+            </SceneMessage>) }
           <View style={{ height: 30 }} />
           {
             (

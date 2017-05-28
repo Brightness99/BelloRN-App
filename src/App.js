@@ -55,7 +55,7 @@ const MainRouter = () => (
   <Router>
     <Scene key="root" navigationBarStyle={styles.rootNavbar} titleStyle={{ fontWeight: 'bold', color: '#FFFFFF' }} barButtonIconStyle={{ tintColor: colors.white }}>
       <SceneWithoutNavbar key="splash" component={SplashContainer} title="splash" hideNavBar />
-      <SceneWithoutNavbar key="login" component={AuthContainer} title="login" hideNavBar />
+      <SceneWithoutNavbar key="login" component={AuthContainer} title="login" hideNavBar type={ActionConst.RESET} />
       <SceneMenu key="home" component={HomeContainer} title="BELLO" hideNavBar={false} panHandlers={null} renderBackButton={() => (null)} type={ActionConst.RESET} />
       <SceneWithNavbar key="chat" component={ChatContainer} title="BELLO" />
       <SceneWithNavbar key="product" component={ProductContainer} title="PRODUCT" />

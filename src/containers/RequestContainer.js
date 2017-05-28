@@ -9,8 +9,9 @@ import FooterActionButton from '../components/FooterActionButton';
 import ChatSectionHeading from '../components/Chat/SectionHeading';
 import HeadingDescription from '../components/Core/HeadingDescription';
 import ActionSuccessInfo from '../components/Core/ActionSuccessInfo';
+import SceneMessage from '../components/Core/SceneMessage';
 
-import { getRequestData } from '../actions/request';
+import { getRequestData, deleteRequestData } from '../actions/request';
 
 import * as colors from '../constants/colors';
 import type { ProductsType } from '../types';
@@ -55,7 +56,9 @@ class RequestContainer extends React.Component {
   }
 
 
-  deleteRequest() {
+  deleteRequest(requestId) {
+    this.props.deleteRequestData(requestId, this.props.userdata.id);
+
     this.setState({
       successInfo: true,
       successInfoMessage: 'Request Sukses Dihapus!',
@@ -84,12 +87,13 @@ class RequestContainer extends React.Component {
         <ScrollView style={styles.productList}>
           <ChatSectionHeading headingText={'List Request'} />
           <HeadingDescription text={'List barang yang kamu request dan akan direminder oleh Bello'} />
+          { requests.length < 1 && <SceneMessage>Kamu belum punya list request</SceneMessage> }
           <View style={{ height: 30 }} />
           {
             (
               (requests.length > 0) &&
               requests.map(request => (
-                <RequestItem key={request.id} {...request} deleteRequest={this.deleteRequest} />
+                <RequestItem key={request.id} {...request} deleteRequest={() => { this.deleteRequest(request.id); }} />
               ))
             ) || (
               (this.props.isFetching) &&
@@ -108,6 +112,7 @@ class RequestContainer extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   getRequestData: requestData => dispatch(getRequestData(requestData)),
+  deleteRequestData: (id, userId) => dispatch(deleteRequestData(id, userId)),
 });
 
 const mapStateToProps = state => ({

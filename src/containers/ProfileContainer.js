@@ -38,7 +38,7 @@ class ProfileContainer extends React.Component {
     try {
       await AsyncStorage.removeItem('@Bello:user');
       this.props.removeUserdata();
-      Actions.pop({ popNum: 2 });
+      Actions.login();
     } catch (error) {
       Alert.alert(
         `Log Out Error ${error}`,

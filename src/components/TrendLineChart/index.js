@@ -111,7 +111,7 @@ class TrendLineChart extends React.Component {
 
   render() {
     const { dataset, isCollapsed } = this.state;
-    const frequencies = dataset.map(data => data.frequency);
+    const frequencies = this.props.reports.map(data => data.total);
     const maxData = d3.max(frequencies);
     const yScale = d3.scaleLinear()
       .domain([0, maxData])

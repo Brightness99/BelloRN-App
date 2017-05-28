@@ -8,6 +8,7 @@ import TrendLineChart from '../components/TrendLineChart';
 import ChatSectionHeading from '../components/Chat/SectionHeading';
 import HeadingDescription from '../components/Core/HeadingDescription';
 import ActionSuccessInfo from '../components/Core/ActionSuccessInfo';
+import SceneMessage from '../components/Core/SceneMessage';
 import FooterActionButton from '../components/FooterActionButton';
 
 import { getAnalyticsData, deleteSubscribe } from '../actions/analytics';
@@ -50,10 +51,7 @@ class AnalyticsContainer extends React.Component {
 
 
   deleteChart(chartId) {
-    let data = new FormData();
-    data.append('_method', 'DELETE');
-
-    this.props.deleteSubscribe(chartId, data, this.props.userdata.id);
+    this.props.deleteSubscribe(chartId, this.props.userdata.id);
 
     this.setState({
       successInfo: true,
@@ -82,7 +80,11 @@ class AnalyticsContainer extends React.Component {
       <View style={styles.container}>
         <ScrollView style={styles.list}>
           <ChatSectionHeading headingText={'List Analisa'} />
-          <HeadingDescription text={'Kamu Belum Punya Analisa Barang Apapun. Mulai analisa tren sekarang!'} />
+          <HeadingDescription text={'Analisa trend barang yang banyak dicari oleh user'} />
+          { charts.length < 1 && (
+            <SceneMessage>
+              Kamu belum memilih untuk subscribe ke analisa apapun
+            </SceneMessage>) }
           {
             (
               (charts.length > 0) &&
@@ -109,7 +111,7 @@ class AnalyticsContainer extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   getAnalyticsData: requestData => dispatch(getAnalyticsData(requestData)),
-  deleteSubscribe: (id, data, user) => dispatch(deleteSubscribe(id, data, user)),
+  deleteSubscribe: (id, userId) => dispatch(deleteSubscribe(id, userId)),
 });
 
 const mapStateToProps = state => ({

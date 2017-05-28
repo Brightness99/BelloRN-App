@@ -20,6 +20,7 @@ export default combineReducers({
   cart: cartReducer,
   demand: demandReducer,
   request: requestReducer,
+  notification: notificationReducer,
   analytics: analyticsReducer,
   notification: notificationReducer,
 });
