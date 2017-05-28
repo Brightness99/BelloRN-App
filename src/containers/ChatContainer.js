@@ -526,7 +526,7 @@ class productContainer extends React.Component {
       <View style={{ padding: 10 }}>
         <View style={{ flexDirection: 'row', width: '60%', alignSelf: 'center', margin: 10 }}>
           <GreyButton label={'-'} handleClick={() => this.setSelectedProductQuantity(-1)} />
-          <Text style={{ padding: 10, fontSize: 16, color: '#FFFFFF' }}>
+          <Text style={{ padding: 10, fontSize: 16, color: '#353535' }}>
             { selectedProduct.quantity }
           </Text>
           <GreyButton label={'+'} handleClick={() => this.setSelectedProductQuantity(1)} />
