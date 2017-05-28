@@ -21,4 +21,5 @@ export default combineReducers({
   demand: demandReducer,
   request: requestReducer,
   analytics: analyticsReducer,
+  notification: notificationReducer,
 });
