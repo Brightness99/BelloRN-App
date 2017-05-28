@@ -7,16 +7,16 @@ import styles from './styles';
 import OrangeButton from '../../../components/Core/OrangeButton';
 
 type PropTypes = {
-  notification: string,
-  isRead: boolean,
+  keyword: string,
+  showRecommendation: Function,
 };
 
-const NotificationItem = ({ notification, isRead }: PropTypes) => (
+const NotificationItem = ({ keyword, showRecommendation }: PropTypes) => (
   <TouchableOpacity style={styles.card} onPress={() => {}} activeOpacity={0.95}>
     <View style={styles.cardContent}>
-      <Text style={styles.title}>{ notification }</Text>
+      <Text style={styles.title}>Tersedia barang baru untuk pencarian { keyword }</Text>
       <View style={{ flexDirection: 'row', paddingLeft: 10, paddingRight: 10 }}>
-        <OrangeButton label={'Lihat'} handleClick={() => {}} />
+        <OrangeButton label={'Lihat'} handleClick={showRecommendation} />
       </View>
     </View>
   </TouchableOpacity>

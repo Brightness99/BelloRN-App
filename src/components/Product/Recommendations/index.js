@@ -12,11 +12,12 @@ import type { ProductsType } from '../../../types';
 type PropTypes = {
   toggleDetailModal: Function,
   products: ProductsType,
+  searchKeyword: string,
 };
 
-const ProductRecommendations = ({ toggleDetailModal, products }: PropTypes) => (
+const ProductRecommendations = ({ toggleDetailModal, products, searchKeyword }: PropTypes) => (
   <View>
-    <ChatSectionHeading headingText={'Rekomendasi Produk: iPhone 10'} />
+    <ChatSectionHeading headingText={`Rekomendasi Produk: ${searchKeyword}`} />
     <ScrollView horizontal style={styles.productRecommendations}>
       {products.map((product, index) => (
         <View key={product.id} style={styles.productRecWrapper}>

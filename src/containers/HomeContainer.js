@@ -1,9 +1,11 @@
 import React from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
+import OneSignal from 'react-native-onesignal';
 
 import * as colors from '../constants/colors';
-import cartIcon from '../images/shopping-cart.png';
+import cartIcon from '../images/shopping-cart-blue.png';
 import notificationIcon from '../images/bell.png';
 import reminderIcon from '../images/hourglass.png';
 import buyIcon from '../images/shopping-bag.png';
@@ -11,6 +13,9 @@ import analyticsIcon from '../images/bar-chart.png';
 import profileIcon from '../images/user.png';
 
 import ActionSuccessInfo from '../components/Core/ActionSuccessInfo';
+
+// redux store
+import { updateUserOneSignalId } from '../actions/userdata';
 
 const styles = {
   container: {
@@ -63,30 +68,42 @@ const styles = {
 };
 
 class HomeContainer extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
-      successInfo: false,
-      successInfoMessage: 'Sukses Login! Selamat Datang',
+      onesignalId: '',
     };
 
-    this.renderSuccessInfo = this.renderSuccessInfo.bind(this);
+    this.onIds = this.onIds.bind(this);
+  }
+
+  componentWillMount() {
+    OneSignal.addEventListener('ids', this.onIds);
+    OneSignal.addEventListener('opened', this.onNotificationOpened);
   }
 
   componentDidMount() {
-    // setTimeout(() => this.setState({ successInfo: true }), 300);
-    // setTimeout(() => this.setState({ successInfo: false }), 2000);
+    OneSignal.configure({});
   }
 
-  renderSuccessInfo() {
-    const { successInfo, successInfoMessage } = this.state;
-
-    if (successInfo) {
-      return (
-        <ActionSuccessInfo label={successInfoMessage} />
-      );
+  onNotificationOpened(message, data, isActive) {
+    if (isActive) {
+      setTimeout(Actions.notification, 2000);
+    } else {
+      setTimeout(Actions.notification, 2000);
     }
-    return null;
+  }
+
+  onIds(device) {
+    const onesignalId = device.userId;
+    this.setState({ onesignalId });
+    setTimeout(() => {
+      this.props.updateUserOneSignalId({
+        user_id: this.props.userdata.id,
+        onesignal_id: onesignalId,
+      });
+    }, 1000);
   }
 
   render() {
@@ -138,10 +155,19 @@ class HomeContainer extends React.Component {
             </View>
           </TouchableOpacity>
         </View>
-        { this.renderSuccessInfo() }
       </View>
     );
   }
 }
 
-export default HomeContainer;
+const mapStateToProps = (state) => {
+  return {
+    userdata: state.userdata.result,
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  updateUserOneSignalId: data => dispatch(updateUserOneSignalId(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);
