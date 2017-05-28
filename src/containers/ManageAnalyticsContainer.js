@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { View, ScrollView, ActivityIndicator } from 'react-native';
+import { View, ScrollView, Text, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
@@ -10,7 +10,7 @@ import ActionSuccessInfo from '../components/Core/ActionSuccessInfo';
 import UserDemandItem from '../components/UserDemand/Item';
 import FooterActionButton from '../components/FooterActionButton';
 
-import { getDemandData } from '../actions/demand';
+import { getDemandData, subscribeDemand } from '../actions/demand';
 
 import * as colors from '../constants/colors';
 import type { DemandsType } from '../types';
@@ -57,7 +57,12 @@ class ManageAnalyticsContainer extends React.Component {
   }
 
 
-  addChart() {
+  addChart = (keyword) => {
+    this.props.subscribeDemand({
+      user_id: this.props.userdata.id,
+      keyword,
+    });
+
     this.setState({
       successInfo: true,
       successInfoMessage: 'Analisa sukses ditambahkan!',
@@ -93,13 +98,15 @@ class ManageAnalyticsContainer extends React.Component {
                 <UserDemandItem
                   key={demand.id}
                   {...demand}
-                  addChart={this.addChart}
+                  addChart={() => this.addChart(demand.keyword)}
                   toggleDetailModal={() => {}}
                 />
               ))
             ) ||
             <ActivityIndicator size="large" color="#3498db" style={{ paddingTop: 30 }} />
           }
+
+          <Text style={{ paddingTop: 15, paddingBottom: 20 }}> </Text>
         </ScrollView>
         <FooterActionButton text="< Kembali ke Analisa" handlePress={Actions.pop} />
         { this.renderSuccessInfo() }
@@ -111,11 +118,14 @@ class ManageAnalyticsContainer extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   getDemandData: () => dispatch(getDemandData()),
+  subscribeDemand: data => dispatch(subscribeDemand(data)),
 });
 
 const mapStateToProps = state => ({
   isFetching: state.demand.isFetching,
   result: state.demand.result,
+  status: state.demand.status,
+  userdata: state.userdata.result,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageAnalyticsContainer);

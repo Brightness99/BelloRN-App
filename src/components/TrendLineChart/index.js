@@ -118,20 +118,20 @@ class TrendLineChart extends React.Component {
       .range([0, svgHeight]);
     return (
       <View style={styles.chartContainer}>
-        <RNText style={styles.topicTitle}>Iphone 10 Searches Trends</RNText>
+        <RNText style={styles.topicTitle}>{this.props.keyword} Searches Trends</RNText>
         <Animated.View style={{ height: this.state.animation }}>
           { !isCollapsed && (
             <View>
               <View style={styles.svgContainer}>
                 <Svg style={styles.svgWrapper}>
-                  { dataset.map((data, index) => (
-                    <G key={data.id}>
+                  { this.props.reports.map((data, index) => (
+                    <G key={data.monthNumber}>
                       <Rect
                         x={index * ((svgWidth / 13) + 2)}
-                        y={svgHeight - yScale(data.frequency)}
+                        y={svgHeight - yScale(data.total)}
                         width={svgWidth / 13}
-                        height={yScale(data.frequency)}
-                        fill={data.frequency <= maxData / 3 ? '#C0392B' : (data.frequency <= maxData / 2 ? '#EB9532' : '#16A085')}
+                        height={yScale(data.total)}
+                        fill={data.total <= maxData / 3 ? '#C0392B' : (data.total <= maxData / 2 ? '#EB9532' : '#16A085')}
                       />
                       <Text
                         x={(index * ((svgWidth / 13) + 2)) + 6}
@@ -144,14 +144,14 @@ class TrendLineChart extends React.Component {
                       </Text>
                       <Text
                         x={(index * ((svgWidth / 13) + 2)) + 5}
-                        y={svgHeight - yScale(data.frequency)}
+                        y={svgHeight - yScale(data.total)}
                         width={svgWidth / 13}
                         fill="#FFFFFF"
                         textAnchor="middle"
                         fontSize="8"
                         fontWeight="bold"
                       >
-                        { data.frequency }
+                        { data.total }
                       </Text>
                     </G>
                   ))}
@@ -168,7 +168,7 @@ class TrendLineChart extends React.Component {
               </View>
               <MessageBubble
                 sender="Bello"
-                message="Bello saranin sih bos coba jualan iPhone 10. Baru ada 15 barang yang dijual lho!"
+                message={`Bello saranin sih bos coba jualan ${this.props.keyword}. Baru ada ${this.props.total} barang yang dijual lho!`}
                 time={moment().format('DD-MM-YYYY HH:mm')}
               />
             </View>

@@ -56,7 +56,6 @@ const MainRouter = () => (
       <SceneWithoutNavbar key="splash" component={SplashContainer} title="splash" hideNavBar />
       <SceneWithoutNavbar key="login" component={AuthContainer} title="login" hideNavBar />
       <SceneMenu key="home" component={HomeContainer} title="BELLO" hideNavBar={false} />
-      <SceneWithNavbar key="chat" component={ChatContainer} title="Bello" />
       <SceneWithNavbar key="chat" component={ChatContainer} title="BELLO" />
       <SceneWithNavbar key="product" component={ProductContainer} title="PRODUCT" />
       <SceneWithNavbar key="cart" component={CartContainer} title="CART" />
