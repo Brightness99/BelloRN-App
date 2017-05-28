@@ -3,7 +3,7 @@ import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import * as colors from '../constants/colors';
-import cartIcon from '../images/shopping-cart.png';
+import cartIcon from '../images/shopping-cart-blue.png';
 import notificationIcon from '../images/bell.png';
 import reminderIcon from '../images/hourglass.png';
 import buyIcon from '../images/shopping-bag.png';
