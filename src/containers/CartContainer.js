@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 
 import ChatSectionHeading from '../components/Chat/SectionHeading';
 import HeadingDescription from '../components/Core/HeadingDescription';
+import ActionSuccessInfo from '../components/Core/ActionSuccessInfo';
 import ProductItem from '../components/Product/Item';
 import FooterActionButton from '../components/FooterActionButton';
-import ActionSuccessInfo from '../components/Core/ActionSuccessInfo';
 
 // Redux Actions
 import { getCart, deleteCart } from '../actions/cart';
@@ -41,6 +41,7 @@ class CartContainer extends React.Component {
     };
 
     this.openBukalapakWeb = this.openBukalapakWeb.bind(this);
+    this.deleteCart = this.deleteCart.bind(this);
   }
 
   state: {
@@ -66,9 +67,10 @@ class CartContainer extends React.Component {
 
 
   openBukalapakWeb = () => {
-    const url = 'https://bukalapak.com';
+    const url = 'https://www.bukalapak.com/cart/carts';
     Linking.openURL(url).catch((err) => {});
   }
+
 
   deleteCart = (productId) => {
     this.props.deleteCart({
@@ -79,7 +81,7 @@ class CartContainer extends React.Component {
 
     this.setState({
       successInfo: true,
-      successInfoMessage: 'Produk berhasil dihapus dari Keranjang Belanja',
+      successInfoMessage: 'Barang di Cart Sukses Dihapus!',
     });
     setTimeout(() => this.setState({
       successInfo: false,
@@ -127,7 +129,6 @@ class CartContainer extends React.Component {
           <View style={{ height: 150, width: '100%' }} />
         </ScrollView>
         <FooterActionButton text="CHECKOUT" handlePress={this.openBukalapakWeb} />
-
         { this.renderSuccessInfo() }
       </View>
     );

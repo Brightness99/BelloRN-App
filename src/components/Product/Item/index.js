@@ -38,7 +38,7 @@ const ProductItem = ({
         { quantity && `${quantity} x ` }
         { `Rp ${numeral(price).format('0,0[.]00')}` }
       </Text>
-      { inCart && <RedButton label={'Delete'} handleClick={deleteCart} /> }
+      { inCart && <RedButton label="Hapus dari Cart" handleClick={deleteCart} /> }
     </View>
   </TouchableOpacity>
 );

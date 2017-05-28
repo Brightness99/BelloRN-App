@@ -32,24 +32,44 @@ import styles from './chatContainer.styles';
 // Redux Actions
 import { getProductRecommendation, resetReminder } from '../actions/recommendation';
 import { sendBuyRequest, updateBuyRequest } from '../actions/buyrequest';
-import { addToCart } from '../actions/cart';
+import { getCart, addToCart } from '../actions/cart';
 
+class CartHeaderIcon extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      firstFetch: true,
+      cartsLength: 0,
+    };
+  }
 
-// TODO a quick hack! put this into redux and connect it to renderRightButton
-let globalCartLength = 0;
+  componentDidMount = () => {
+    this.props.getCart({
+      user_id: this.props.userdata.id,
+      token: this.props.userdata.token,
+    });
+  }
+
+  render() {
+    return (
+      <TouchableOpacity onPress={Actions.cart} activeOpacity={1}>
+        <Image source={cartIcon} style={{ width: 25, height: 25, marginTop: 0, marginRight: 10 }} />
+        <View style={{ backgroundColor: '#D91E18', position: 'absolute', width: 15, height: 15, borderRadius: 7, right: 0, top: 0 }}>
+          <Text style={{ color: '#FFFFFF', textAlign: 'center', fontSize: 12, fontWeight: 'bold' }}>
+            { this.props.carts.length }
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+}
 
 class productContainer extends React.Component {
-  // Header right icon
-  static renderRightButton = () => (
-    <TouchableOpacity onPress={Actions.cart}>
-      <Image source={cartIcon} style={{ width: 25, height: 25, marginTop: 0 }} />
-      <View style={{ backgroundColor: '#D91E18', position: 'absolute', width: 15, height: 15, borderRadius: 7, right: -5, top: -5 }}>
-        <Text style={{ color: '#FFFFFF', textAlign: 'center', fontSize: 12, fontWeight: 'bold' }}>
-          { globalCartLength }
-        </Text>
-      </View>
-    </TouchableOpacity>
-  );
+  static renderRightButton = () => {
+    return (
+      <ConnectedCartHeaderIcon />
+    );
+  }
 
   constructor(props: Object) {
     super(props);
@@ -117,9 +137,11 @@ class productContainer extends React.Component {
     carts: ProductsType,
   };
 
+  props: {
+    getCart: Function,
+  };
 
-  componentDidMount() {
-    // initial greet message
+  componentDidMount = () => {
     this.addChatMessage('Bello', 'Bello! Mau beli apa hari ini?');
   }
 
@@ -552,7 +574,7 @@ class productContainer extends React.Component {
           </Text>
           <GreyButton label={'+'} handleClick={() => this.setSelectedProductQuantity(1)} />
         </View>
-        <Text style={{ fontWeight: 'bold', fontSize: 20, color: '#FFFFFF', textAlign: 'center' }}>
+        <Text style={{ fontWeight: 'bold', fontSize: 20, color: '#353535', textAlign: 'center' }}>
           { `Rp ${numeral(selectedProduct.price * selectedProduct.quantity).format('0,0[.]00')}` }
         </Text>
         <OrangeButton label={'Lanjut'} handleClick={this.addProductToCart} />
@@ -605,4 +627,15 @@ const mapStateToProps = state => ({
   userdata: state.userdata.result,
 });
 
+const mapDispatchToPropsForHeaderIcon = dispatch => ({
+  getCart: requestData => dispatch(getCart(requestData)),
+});
+
+const mapStateToPropsForHeaderIcon = state => ({
+  userdata: state.userdata.result,
+  isCartFetching: state.cart.isFetching,
+  carts: state.cart.result,
+});
+
+const ConnectedCartHeaderIcon = connect(mapStateToPropsForHeaderIcon, mapDispatchToPropsForHeaderIcon)(CartHeaderIcon);
 export default connect(mapStateToProps, mapDispatchToProps)(productContainer);
