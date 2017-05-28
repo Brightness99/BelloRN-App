@@ -22,4 +22,5 @@ export default combineReducers({
   request: requestReducer,
   notification: notificationReducer,
   analytics: analyticsReducer,
+  notification: notificationReducer,
 });
