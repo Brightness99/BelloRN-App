@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider, connect } from 'react-redux';
-import { Scene, Router } from 'react-native-router-flux';
+import { Scene, Router, ActionConst } from 'react-native-router-flux';
 import OneSignal from 'react-native-onesignal';
 
 import store from '../src/store/configureStore';
@@ -33,7 +33,10 @@ const styles = {
 };
 
 const SceneWithoutNavbar = props => (
-  <Scene {...props} />
+  <Scene
+    {...props}
+    renderBackButton={() => (null)}
+  />
 );
 
 const SceneMenu = props => (
@@ -41,7 +44,6 @@ const SceneMenu = props => (
     {...props}
     titleStyle={{ fontWeight: 'bold', color: '#FFFFFF' }}
     navigationBarStyle={styles.homeNavbar}
-    hideNavBar={false}
     renderBackButton={() => (null)}
   />
 );
@@ -55,7 +57,7 @@ const MainRouter = () => (
     <Scene key="root" navigationBarStyle={styles.rootNavbar} titleStyle={{ fontWeight: 'bold', color: '#FFFFFF' }} barButtonIconStyle={{ tintColor: colors.white }}>
       <SceneWithoutNavbar key="splash" component={SplashContainer} title="splash" hideNavBar />
       <SceneWithoutNavbar key="login" component={AuthContainer} title="login" hideNavBar />
-      <SceneMenu key="home" component={HomeContainer} title="BELLO" hideNavBar={false} />
+      <SceneMenu key="home" component={HomeContainer} title="BELLO" hideNavBar={false} panHandlers={null} renderBackButton={() => (null)} type={ActionConst.RESET} />
       <SceneWithNavbar key="chat" component={ChatContainer} title="Bello" />
       <SceneWithNavbar key="chat" component={ChatContainer} title="BELLO" />
       <SceneWithNavbar key="product" component={ProductContainer} title="PRODUCT" />
