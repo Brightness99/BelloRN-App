@@ -50,10 +50,7 @@ class AnalyticsContainer extends React.Component {
 
 
   deleteChart(chartId) {
-    let data = new FormData();
-    data.append('_method', 'DELETE');
-
-    this.props.deleteSubscribe(chartId, data, this.props.userdata.id);
+    this.props.deleteSubscribe(chartId, this.props.userdata.id);
 
     this.setState({
       successInfo: true,
@@ -109,7 +106,7 @@ class AnalyticsContainer extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   getAnalyticsData: requestData => dispatch(getAnalyticsData(requestData)),
-  deleteSubscribe: (id, data, user) => dispatch(deleteSubscribe(id, data, user)),
+  deleteSubscribe: (id, userId) => dispatch(deleteSubscribe(id, userId)),
 });
 
 const mapStateToProps = state => ({

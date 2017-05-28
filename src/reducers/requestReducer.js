@@ -23,6 +23,12 @@ export default function (state = initialState, action) {
       };
 
     case DELETE_REQUEST_DATA :
+      return {
+        isFetching: false,
+        result: state.result,
+        status: action.status,
+      };
+
     default :
       return state;
   }

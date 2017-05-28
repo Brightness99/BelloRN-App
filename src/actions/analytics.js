@@ -46,17 +46,21 @@ export function setDeleteSubscribeResponse({ status }) {
   };
 }
 
-export function deleteSubscribe(id, data, user) {
+export function deleteSubscribe(id, userId) {
   return (dispatch) => {
-    return fetch(`${url}userbuyrequest/${id}`, {
+    dispatch(fetchAnalyticsData());
+
+    return fetch(`${url}userbuyrequest/delete/${id}`, {
       method: 'POST',
-      body: data,
+      body: JSON.stringify({
+        id,
+      }),
       headers: header,
     })
     .then(response => response.json())
     .then((responseData) => {
       dispatch(setDeleteSubscribeResponse({ status: responseData }));
-      dispatch(getAnalyticsData({ user_id: user }));
+      dispatch(getAnalyticsData({ user_id: userId }));
     })
     .done();
   };
