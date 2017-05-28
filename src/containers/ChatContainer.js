@@ -32,23 +32,26 @@ import styles from './chatContainer.styles';
 // Redux Actions
 import { getProductRecommendation } from '../actions/recommendation';
 import { sendBuyRequest, updateBuyRequest } from '../actions/buyrequest';
-import { addToCart } from '../actions/cart';
-
+import { getCart, addToCart } from '../actions/cart';
 
 // TODO a quick hack! put this into redux and connect it to renderRightButton
 let globalCartLength = 0;
 
+const CartHeaderIcon = ({ isCartFetching, carts }) => (
+  <TouchableOpacity onPress={Actions.cart} activeOpacity={1}>
+    <Image source={cartIcon} style={{ width: 25, height: 25, marginTop: 0, marginRight: 10 }} />
+    <View style={{ backgroundColor: '#D91E18', position: 'absolute', width: 15, height: 15, borderRadius: 7, right: 0, top: 0 }}>
+      <Text style={{ color: '#FFFFFF', textAlign: 'center', fontSize: 12, fontWeight: 'bold' }}>
+        { isCartFetching ? 0 : carts.length }
+      </Text>
+    </View>
+  </TouchableOpacity>
+);
+
 class productContainer extends React.Component {
   // Header right icon
   static renderRightButton = () => (
-    <TouchableOpacity onPress={Actions.cart} activeOpacity={1}>
-      <Image source={cartIcon} style={{ width: 25, height: 25, marginTop: 0, marginRight: 10 }} />
-      <View style={{ backgroundColor: '#D91E18', position: 'absolute', width: 15, height: 15, borderRadius: 7, right: 0, top: 0 }}>
-        <Text style={{ color: '#FFFFFF', textAlign: 'center', fontSize: 12, fontWeight: 'bold' }}>
-          { globalCartLength }
-        </Text>
-      </View>
-    </TouchableOpacity>
+    <ConnectedCartHeaderIcon />
   );
 
   constructor(props: Object) {
@@ -117,10 +120,21 @@ class productContainer extends React.Component {
     carts: ProductsType,
   };
 
+  props: {
+    getCart: Function,
+  };
 
-  componentDidMount() {
-    // initial greet message
+  // componentDidMount() {
+  //   // initial greet message
+  //   this.addChatMessage('Bello', 'Bello! Mau beli apa hari ini?');
+  // }
+
+  componentDidMount = () => {
     this.addChatMessage('Bello', 'Bello! Mau beli apa hari ini?');
+    this.props.getCart({
+      user_id: this.props.userdata.id,
+      token: this.props.userdata.token,
+    });
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -573,12 +587,16 @@ const mapDispatchToProps = dispatch => ({
   sendBuyRequest: requestData => dispatch(sendBuyRequest(requestData)),
   updateBuyRequest: requestData => dispatch(updateBuyRequest(requestData)),
   addToCart: requestData => dispatch(addToCart(requestData)),
+  getCart: requestData => dispatch(getCart(requestData)),
 });
 
 const mapStateToProps = state => ({
   isFetchingProduct: state.recommendation.isFetching,
   productResult: state.recommendation.result,
   userdata: state.userdata.result,
+  isCartFetching: state.cart.isFetching,
+  carts: state.cart.result,
 });
 
+const ConnectedCartHeaderIcon = connect(mapStateToProps, mapDispatchToProps)(CartHeaderIcon);
 export default connect(mapStateToProps, mapDispatchToProps)(productContainer);
