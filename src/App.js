@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider, connect } from 'react-redux';
-import { Scene, Router, ActionConst } from 'react-native-router-flux';
+import { Scene, Router, ActionConst, Actions } from 'react-native-router-flux';
 import OneSignal from 'react-native-onesignal';
 
 import store from '../src/store/configureStore';
@@ -78,10 +78,19 @@ const ConnectedRouter = connect(mapStateToProps, null)(MainRouter);
 class App extends React.Component {
   componentWillMount() {
     OneSignal.addEventListener('ids', this.onIds);
+    OneSignal.addEventListener('opened', this.onNotificationOpened);
   }
 
   componentDidMount() {
     OneSignal.configure({});
+  }
+
+  onNotificationOpened(message, data, isActive) {
+    if (isActive) {
+      // Actions.notification();
+    } else {
+      setTimeout(Actions.notification, 2000);
+    }
   }
 
   onIds(device) {
