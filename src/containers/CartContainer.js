@@ -64,7 +64,7 @@ class CartContainer extends React.Component {
 
   openBukalapakWeb = () => {
     const url = 'https://bukalapak.com';
-    Linking.openURL(url).catch(err => console.error('An error occurred', err));
+    Linking.openURL(url).catch((err) => {});
   }
 
   render() {
@@ -79,7 +79,13 @@ class CartContainer extends React.Component {
             (
               (carts.length > 0) &&
               carts.map(product => (
-                <ProductItem key={product.id} {...product} toggleDetailModal={() => {}} />
+                <ProductItem
+                  key={product.id}
+                  {...product}
+                  toggleDetailModal={() => {}}
+                  inCart
+                  deleteCart={() => {}}
+                />
               ))
             ) ||
             <ActivityIndicator size="large" color="#3498db" style={{ paddingTop: 30 }} />

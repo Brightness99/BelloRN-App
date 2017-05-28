@@ -3,6 +3,7 @@ import React from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import numeral from 'numeral';
 
+import RedButton from '../../Core/RedButton';
 import styles from './styles';
 
 type PropTypes = {
@@ -12,9 +13,20 @@ type PropTypes = {
   price: number,
   quantity: number,
   image: string,
+  inCart?: boolean,
+  deleteCart?: Function,
 };
 
-const ProductItem = ({ toggleDetailModal, name, owner, price, quantity, image }: PropTypes) => (
+const ProductItem = ({
+  toggleDetailModal,
+  name,
+  owner,
+  price,
+  quantity,
+  image,
+  inCart = false,
+  deleteCart = () => {},
+}: PropTypes) => (
   <TouchableOpacity style={styles.productCard} onPress={toggleDetailModal} activeOpacity={0.95}>
     <View style={styles.productCardImage}>
       <Image style={styles.productImage} source={{ uri: image }} />
@@ -26,6 +38,7 @@ const ProductItem = ({ toggleDetailModal, name, owner, price, quantity, image }:
         { quantity ? `${quantity} x ` : '' }
         { `Rp ${numeral(price).format('0,0[.]00')}` }
       </Text>
+      { inCart && <RedButton handleClick={deleteCart} /> }
     </View>
   </TouchableOpacity>
 );
