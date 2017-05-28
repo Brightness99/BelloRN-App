@@ -30,7 +30,7 @@ import BelloIcon from '../images/bello.png';
 import styles from './chatContainer.styles';
 
 // Redux Actions
-import { getProductRecommendation } from '../actions/recommendation';
+import { getProductRecommendation, resetReminder } from '../actions/recommendation';
 import { sendBuyRequest, updateBuyRequest } from '../actions/buyrequest';
 import { getCart, addToCart } from '../actions/cart';
 
@@ -147,6 +147,13 @@ class productContainer extends React.Component {
 
   componentWillReceiveProps = (nextProps) => {
     if (this.props.isFetchingProduct && !nextProps.isFetchingProduct) {
+      if (this.props.isReminder) {
+        this.setState({
+          isSearching: false,
+          searchKeyword: this.props.keyword,
+        });
+        this.props.resetReminder();
+      }
       this.displayProductRecommendations(nextProps.productResult.length);
       this.setState({
         products: nextProps.productResult.length > 0 ? nextProps.productResult : [],
@@ -314,6 +321,7 @@ class productContainer extends React.Component {
       reminder_schedule: false,
       is_cancel: 1,
       cancelation_reason: cancellationReason,
+      is_read: false,
       is_delete: false,
     });
   }
@@ -330,8 +338,20 @@ class productContainer extends React.Component {
       reminder_schedule: moment().add(14, 'days').format('YYYY-MM-DD'),
       is_cancel: false,
       cancelation_reason: false,
+      is_read: 0,
       is_delete: false,
     });
+
+    console.log({
+      user_id: this.props.userdata.id,
+      keyword: this.state.searchKeyword,
+      is_purchase: false,
+      reminder_schedule: moment().add(14, 'days').format('YYYY-MM-DD'),
+      is_cancel: false,
+      cancelation_reason: false,
+      is_read: 0,
+      is_delete: false,
+    })
 
     this.addChatMessage('Bello', `Siap, nanti Bello kabarin kalau ada ${searchKeyword} yang baru dan sesuai dengan keinginan ya! Kalau mau membatalkan, kamu bisa masuk ke pengaturan untuk menghapus reminder request.`);
     setTimeout(this.resetAction, 1000);
@@ -344,7 +364,7 @@ class productContainer extends React.Component {
       isProductsFetching: false,
       isProductsLoaded: true,
     });
-    this.addChatMessage('Bello', `Pencarian selesai. Bello dapat ${productLength} barang yang sesuai dengan ${this.state.searchKeyword}.`);
+    this.addChatMessage('Bello', `Pencarian selesai. Bello dapat ${productLength} barang yang sesuai dengan ${this.props.keyword}.`);
     this.displayActionBar({
       redLabel: 'Batal',
       redMethod: this.cancelBuyingAction,
@@ -450,6 +470,7 @@ class productContainer extends React.Component {
       reminder_schedule: false,
       is_cancel: false,
       cancelation_reason: false,
+      is_read: false,
       is_delete: false,
     });
 
@@ -592,6 +613,7 @@ class productContainer extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   getProductRecommendation: keyword => dispatch(getProductRecommendation(keyword)),
+  resetReminder: () => dispatch(resetReminder()),
   sendBuyRequest: requestData => dispatch(sendBuyRequest(requestData)),
   updateBuyRequest: requestData => dispatch(updateBuyRequest(requestData)),
   addToCart: requestData => dispatch(addToCart(requestData)),
@@ -600,6 +622,8 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   isFetchingProduct: state.recommendation.isFetching,
   productResult: state.recommendation.result,
+  keyword: state.recommendation.keyword,
+  isReminder: state.recommendation.isReminder,
   userdata: state.userdata.result,
 });
 

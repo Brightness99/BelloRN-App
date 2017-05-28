@@ -1,4 +1,4 @@
-import { FETCH_CART, GET_CART, ADD_TO_CART, DELETE_CART } from '../actions/types';
+import { FETCH_REQUEST_DATA, GET_REQUEST_DATA, DELETE_REQUEST_DATA } from '../actions/types';
 
 const initialState = {
   isFetching: false,
@@ -8,28 +8,21 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case FETCH_CART :
+    case FETCH_REQUEST_DATA :
       return {
         isFetching: true,
         result: state.result,
         status: state.status,
       };
 
-    case GET_CART :
+    case GET_REQUEST_DATA :
       return {
         isFetching: false,
         result: action.result,
         status: state.status,
       };
 
-    case DELETE_CART :
-    case ADD_TO_CART :
-      return {
-        isFetching: false,
-        result: state.result,
-        status: action.result,
-      };
-
+    case DELETE_REQUEST_DATA :
     default :
       return state;
   }

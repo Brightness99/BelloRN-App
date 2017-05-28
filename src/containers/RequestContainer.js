@@ -1,13 +1,16 @@
 // @flow
 import React from 'react';
-import { Text, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView, ActivityIndicator } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
 
 import RequestItem from '../components/Request/Item';
 import FooterActionButton from '../components/FooterActionButton';
 import ChatSectionHeading from '../components/Chat/SectionHeading';
 import HeadingDescription from '../components/Core/HeadingDescription';
 import ActionSuccessInfo from '../components/Core/ActionSuccessInfo';
+
+import { getRequestData } from '../actions/request';
 
 import * as colors from '../constants/colors';
 import type { ProductsType } from '../types';
@@ -44,6 +47,14 @@ class RequestContainer extends React.Component {
     carts: ProductsType,
   }
 
+
+  componentDidMount = () => {
+    this.props.getRequestData({
+      user_id: this.props.userdata.id,
+    });
+  }
+
+
   deleteRequest() {
     this.setState({
       successInfo: true,
@@ -67,16 +78,24 @@ class RequestContainer extends React.Component {
   }
 
   render() {
-    const { requests } = this.state;
+    const requests = this.props.result;
     return (
       <View style={styles.container}>
         <ScrollView style={styles.productList}>
           <ChatSectionHeading headingText={'List Request'} />
           <HeadingDescription text={'List barang yang kamu request dan akan direminder oleh Bello'} />
           <View style={{ height: 30 }} />
-          {requests.map(request => (
-            <RequestItem key={request.id} {...request} deleteRequest={this.deleteRequest} />
-          ))}
+          {
+            (
+              (requests.length > 0) &&
+              requests.map(request => (
+                <RequestItem key={request.id} {...request} deleteRequest={this.deleteRequest} />
+              ))
+            ) || (
+              (this.props.isFetching) &&
+              <ActivityIndicator size="large" color="#3498db" style={{ paddingTop: 30 }} />
+            )
+          }
           <View style={{ height: 150, width: '100%' }} />
         </ScrollView>
         <FooterActionButton text="+ Cari Barang Baru" handlePress={Actions.chat} />
@@ -86,4 +105,15 @@ class RequestContainer extends React.Component {
   }
 }
 
-export default RequestContainer;
+
+const mapDispatchToProps = dispatch => ({
+  getRequestData: requestData => dispatch(getRequestData(requestData)),
+});
+
+const mapStateToProps = state => ({
+  isFetching: state.request.isFetching,
+  result: state.request.result,
+  userdata: state.userdata.result,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(RequestContainer);

@@ -298,7 +298,7 @@ class AuthContainer extends React.Component {
             handleChange={this.setFormValue}
           />
           <OrangeButton label={'Login'} handleClick={this.submitLoginForm} />
-          <GreyButton label={'Belum punya akun?'} handleClick={() => this.setFormVisibility('register')} />
+          { /*<GreyButton label={'Belum punya akun?'} handleClick={() => this.setFormVisibility('register')} /> */}
         </View>
       );
     }
@@ -370,7 +370,7 @@ class AuthContainer extends React.Component {
 
 
   componentWillReceiveProps = (nextProps) => {
-    if (nextProps.loginResult != null) {
+    if (!nextProps.isFetching && nextProps.loginResult != null) {
       if (nextProps.loginResult.login_status === "Login Succeed") {
         Alert.alert(
           'Login Succeed',
@@ -422,12 +422,12 @@ class AuthContainer extends React.Component {
             <Text style={styles.tagline}>Belanja Semudah Bilang Hello!</Text>
             { this.renderMain() }
             { this.renderLoginForm() }
-            { this.renderRegisterForm() }
+            { /* this.renderRegisterForm() */ }
             { /* this.renderFooter() */ }
 
             {
               (this.props.isFetching) &&
-              <ActivityIndicator style={{ width: 70, height: 70, position: 'absolute', left: ((deviceWidth / 2) - 35), top: ((deviceHeight / 2) - 35) }} size="large" color="#efefef" />
+              <ActivityIndicator style={{ width: 70, height: 70, position: 'absolute', left: ((deviceWidth / 2) - 40), top: ((deviceHeight / 2) - 35) }} size="large" color="#efefef" />
             }
           </View>
         </ScrollView>

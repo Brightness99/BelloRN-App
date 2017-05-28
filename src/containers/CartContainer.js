@@ -10,7 +10,7 @@ import ProductItem from '../components/Product/Item';
 import FooterActionButton from '../components/FooterActionButton';
 
 // Redux Actions
-import { getCart } from '../actions/cart';
+import { getCart, deleteCart } from '../actions/cart';
 
 import * as colors from '../constants/colors';
 import type { ProductsType } from '../types';
@@ -71,7 +71,14 @@ class CartContainer extends React.Component {
     Linking.openURL(url).catch((err) => {});
   }
 
-  deleteCart() {
+
+  deleteCart = (productId) => {
+    this.props.deleteCart({
+      user_id: this.props.userdata.id,
+      token: this.props.userdata.token,
+      product_id: productId,
+    });
+
     this.setState({
       successInfo: true,
       successInfoMessage: 'Barang di Cart Sukses Dihapus!',
@@ -81,6 +88,7 @@ class CartContainer extends React.Component {
       successInfoMessage: '',
     }), 2000);
   }
+
 
   renderSuccessInfo() {
     const { successInfo, successInfoMessage } = this.state;
@@ -110,11 +118,13 @@ class CartContainer extends React.Component {
                   {...product}
                   toggleDetailModal={() => {}}
                   inCart
-                  deleteCart={this.deleteCart}
+                  deleteCart={() => { this.deleteCart(product.id); }}
                 />
               ))
-            ) ||
-            <ActivityIndicator size="large" color="#3498db" style={{ paddingTop: 30 }} />
+            ) || (
+              (this.props.isFetching) &&
+              <ActivityIndicator size="large" color="#3498db" style={{ paddingTop: 30 }} />
+            )
           }
           <View style={{ height: 150, width: '100%' }} />
         </ScrollView>
@@ -127,6 +137,7 @@ class CartContainer extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   getCart: requestData => dispatch(getCart(requestData)),
+  deleteCart: requestData => dispatch(deleteCart(requestData)),
 });
 
 const mapStateToProps = state => ({

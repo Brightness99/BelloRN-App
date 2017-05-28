@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, ActivityIndicator } from 'react-native';
+import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
 import TrendLineChart from '../components/TrendLineChart';
@@ -8,6 +9,8 @@ import ChatSectionHeading from '../components/Chat/SectionHeading';
 import HeadingDescription from '../components/Core/HeadingDescription';
 import ActionSuccessInfo from '../components/Core/ActionSuccessInfo';
 import FooterActionButton from '../components/FooterActionButton';
+
+import { getAnalyticsData, deleteSubscribe } from '../actions/analytics';
 
 import * as colors from '../constants/colors';
 
@@ -40,7 +43,18 @@ class AnalyticsContainer extends React.Component {
     this.deleteChart = this.deleteChart.bind(this);
   }
 
-  deleteChart() {
+
+  componentDidMount = () => {
+    this.props.getAnalyticsData({ user_id: this.props.userdata.id });
+  }
+
+
+  deleteChart(chartId) {
+    let data = new FormData();
+    data.append('_method', 'DELETE');
+
+    this.props.deleteSubscribe(chartId, data, this.props.userdata.id);
+
     this.setState({
       successInfo: true,
       successInfoMessage: 'Analisa sukses Dihapus!',
@@ -63,20 +77,45 @@ class AnalyticsContainer extends React.Component {
   }
 
   render() {
+    const charts = this.props.result;
     return (
       <View style={styles.container}>
         <ScrollView style={styles.list}>
           <ChatSectionHeading headingText={'List Analisa'} />
           <HeadingDescription text={'Kamu Belum Punya Analisa Barang Apapun. Mulai analisa tren sekarang!'} />
-          <TrendLineChart deleteChart={this.deleteChart} />
-          <TrendLineChart deleteChart={this.deleteChart} />
-          <TrendLineChart deleteChart={this.deleteChart} />
+          {
+            (
+              (charts.length > 0) &&
+              charts.map(chart => (
+                <TrendLineChart
+                  key={chart.id}
+                  {...chart}
+                  deleteChart={() => { this.deleteChart(chart.id); }}
+                />
+              ))
+            ) || (
+              (this.props.isFetching) &&
+              <ActivityIndicator size="large" color="#3498db" style={{ paddingTop: 30 }} />
+            )
+          }
         </ScrollView>
         <FooterActionButton text="+ Tambah Analisa Baru" handlePress={Actions.manageAnalytics} />
         { this.renderSuccessInfo() }
       </View>
     );
   }
+
 }
 
-export default AnalyticsContainer;
+const mapDispatchToProps = dispatch => ({
+  getAnalyticsData: requestData => dispatch(getAnalyticsData(requestData)),
+  deleteSubscribe: (id, data, user) => dispatch(deleteSubscribe(id, data, user)),
+});
+
+const mapStateToProps = state => ({
+  isFetching: state.analytics.isFetching,
+  result: state.analytics.result,
+  userdata: state.userdata.result,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AnalyticsContainer);

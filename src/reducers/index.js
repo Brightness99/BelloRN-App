@@ -7,6 +7,9 @@ import recommendationReducer from './recommendationReducer';
 import buyrequestReducer from './buyrequestReducer';
 import cartReducer from './cartReducer';
 import demandReducer from './demandReducer';
+import requestReducer from './requestReducer';
+import notificationReducer from './notificationReducer';
+import analyticsReducer from './analyticsReducer';
 
 export default combineReducers({
   scene: sceneReducer,
@@ -16,4 +19,6 @@ export default combineReducers({
   buyrequest: buyrequestReducer,
   cart: cartReducer,
   demand: demandReducer,
+  request: requestReducer,
+  analytics: analyticsReducer,
 });

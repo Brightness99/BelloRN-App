@@ -1,4 +1,4 @@
-import { FETCH_CART, GET_CART, ADD_TO_CART } from './types';
+import { FETCH_CART, GET_CART, ADD_TO_CART, DELETE_CART } from './types';
 import * as env from './env';
 
 
@@ -13,10 +13,10 @@ export function fetchCart() {
 }
 
 
-export function setAddToCartResponse({ result }) {
+export function setAddToCartResponse({ status }) {
   return {
     type: ADD_TO_CART,
-    result,
+    status,
   };
 }
 
@@ -36,7 +36,7 @@ export function addToCart(data) {
     })
     .then(response => response.json())
     .then((responseData) => {
-      dispatch(setAddToCartResponse({ result: responseData }));
+      dispatch(setAddToCartResponse({ status: responseData }));
     })
     .done();
   };
@@ -65,6 +65,36 @@ export function getCart(data) {
     .then(response => response.json())
     .then((responseData) => {
       dispatch(setGetCartResponse({ result: responseData }));
+    })
+    .done();
+  };
+}
+
+
+export function setDeleteCartResponse({ status }) {
+  return {
+    type: DELETE_CART,
+    status,
+  };
+}
+
+export function deleteCart(data) {
+  return (dispatch) => {
+    dispatch(fetchCart());
+
+    return fetch(`${url}product/deleteCart`, {
+      method: 'POST',
+      body: JSON.stringify({
+        user_id: data.user_id,
+        token: data.token,
+        product_id: data.product_id,
+      }),
+      headers: header,
+    })
+    .then(response => response.json())
+    .then((responseData) => {
+      dispatch(setDeleteCartResponse({ status: responseData }));
+      dispatch(getCart({ user_id: data.user_id, token: data.token }));
     })
     .done();
   };

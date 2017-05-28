@@ -60,9 +60,18 @@ class ProfileContainer extends React.Component {
               borderRadius: 0,
               elevation: 2 }}
             >
-              <Text style={styles.profileField}>Email: {this.props.userdata.email}</Text>
-              <Text style={styles.profileField}>Username: {this.props.userdata.username}</Text>
-              <Text style={styles.profileField}>Name: {this.props.userdata.name}</Text>
+              <Text style={styles.profileField}>
+                Email:
+                { this.props.userdata !== null && ` ${this.props.userdata.email}` }
+              </Text>
+              <Text style={styles.profileField}>
+                Username:
+                { this.props.userdata !== null && ` ${this.props.userdata.username}` }
+              </Text>
+              <Text style={styles.profileField}>
+                Name:
+                { this.props.userdata !== null && ` ${this.props.userdata.name}` }
+              </Text>
 
               <Text style={{ paddingTop: 10, paddingBottom: 10 }}> </Text>
 

@@ -35,7 +35,7 @@ const ProductItem = ({
       <Text style={styles.productTitle}>{ name }</Text>
       <Text style={styles.productDescription}>oleh { owner }</Text>
       <Text style={styles.productPrice}>
-        { quantity ? `${quantity} x ` : '' }
+        { quantity && `${quantity} x ` }
         { `Rp ${numeral(price).format('0,0[.]00')}` }
       </Text>
       { inCart && <RedButton label="Hapus dari Cart" handleClick={deleteCart} /> }
