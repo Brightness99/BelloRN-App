@@ -1,5 +1,5 @@
-export const API_URL = 'http://localhost/bello-api/public/';
-// export const API_URL = 'http://digitalsmith.id/bello/public/';
+// export const API_URL = 'http://localhost/bello-api/public/';
+export const API_URL = 'http://digitalsmith.id/bello/public/';
 
 export const API_HEADER = {
   'Accept': 'application/json',
